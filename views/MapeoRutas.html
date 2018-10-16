@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../img/logo_sctslp.ico" rel="icon" type="image/ico" />
+    <title>
+        Dashboard Administrador
+    </title>
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../css/custom.css" rel="stylesheet">
+    <link href="../css/ciatecCustom.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+
+    <div class="container">
+        <div class="row" id="fila">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            Mapeo de Rutas
+                        </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up">
+                                    </i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="close-link">
+                                    <i class="fas fa-times">
+                                    </i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="clearfix">
+                        </div>
+                    </div>
+                    <div class="x_content">
+                        <div class="col-md-12">
+                            <div class="" data-example-id="togglable-tabs" role="tabpanel">
+                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                                    <li class="active" role="presentation">
+                                        <a aria-expanded="true" data-toggle="tab" href="#tab_verRuta" id="home-tab"
+                                            role="tab">
+                                            Ver Ruta
+                                        </a>
+                                    </li>
+                                    <li class="" role="presentation">
+                                        <a aria-expanded="false" data-toggle="tab" href="#tab_creaRuta" id="profile-tab"
+                                            role="tab">
+                                            Crear Ruta
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div aria-labelledby="home-tab" class="tab-pane fade active in" id="tab_verRuta"
+                                        role="tabpanel">
+                                        <div class="col-md-8" id="mapcontainerVR">
+                                        </div>
+                                        <div class="col-md-4 panel panel-default">
+                                            <div class="panel-body">
+                                                <select class="form-control" id="lstRutas">
+                                                </select>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div aria-labelledby="profile-tab" class="tab-pane fade" id="tab_creaRuta" role="tabpanel">
+                                        <div class="col-md-8" id="mapcontainerCR">
+                                        </div>
+                                        <div class=" col-md-4 panel panel-default">
+                                            <div class="panel-body">
+                                                <form action="#" novalidate>
+                                                    <div class="item form-group">
+                                                        <label for="nombreRuta">
+                                                            Nombre de la ruta
+                                                            <span class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                        <input class="form-control" id="nombreRuta" name="" required="required"
+                                                            type="text" />
+                                                    </div>
+                                                    <div class="item form-group">
+                                                        <label for="lstCiudades">
+                                                            Ciudad
+                                                            <span class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                        <select class="form-control" id="lstCiudades" required="required">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="item form-group">
+                                                        <label for="modalidad">
+                                                            Modalidad
+                                                            <span class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                        <select class="form-control" id="modalidad" required="required">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <br>
+                                                    <button class="btn btn-success" disabled id="btnsaveRuta" type="submit">
+                                                        Guardar Ruta
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /footer content -->
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js">
+
+    </script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js">
+
+    </script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js">
+
+    </script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js">
+
+    </script>
+    <!-- Chart.js -->
+    <script src="../vendors/Chart.js/dist/Chart.min.js">
+
+    </script>
+    <!-- gauge.js -->
+    <script src="../vendors/gauge.js/dist/gauge.min.js">
+
+    </script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js">
+
+    </script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js">
+
+    </script>
+    <!-- Skycons -->
+    <script src="../vendors/skycons/skycons.js">
+
+    </script>
+    <!-- Flot -->
+    <script src="../vendors/Flot/jquery.flot.js">
+
+    </script>
+    <script src="../vendors/Flot/jquery.flot.pie.js">
+
+    </script>
+    <script src="../vendors/Flot/jquery.flot.time.js">
+
+    </script>
+    <script src="../vendors/Flot/jquery.flot.stack.js">
+
+    </script>
+    <script src="../vendors/Flot/jquery.flot.resize.js">
+
+    </script>
+    <!-- Flot plugins -->
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js">
+
+    </script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js">
+
+    </script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js">
+
+    </script>
+    <!-- DateJS -->
+    <script src="../vendors/DateJS/build/date.js">
+
+    </script>
+    <!-- JQVMap -->
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js">
+
+    </script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js">
+
+    </script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js">
+
+    </script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../vendors/moment/min/moment.min.js">
+
+    </script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js">
+
+    </script>
+    <script src="../vendors/validator/validator.js" type="text/javascript">
+
+    </script>
+    <!-- Google Maps API -->
+    <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXlyFifhXL537XaP866pupts-8QvK4xkM&callback=initMap"
+        type="text/javascript">
+
+        </script>
+    <!-- PNotify -->
+    <script src="../vendors/pnotify/dist/pnotify.js"></script>
+    <script src="../vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../js/comun.js"></script>
+    <script src="../js/custom.js">
+
+    </script>
+    <script src="../js/MapeoRutas.js">
+
+    </script>

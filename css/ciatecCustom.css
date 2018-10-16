@@ -1,0 +1,25 @@
+#itemsLst{
+	text-decoration: none;	
+	max-height: 200px;
+}
+#ruta{
+	height: 400px;
+}
+#mapcontainerCR,
+#mapcontainerVR{
+	height: 700px;
+	border: solid 1px black;
+}
+#logoImg{
+	width: 200px;
+}
+#iframeMain{
+	width: 100%;
+	min-height: 930px;	
+}
+#fila{
+	background-color: #F7F7F7;
+}
+#tablaReportes{    
+	position: inherit;
+}
