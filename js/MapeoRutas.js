@@ -1,7 +1,6 @@
 /** Variables Globales */
 var g;
 var map = null;
-var mapVR = null;
 var polyLine;
 var tmpPolyLine;
 var flightPath;
@@ -10,97 +9,152 @@ var vmarkers = [];
 var nomRuta;
 var ciudadRuta;
 var modalidadRuta;
+var des;
 var trazo = '';
+var latGlobal = 21.256712;
+var lngGlobal = -98.786337;
 
 var imageNormal;
 var imageHover;
+$('#horaInit').datetimepicker({
+    format: 'HH:mm'
+});
+$('#horaEnd').datetimepicker({
+    format: 'HH:mm'
+});
+$('#horaInitEditar').datetimepicker({
+    format: 'HH:mm'
+});
+$('#horaEndEditar').datetimepicker({
+    format: 'HH:mm'
+});
 
 
 var totRegMR = 0;
-function cargaInfo() {
-    $.getJSON({
-        type: "POST",
-        url: rootURL + ciudadesRutas,
-        data: JSON.stringify({
-            token: tokenSession
-        }),
-        contentType: "application/json; charset=utf-8",
-        //dataType: "json",
-        success: function (data) {
-            datos = JSON.parse(data.d);
-            //Obtiene el total de registros retornados
-            totRegCR = datos['iRegistros'];
-            for (var i = 0; i < totRegCR; i++) {
-                var item = datos['aoData'][i];
-                var idCiudad = item['IdCiudad'];
-                var nombreCiudad = item['Nombre'];
-                $('#lstCiudades').append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
-            }
-        },
-        error: function () {
-            console.log("ERROR en carga");
-        }
-    });
+async function cargaInfo() {
+    var resultado;
 
-    $.getJSON({
-        type: "POST",
-        url: rootURL + mapRutas,
-        data: JSON.stringify({
-            token: tokenSession
-        }),
-        contentType: "application/json; charset=utf-8",
-        //dataType: "json",
-        success: function (data) {
-            datos = JSON.parse(data.d);
-            //Obtiene el total de registros retornados
-            totRegMR = datos['iRegistros'];
-            for (var i = 0; i < totRegMR; i++) {
-                var item = datos['aoData'][i];
-                var idRuta = item['IdRuta'];
-                var nombreRuta = item['Nombre'];
-                $('#lstRutas').append('<option value="' + idRuta + '">' + nombreRuta + '</option>');
-                $('#lstRutas2').append('<option value="' + idRuta + '">' + nombreRuta + '</option>');
-            }
-        },
-        error: function () {
-            console.log("ERROR en carga");
-        }
-    });
 
-    $.getJSON({
-        type: "POST",
-        url: rootURL + consultarModalidades,
-        data: JSON.stringify({
-            token: tokenSession
-        }),
-        contentType: "application/json; charset=utf-8",
-        //dataType: "json",
-        success: function (data) {
-            datos = JSON.parse(data.d);
-            //Obtiene el total de registros retornados
-            totRegMR = datos['iRegistros'];
-            for (var i = 0; i < totRegMR; i++) {
-                var item = datos['aoData'][i];
-                var idModalidad = item['IdModalidad'];
-                var nombreModalidad = item['Nombre'];
-                $('#modalidad').append('<option value="' + idModalidad + '">' + nombreModalidad + '</option>');                
-            }
-        },
-        error: function () {
-            console.log("ERROR en carga");
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + ciudadesRutas,
+            data: JSON.stringify({
+                token: tokenSession
+            }),
+            contentType: "application/json; charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        //Obtiene el total de registros retornados
+        totRegCR = datos['iRegistros'];
+        for (var i = 0; i < totRegCR; i++) {
+            var item = datos['aoData'][i];
+            var idCiudad = item['IdCiudad'];
+            var nombreCiudad = item['Nombre'];
+            $('#lstCiudades').append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
+            $('#lstCiudadesVer').append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
+            $('#lstCiudadesEditar').append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
         }
-    });    
+    })
+
+
+
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + mapRutas,
+            data: JSON.stringify({
+                token: tokenSession
+            }),
+            contentType: "application/json; charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        //Obtiene el total de registros retornados
+        totRegMR = datos['iRegistros'];
+        for (var i = 0; i < totRegMR; i++) {
+            var item = datos['aoData'][i];
+            var idRuta = item['IdRuta'];
+            var nombreRuta = item['Nombre'];
+            $('#lstRutas').append('<option value="' + idRuta + '">' + nombreRuta + '</option>');
+            $('#lstRutasVer').append('<option value="' + idRuta + '">' + nombreRuta + '</option>');
+            $('#lstRutasEditar').append('<option value="' + idRuta + '">' + nombreRuta + '</option>');
+        }
+    })
+
+
+
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarModalidades,
+            data: JSON.stringify({
+                token: tokenSession
+            }),
+            contentType: "application/json; charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        //Obtiene el total de registros retornados
+        totRegMRModalidad = datos['iRegistros'];
+        for (var i = 0; i < totRegMRModalidad; i++) {
+            var item = datos['aoData'][i];
+            var idModalidad = item['IdModalidad'];
+            var nombreModalidad = item['Nombre'];
+            $('#lstModalidad').append('<option value="' + idModalidad + '">' + nombreModalidad + '</option>');
+            $('#lstModalidadVer').append('<option value="' + idModalidad + '">' + nombreModalidad + '</option>');
+            $('#lstModalidadEditar').append('<option value="' + idModalidad + '">' + nombreModalidad + '</option>');
+        }
+    })
+
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarLineas,
+            data: JSON.stringify({
+                token: tokenSession
+            }),
+            contentType: "application/json; charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        //Obtiene el total de registros retornados
+        totRegMRLinea = datos['iRegistros'];
+        for (var i = 0; i < totRegMRLinea; i++) {
+            var item = datos['aoData'][i];
+            var idLinea = item['IdLinea'];
+            var claveLinea = item['Clave'];
+            var nombreLinea = item['Nombre'];
+            $('#lstLineas').append('<option value="' + idLinea + '">' + claveLinea + ' - ' + nombreLinea + '</option>');
+            $('#lstLineasVer').append('<option value="' + idLinea + '">' + claveLinea + ' - ' + nombreLinea + '</option>');
+            $('#lstLineasEditar').append('<option value="' + idLinea + '">' + claveLinea + ' - ' + nombreLinea + '</option>');
+        }
+    })
+
 }
-var initMapCR = function (mapHolder) {
+
+
+var initMap = function (mapHolder, lat, lng) {
     g = google.maps;
-    imageNormal = new g.MarkerImage("../img/square_transparent.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
-    imageHover = new g.MarkerImage("../img/square_transparent_over.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
     markers = [];
     vmarkers = [];
     var mapOptions = {
-        zoom: 14,
-        center: new g.LatLng(21.256712, -98.786337),
-        mapTypeId: g.MapTypeId.HYBRID,
+        zoom: 15,
+        center: new g.LatLng(lat, lng),
+        mapTypeId: g.MapTypeId.roadmap,
         draggableCursor: 'auto',
         draggingCursor: 'move',
         disableDoubleClickZoom: true
@@ -111,35 +165,15 @@ var initMapCR = function (mapHolder) {
     mapOptions = null;
 };
 
-var initMapVR = function (mapHolder) {
-    g = google.maps;
-    imageNormal = new g.MarkerImage("../img/square_transparent.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
-    imageHover = new g.MarkerImage("../img/square_transparent_over.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
-    markers = [];
-    vmarkers = [];
-    var mapOptions = {
-        zoom: 14,
-        center: new g.LatLng(21.256712, -98.786337),
-        mapTypeId: g.MapTypeId.HYBRID,
-        draggableCursor: 'auto',
-        draggingCursor: 'move',
-        disableDoubleClickZoom: true
-    };
-    mapVR = new g.Map(document.getElementById(mapHolder), mapOptions);
-    g.event.addListener(map, "click", mapLeftClick);
-    mapHolder = null;
-    mapOptions = null;
-};
-
 function addItemList(lat, lng) {
     var lista = document.getElementById("itemsLst");
     var string = lat.toFixed(5) + ", " + lng.toFixed(5);
-    //console.log(string);
+    console.log(string);
     var item = document.createElement("li");
     item.appendChild(document.createTextNode(string));
     lista.appendChild(item);
 }
-var initPolyline = function () {
+var initPolyline = function (mapHolder) {
     var polyOptions = {
         strokeColor: "#3355FF",
         strokeOpacity: 0.8,
@@ -151,18 +185,17 @@ var initPolyline = function () {
         strokeWeight: 4
     };
     polyLine = new g.Polyline(polyOptions);
-    polyLine.setMap(map);
+    polyLine.setMap(mapHolder);
     tmpPolyLine = new g.Polyline(tmpPolyOptions);
-    tmpPolyLine.setMap(map);
+    tmpPolyLine.setMap(mapHolder);
 };
+
 var mapLeftClick = function (event) {
     if (event.latLng) {
         var marker = createMarker(event.latLng);
-        //console.log(marker);
         markers.push(marker);
         if (markers.length != 1) {
             var vmarker = createVMarker(event.latLng);
-            //console.log(vmarker);
             vmarkers.push(vmarker);
             vmarker = null;
         }
@@ -173,15 +206,17 @@ var mapLeftClick = function (event) {
     event = null;
 };
 var createMarker = function (point) {
+    var imageNormal = new g.MarkerImage("../img/square.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
+    var imageHover = new g.MarkerImage("../img/square_over.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
     var marker = new g.Marker({
         position: point,
         map: map,
         icon: imageNormal,
         draggable: true
-    });    
+    });
     //addItemList(marker.getPosition().lat(), marker.getPosition().lng());
     g.event.addListener(marker, "mouseover", function () {
-        marker.setIcon(imageNormal);
+        marker.setIcon(imageHover);
     });
     g.event.addListener(marker, "mouseout", function () {
         marker.setIcon(imageNormal);
@@ -211,8 +246,9 @@ var createMarker = function (point) {
     return marker;
 };
 var createVMarker = function (point) {
+    var imageNormal = new g.MarkerImage("../img/square_transparent.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
+    var imageHover = new g.MarkerImage("../img/square_transparent_over.png", new g.Size(11, 11), new g.Point(0, 0), new g.Point(6, 6));
     var prevpoint = markers[markers.length - 2].getPosition();
-    //console.log(prevpoint.latLng);
     var marker = new g.Marker({
         position: new g.LatLng(point.lat() - (0.5 * (point.lat() - prevpoint.lat())), point.lng() - (0.5 * (point.lng() - prevpoint.lng()))),
         map: map,
@@ -220,7 +256,7 @@ var createVMarker = function (point) {
         draggable: true
     });
     g.event.addListener(marker, "mouseover", function () {
-        //marker.setIcon(imageHover);
+        marker.setIcon(imageHover);
     });
     g.event.addListener(marker, "mouseout", function () {
         marker.setIcon(imageNormal);
@@ -312,12 +348,16 @@ var removeVMarkers = function (index) {
     index = null;
 };
 
-$("#btnsaveRuta").on('click', function () {
+$("#btnsaveRuta").on('click', async function () {
     var path = polyLine.getPath();
     var ptnsPath = path.length;
     nomRuta = $("#nombreRuta").val();
     ciudadRuta = $("#lstCiudades").val();
-    modalidadRuta = $("#modalidad").val();
+    modalidadRuta = $("#lstModalidad").val();
+    lineaRuta = $("#lstLineas").val();
+    horaInicio = ($("#horaInit").val()).split(" ");
+    horaFin = ($("#horaEnd").val()).split(" ");
+    des = $("#descrip").val();
     for (var i = 0; i < ptnsPath; i++) {
         var item = path.getAt(i);
         var lat = item.lat().toFixed(5);
@@ -327,132 +367,322 @@ $("#btnsaveRuta").on('click', function () {
             trazo = trazo + lat + ',' + lng;
         } else {
             trazo = trazo + lat + ',' + lng + '|';
-        }        
+        }
+    }
+    var dataJson = JSON.stringify({
+        nomRuta: nomRuta,
+        idCiudad: ciudadRuta,
+        idModalidad: modalidadRuta,
+        puntos: trazo,
+        idLinea: lineaRuta,
+        horaInicio: horaInicio[0],
+        horaFin: horaFin[0],
+        descripcion: des,
+        token: tokenSession
+    });
+    var resultado;
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + guardarRutas,
+            data: dataJson,
+            contentType: "application/json;charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
     }
 
-    $.ajax({
-        type: "POST",
-        async: false,
-        url: rootURL + guardarRutas,
-        data: JSON.stringify({
-            nomRuta: nomRuta,
-            idCiudad: ciudadRuta,
-            idModalidad: modalidadRuta,
-            puntos: trazo,
-            token: tokenSession
-        }),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (data, status) {
-            //console.log("Success...");
-            new PNotify({
-                title: 'Ruta guardada',
-                text: 'Se ha guardado correctamente la ruta creada',
-                type: 'success',
-                styling: 'bootstrap3'
-            });
+    $.when(resultado).then(function (data) {
+        $("#formCreateRuta")[0].reset();
+        initMap('mapcontainer');
+    })
+    trazo = '';
+
+});
+
+$("#btnupdateRuta").on('click', async function () {
+    var path = polyLine.getPath();
+    var ptnsPath = path.length;
+    var idRutaGet = $("#lstRutasEditar").val();
+    nomRuta = $("#nombreRutaEditar").val();
+    ciudadRuta = $("#lstCiudadesEditar").val();
+    modalidadRuta = $("#lstModalidadEditar").val();
+    lineaRuta = $("#lstLineasEditar").val();
+    horaInicio = ($("#horaInitEditar").val()).split(" ");
+    horaFin = ($("#horaEndEditar").val()).split(" ");
+    des = $("#descripEditar").val();
+    for (var i = 0; i < ptnsPath; i++) {
+        var item = path.getAt(i);
+        var lat = item.lat().toFixed(5);
+        var lng = item.lng().toFixed(5);
+        var string = lat + ", " + lng;
+        if (i == ptnsPath - 1) {
+            trazo = trazo + lat + ',' + lng;
+        } else {
+            trazo = trazo + lat + ',' + lng + '|';
         }
+    }
+    var dataJson = JSON.stringify({
+        idRuta: idRutaGet,
+        nomRuta: nomRuta,
+        idCiudad: ciudadRuta,
+        idModalidad: modalidadRuta,
+        puntos: trazo,
+        idLinea: lineaRuta,
+        horaInicio: horaInicio[0],
+        horaFin: horaFin[0],
+        descripcion: des,
+        token: tokenSession
     });
+    var resultado;
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + actualizarRutas,
+            data: dataJson,
+            contentType: "application/json;charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+    $.when(resultado).then(function (data) {
+        $("#formCreateRuta")[0].reset();
+        initMap('mapcontainer');
+    })
+    trazo = '';
+
 });
 
 
-$("#lstRutas").on('change', function(){
-    debugger;
+$("#lstRutas").on('change', async function () {
     var idRutaGet = $("#lstRutas").val();
-    console.log(idRutaGet);
+    flightPath = new google.maps.Polyline({
+        geodesic: true,
+        strokeColor: '#3355FF',
+        strokeOpacity: 0.8,
+        strokeWeight: 3
+    });
+    var dataJson = JSON.stringify({
+        idRuta: idRutaGet,
+        token: tokenSession
+    });
+    var resultado;
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarRutasId,
+            data: dataJson,
+            contentType: "application/json;charset=utf-8"
+        })
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        var itemData = datos['aoData'];
+        $("#nombreRutaVer").val(itemData[0]["Nombre"]);
+        $("#lstLineasVer").val(itemData[0]["IdLinea"]);
+        $("#lstCiudadesVer").val(itemData[0]["IdCiudad"]);
+        $("#lstModalidadVer").val(itemData[0]["IdModalidad"]);
+        $("#horaInitVer").val(itemData[0]["HoraInicio"]);
+        $("#horaEndVer").val(itemData[0]["HoraFin"]);
+        $("#descripVer").val(itemData[0]["Descripcion"]);
+    });
+
+    var dataJson1 = JSON.stringify({
+        idRuta: idRutaGet,
+        token: tokenSession
+    });
+    var resultado1;
+
+    try {
+        resultado1 = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarTrazo,
+            data: dataJson1,
+            contentType: "application/json;charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+    $.when(resultado1).then(function (data) {
+        datos = JSON.parse(data.d);
+        var itemData = datos['aoData'];
+        var arrayLat = [], arrayLng = [];
+        var i = 0;
+        var bounds = new google.maps.LatLngBounds();
+        itemData.forEach(function (item) {
+            arrayLat[i] = parseFloat(item.lat);
+            arrayLng[i] = parseFloat(item.lng);
+            var punto = new g.LatLng(arrayLat[i], arrayLng[i]);
+            bounds.extend(punto);
+            i++;
+        });
+        var minLat = Math.min(...arrayLat);
+        var maxLat = Math.max(...arrayLat);
+        var pLat = ((maxLat - minLat) / 2) + minLat;
+        var minLng = Math.min(...arrayLng);
+        var maxLng = Math.max(...arrayLng);
+        var pLng = ((maxLng - minLng) / 2) + minLng;
+        initMap('mapcontainer', pLat, pLng);
+        flightPath.setPath(itemData);
+        flightPath.setMap(map);
+        map.fitBounds(bounds);
+    });
+});
+
+$("#lstRutasEditar").on('change', async function () {
+    var idRutaGet = $("#lstRutasEditar").val();
     flightPath = new google.maps.Polyline({
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
-    flightPath.setMap(null);
-    $.ajax({
-        type: "POST",
-        async: false,
-        url: rootURL + consultarRutasId,
-        data: JSON.stringify({
-            idRuta: idRutaGet,
-            token: tokenSession
-        }),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (data, status) {
-            datos = JSON.parse(data.d);
-            var item = datos['aoData'];
-            if (item != null) {
-                //console.log();
-            } else {
-                //No hacer nada
-            }
-        }
+    var dataJson = JSON.stringify({
+        idRuta: idRutaGet,
+        token: tokenSession
     });
-    
-    $.ajax({
-        type: "POST",
-        async: false,
-        url: rootURL + consultarTrazo,
-        data: JSON.stringify({
-            idRuta: idRutaGet,
-            token: tokenSession
-        }),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (data, status) {            
-            datos = JSON.parse(data.d);
-            var itemData = datos['aoData'];
-            itemData.forEach(function (item) {
-                var lat = item.Latitud;
-                var lng = item.Longitud;
-            });
-            flightPath.setPath(itemData);                                    
-            flightPath.setMap(mapVR);
+    var resultado;
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarRutasId,
+            data: dataJson,
+            contentType: "application/json;charset=utf-8"
+        })
+    }
+    catch (error) {
+        console.log(error);
+    }
 
-            new PNotify({
-                title: 'Carga exitosa',
-                text: 'Se ha cargado correctamente la ruta',
-                type: 'success',
-                styling: 'bootstrap3'
-            })
-        },
-        error: function(status){
-            new PNotify({
-                title: 'Error al cargar puntos',
-                text: status,
-                type: 'error',
-                styling: 'bootstrap3'
-            });
-        }
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        var itemData = datos['aoData'];
+        $("#nombreRutaEditar").val(itemData[0]["Nombre"]);
+        $("#horaInitEditar").val(itemData[0]["HoraInicio"]);
+        $("#horaEndEditar").val(itemData[0]["HoraFin"]);
+        $("#lstLineasEditar").val(itemData[0]["IdLinea"]);
+        $("#lstCiudadesEditar").val(itemData[0]["IdCiudad"]);
+        $("#lstModalidadEditar").val(itemData[0]["IdModalidad"]);
+        $("#descripEditar").val(itemData[0]["Descripcion"]);
     });
-    
+
+    var dataJson1 = JSON.stringify({
+        idRuta: idRutaGet,
+        token: tokenSession
+    });
+    var resultado1;
+
+    try {
+        resultado1 = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarTrazo,
+            data: dataJson1,
+            contentType: "application/json;charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+    $.when(resultado1).then(function (data) {
+        datos = JSON.parse(data.d);
+        var itemData = datos['aoData'];
+        var arrayLat = [], arrayLng = [];
+        var i = 0;
+        itemData.forEach(function (item) {
+            arrayLat[i] = parseFloat(item.lat);
+            arrayLng[i] = parseFloat(item.lng);
+            i++;
+        });
+        var minLat = Math.min(...arrayLat);
+        var maxLat = Math.max(...arrayLat);
+        var pLat = ((maxLat - minLat) / 2) + minLat;
+        var minLng = Math.min(...arrayLng);
+        var maxLng = Math.max(...arrayLng);
+        var pLng = ((maxLng - minLng) / 2) + minLng;
+        initMap('mapcontainer', pLat, pLng);
+        initPolyline(map);
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < arrayLat.length; i++) {
+            var punto = new g.LatLng(arrayLat[i], arrayLng[i]);
+            var marker = createMarker(punto);
+            markers.push(marker);
+            if (markers.length != 1) {
+                var vmarker = createVMarker(punto);
+                vmarkers.push(vmarker);
+                vmarker = null;
+            }
+            var path = polyLine.getPath();
+            path.push(punto);
+            marker = null;
+            bounds.extend(punto);
+        }
+        map.fitBounds(bounds);
+    });
 });
 
-setInterval(function () {
-    $.ajax({
-        type: "POST",
-        async: false,
-        url: rootURL + consultarRutasUpdate,
-        data: JSON.stringify({
-            TotalRegistros: totRegMR,
-            token: tokenSession
-        }),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (data, status) {
-            datos = JSON.parse(data.d);
-            var item = datos['aoData'];
-            if (item != null) {
-                cargaInfo();
-            } else {
-                //No hacer nada
-            }
+setInterval(async function () {
+    var dataJson = JSON.stringify({
+        TotalRegistros: totRegMR,
+        token: tokenSession
+    });
+    var resultado;
+    try {
+        resultado = await $.ajax({
+            type: "POST",
+            url: rootURL + consultarRutasUpdate,
+            data: dataJson,
+            contentType: "application/json;charset=utf-8",
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+    $.when(resultado).then(function (data) {
+        datos = JSON.parse(data.d);
+        var item = datos['aoData'];
+        if (item != null) {
+            $('#lstRutas')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option></option>');
+            $('#lstRutasEditar')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option></option>');
+            cargaInfo();
+        } else {
+            //No hacer nada
         }
     });
 }, 3000);
+$("#tabSeeRoute").on('click', function () {
+    initMap('mapcontainer', 21.256712, -98.786337);
+    initPolyline(map);
+    $("#formCreateRuta").find('input:text, select, textarea').val("");
+});
+$("#tabCreateRoute").on('click', function () {
+    initMap('mapcontainer', 21.256712, -98.786337);
+    initPolyline(map);
+});
+$("#tabEditRoute").on('click', function () {
+    initMap('mapcontainer', 21.256712, -98.786337);
+    initPolyline(map);
+});
 
 window.onload = function () {
-    initMapCR('mapcontainerCR');
-    initMapVR('mapcontainerVR');
-    initPolyline();
+    initMap('mapcontainer', 21.256712, -98.786337);
+    /*initMapVR('mapcontainerVR', latGlobal, lngGlobal);
+    initMapER('mapcontainerER', latGlobal, lngGlobal);*/
+    initPolyline(map);
+    //initPolylineER(mapER);
+
     cargaInfo();
 };

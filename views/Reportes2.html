@@ -28,6 +28,12 @@
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- bootstrap-datetimepicker -->
     <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/ciatecCustom.css">
@@ -64,7 +70,7 @@
                                 <li class="permit permit-Admin permit-AReportes"><a id="btnReportes"><i class="fas fa-table"></i> Reportes <span class="fas fa-caret-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="Reportes.html">Trámites</a></li>
-                                        <li><a href="Reportes2.html">Transparecia</a></li>
+                                        <li><a href="Reportes2.html">Transparencia</a></li>
                                     </ul>
                                 </li>
                                 <li class="permit permit-Admin permit-ARutas"><a href="MapeoRutas.html" id="btnMapeoRutas"><i class="fas fa-map-marked-alt"></i>
@@ -94,7 +100,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                                    href="javascript:;">                                    
+                                    href="javascript:;"> 
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
@@ -127,55 +133,65 @@
             <!-- /top navigation -->
             <!-- page content -->
             <div class="right_col" role="main">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h3>Estadisticas de trámites</h3>
-                    </div>
-                </div>
-                <div class="row" id="fila_item">
-                    <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="row" id="fila_item_reporte">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <!--<button id="btn_getData" class="btn btn-info">Get Data</button>-->
                         <div class="x_panel">
+                            <div class="x_title">
+                                <h3>Reporte de transparencia</h3>
+                            </div>
                             <div class="x_content">
-                                <label for="rngDatePicker">
-                                    Selecciones el rango de fechas que deseé visualizar
-                                </label>
-                                <div id="rngDatePicker" class="control-group">
-                                    <div class="controls">
-                                        <div class="input-prepend input-group" style="width: 250px">
-                                            <input type="text" name="dateRangePicker" id="dateRangePicker" class="form-control"
-                                                placeholder="MM/DD/YYYY - MM/DD/YYYY" value="" />
-                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                <div class="col-md-12">
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <label for="dateRangePicker2">
+                                                Seleccione un rango de fechas para visualizar los trámites realizados
+                                                dentro de ese periodo.
+                                            </label>
+                                            <div class="input-prepend input-group" style="width: 250px">
+                                                <input type="text" name="dateRangePicker2" id="dateRangePicker2" class="form-control"
+                                                    placeholder="MM/DD/YYYY - MM/DD/YYYY" value="" />
+                                                <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="tramitesDia" class="G1">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div id="tramitesDiaUlt30" class="G2">
-                                    </div>
-                                </div>
+                                    <table id="tablaReportes2" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="4"></th>
+                                                <th colspan="3">Licencia</th>
+                                                <th colspan="3">Gafete</th>
+                                                <th colspan="5"></th>
+                                            </tr>
+                                            <tr id="TblRepHead">
+                                                <th>No. Gafete</th>
+                                                <th>Id Tramite</th>
+                                                <th>Fecha Tramite</th>
+                                                <th>Tramite</th>
+                                                <th>Años de licencia</th>
+                                                <th>Tipo de licencia</th>
+                                                <th>Fecha de vigencia de licencia</th>
+                                                <th>Años de gafete</th>
+                                                <th>Fecha de vigencia de gafete</th>
+                                                <th>Fecha de expedicion de gafete</th>
+                                                <th>Nombres</th>
+                                                <th>Apellido Paterno</th>
+                                                <th>Apellido Materno</th>
+                                                <th>Fecha Toxicologico</th>
+                                                <th>Municipio</th>
+                                                <th>Fecha de Nacimiento</th>
+                                                <th>Clave</th>
+                                                <th>Linea</th>
+                                                <th>Modalidad</th>
+                                                <th>No. económico</th>
+                                                <th>Usuario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="TblRep2Body">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_content">
-                                <div>
-                                    <label for="myDatepicker2">
-                                        Seleccione la fecha que deseé visualizar
-                                    </label>
-                                    <div style="width: 250px" class='input-group date' id='myDatepicker2'>
-                                        <input type='text' id="datePicker" class="form-control" placeholder="DD/MM/YYYY" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div><br>
-                                <div id="traitesHorario" class="G3"></div>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -185,7 +201,7 @@
             <!-- /page content -->
             <!-- footer content -->
             <footer>
-                <div class="pull-right">                    
+                <div class="pull-right">
                     <p>Secretaria de Comunicaciones y Transportes SLP</p>
                 </div>
                 <div class="clearfix">
@@ -194,6 +210,23 @@
             <!-- /footer content -->
         </div>
     </div>
+    <!-- Modal
+    <div class="modal fade" id="modSelDate" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4><i class="fas fa-exclamation-circle"></i> Atención</h4>
+                    <p>Seleccione un rango de fechas para visualizar los trámites realizados dentro de ese periodo.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- jQuery Cookie -->
@@ -235,16 +268,18 @@
     <!-- bootstrap-daterangepicker -->
     <script src="../vendors/moment/min/moment.min.js"></script>
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- bootstrap-datetimepicker -->
-    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Highcarts -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <!-- Datatables -->
+    <script src="../vendors/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+    <script src="../vendors/jszip/dist/jszip.js"></script>
+    <script src="../vendors/pdfmake/build/pdfmake.js"></script>
+    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.print.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../js/comun.js"></script>
-    <script src="../js/ciatecCustom.js"></script>
+    <script src="../js/reportes.js"></script>
     <script src="../js/custom.js"></script>
 </body>
 

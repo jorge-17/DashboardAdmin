@@ -26,117 +26,441 @@
     <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- PNotify -->
-    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../css/custom.css" rel="stylesheet">
-    <link href="../css/ciatecCustom.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/ciatecCustom.css">
+
 </head>
 
 <body class="nav-md">
-
-    <div class="container">
-        <div class="row" id="fila">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>
-                            Mapeo de Rutas
-                        </h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up">
-                                    </i>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="close-link">
-                                    <i class="fas fa-times">
-                                    </i>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="clearfix">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <i id="logo_sctslp">
+                            <img alt="..." class="img-circle profile_img" src="../img/logoSLP2.png" />
+                        </i>
+                        <a class="site_title" href="home.html">
+                            <span>
+                                Tablero
+                            </span>
+                        </a>
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                    <br />
+                    <!-- sidebar menu -->
+                    <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
+                        <div class="menu_section">
+                            <h3>
+                                General
+                            </h3>
+                            <ul class="nav side-menu">
+                                <li class="permit permit-Admin permit-STramites"><a href="admin.html" id="btnAdmin"><i class="fas fa-home"></i> Pagina principal </a>
+                                </li>
+                                <li class="permit permit-Admin permit-AReportes"><a id="btnReportes"><i class="fas fa-table"></i> Reportes <span class="fas fa-caret-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="Reportes.html">Trámites</a></li>
+                                        <li><a href="Reportes2.html">Transparencia</a></li>
+                                    </ul>
+                                </li>
+                                <li class="permit permit-Admin permit-ARutas"><a href="MapeoRutas.html" id="btnMapeoRutas"><i class="fas fa-map-marked-alt"></i>
+                                        Mapeo Rutas
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="x_content">
-                        <div class="col-md-12">
-                            <div class="" data-example-id="togglable-tabs" role="tabpanel">
-                                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
-                                    <li class="active" role="presentation">
-                                        <a aria-expanded="true" data-toggle="tab" href="#tab_verRuta" id="home-tab"
-                                            role="tab">
-                                            Ver Ruta
-                                        </a>
-                                    </li>
-                                    <li class="" role="presentation">
-                                        <a aria-expanded="false" data-toggle="tab" href="#tab_creaRuta" id="profile-tab"
-                                            role="tab">
-                                            Crear Ruta
-                                        </a>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle">
+                                <i class="fa fa-bars">
+                                </i>
+                            </a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                                    href="javascript:;"> 
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" role="presentation">
+                                <a aria-expanded="false" class="dropdown-toggle info-number" data-toggle="dropdown"
+                                    href="javascript:;">
+                                    <i class="fa fa-envelope-o">
+                                    </i>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" id="menu1" role="menu">
+                                    <li>
+                                        <div class="text-center">
+                                            <a>
+                                                <strong>
+                                                    See All Alerts
+                                                </strong>
+                                                <i class="fa fa-angle-right">
+                                                </i>
+                                            </a>
+                                        </div>
                                     </li>
                                 </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div aria-labelledby="home-tab" class="tab-pane fade active in" id="tab_verRuta"
-                                        role="tabpanel">
-                                        <div class="col-md-8" id="mapcontainerVR">
-                                        </div>
-                                        <div class="col-md-4 panel panel-default">
-                                            <div class="panel-body">
-                                                <select class="form-control" id="lstRutas">
-                                                </select>
-                                                <br>
-                                            </div>
-                                        </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="container">
+                    <div class="row" id="fila_item">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        Mapeo de Rutas
+                                    </h2>
+                                </div>
+                                <div class="x_content">
+                                    <div class="col-md-8" id="mapcontainer">
                                     </div>
-                                    <div aria-labelledby="profile-tab" class="tab-pane fade" id="tab_creaRuta" role="tabpanel">
-                                        <div class="col-md-8" id="mapcontainerCR">
-                                        </div>
-                                        <div class=" col-md-4 panel panel-default">
-                                            <div class="panel-body">
-                                                <form action="#" novalidate>
-                                                    <div class="item form-group">
-                                                        <label for="nombreRuta">
-                                                            Nombre de la ruta
-                                                            <span class="required">
-                                                                *
-                                                            </span>
-                                                        </label>
-                                                        <input class="form-control" id="nombreRuta" name="" required="required"
-                                                            type="text" />
+                                    <div class="col-md-4">
+                                        <div class="" data-example-id="togglable-tabs" role="tabpanel">
+                                            <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                                                <li class="active" role="presentation">
+                                                    <a aria-expanded="true" id="tabSeeRoute" data-toggle="tab" href="#tab_verRuta"
+                                                        id="home-tab" role="tab">
+                                                        Ver Ruta
+                                                    </a>
+                                                </li>
+                                                <li class="" role="presentation">
+                                                    <a aria-expanded="false" id="tabCreateRoute" data-toggle="tab" href="#tab_creaRuta"
+                                                        id="profile-tab" role="tab">
+                                                        Crear Ruta
+                                                    </a>
+                                                </li>
+                                                <li class="" role="presentation">
+                                                    <a aria-expanded="false" id="tabEditRoute" data-toggle="tab" href="#tab_editarRuta"
+                                                        id="profile-tab" role="tab">
+                                                        Editar Ruta
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="myTabContent">
+                                                <div aria-labelledby="home-tab" class="tab-pane fade active in" id="tab_verRuta"
+                                                    role="tabpanel">
+                                                    <h3>Visualización de rutas</h3>
+                                                    <div class="col-md-12 panel panel-default">
+                                                        <div class="panel-body">
+                                                            <label for="lstRutas">
+                                                                Seleccione una ruta para la visualización en el mapa
+                                                            </label>
+                                                            <select aria-placeholder="Selecciona alguna ruta" class="form-control"
+                                                                id="lstRutas">
+                                                                <option></option>
+                                                            </select>
+                                                            <br>
+                                                            <div id="RutaInfo">
+                                                                <div class="item form-group">
+                                                                    <label for="nombreRuta">
+                                                                        Nombre de la ruta
+                                                                    </label>
+                                                                    <input class="form-control" id="nombreRutaVer" name=""
+                                                                        required="required" type="text" disabled="disabled" />
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lineaTransporte">
+                                                                        Línea de transporte
+                                                                    </label>
+                                                                    <select class="form-control" id="lstLineasVer"
+                                                                        required="required" disabled="disabled">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lstCiudades">
+                                                                        Ciudad
+                                                                    </label>
+                                                                    <select class="form-control" id="lstCiudadesVer"
+                                                                        required="required" disabled="disabled">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lstModalidadVer">
+                                                                        Modalidad
+                                                                    </label>
+                                                                    <select class="form-control" id="lstModalidadVer"
+                                                                        required="required" disabled="disabled">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group col-md-6">
+                                                                    <label for="horaInicio">
+                                                                        Hora inicio
+                                                                    </label>
+                                                                    <div class='input-group date' id='horaInicio'>
+                                                                        <input type='text' id='horaInitVer' class="form-control"
+                                                                            disabled="disabled" />
+                                                                        <span class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item form-group col-md-6">
+                                                                    <label for="horaFin">
+                                                                        Hora fin
+                                                                    </label>
+                                                                    <div class='input-group date' id='horaFin'>
+                                                                        <input type='text' id='horaEndVer' class="form-control"
+                                                                            disabled="disabled" />
+                                                                        <span class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item from-group">
+                                                                    <label for="descrip">
+                                                                        Descripción
+                                                                    </label>
+                                                                    <textarea name="" class="form-control" id="descripVer"
+                                                                        cols="30" rows="3" disabled="disabled"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="item form-group">
-                                                        <label for="lstCiudades">
-                                                            Ciudad
-                                                            <span class="required">
-                                                                *
-                                                            </span>
-                                                        </label>
-                                                        <select class="form-control" id="lstCiudades" required="required">
-                                                            <option value=""></option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="item form-group">
-                                                        <label for="modalidad">
-                                                            Modalidad
-                                                            <span class="required">
-                                                                *
-                                                            </span>
-                                                        </label>
-                                                        <select class="form-control" id="modalidad" required="required">
-                                                            <option value=""></option>
-                                                        </select>
-                                                    </div>
-                                                    <br>
-                                                    <button class="btn btn-success" disabled id="btnsaveRuta" type="submit">
-                                                        Guardar Ruta
-                                                    </button>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div aria-labelledby="profile-tab" class="tab-pane fade" id="tab_creaRuta"
+                                                    role="tabpanel">
+                                                    <h3>Creación de rutas</h3>
+                                                    <!--<div class="col-md-8" id="mapcontainerCR">
+                                                    </div>-->
+                                                    <div class=" col-md-12 panel panel-default">
+                                                        <div class="panel-body">
+                                                            <label for="formCreateRuta">
+                                                                <h4>Complete la siguiente información para crear una
+                                                                    nueva ruta</h4>
+                                                            </label>
+                                                            <form action="#" id="formCreateRuta" novalidate>
+                                                                <div class="item form-group">
+                                                                    <label for="nombreRuta">
+                                                                        Nombre de la ruta
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <input class="form-control" id="nombreRuta" name=""
+                                                                        required="required" type="text" />
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lineaTransporte">
+                                                                        Línea de transporte
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <select class="form-control" id="lstLineas"
+                                                                        required="required">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lstCiudades">
+                                                                        Ciudad
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <select class="form-control" id="lstCiudades"
+                                                                        required="required">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="modalidad">
+                                                                        Modalidad
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <select class="form-control" id="lstModalidad"
+                                                                        required="required">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group col-md-6">
+                                                                    <label for="horaInicio">
+                                                                        Hora inicio
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <div class='input-group date' id='horaInicio'>
+                                                                        <input type='text' id='horaInit' class="form-control" />
+                                                                        <span class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item form-group col-md-6">
+                                                                    <label for="horaFin">
+                                                                        Hora fin
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <div class='input-group date' id='horaFin'>
+                                                                        <input type='text' id='horaEnd' class="form-control" />
+                                                                        <span class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item from-group">
+                                                                    <label for="descrip">
+                                                                        Descripción
+                                                                    </label>
+                                                                    <textarea name="" class="form-control" id="descrip"
+                                                                        cols="30" rows="3"></textarea>
+                                                                </div>
+                                                                <br>
+                                                                <button class="btn btn-success" id="btnsaveRuta" type="submit">
+                                                                    Guardar Ruta
+                                                                </button>
+                                                            </form>
+                                                        </div>
 
+                                                    </div>
+                                                </div>
+                                                <div aria-labelledby="profile-tab" class="tab-pane fade" id="tab_editarRuta"
+                                                    role="tabpanel">
+                                                    <h3>Edición de rutas</h3>
+                                                    <!--<div class="col-md-8" id="mapcontainerER">
+                                                    </div>-->
+                                                    <div class=" col-md-12 panel panel-default">
+                                                        <div class="panel-body">
+                                                            <form action="#" id="formCreateRuta" novalidate>
+                                                                <label for="lstRutasEditar">
+                                                                    <h4>Seleccione la ruta que deseé editar</h4>
+                                                                </label>
+                                                                <select aria-placeholder="Selecciona alguna ruta" class="form-control"
+                                                                    id="lstRutasEditar">
+                                                                    <option></option>
+                                                                </select>
+                                                                <div class="item form-group">
+                                                                    <label for="nombreRuta">
+                                                                        Nombre de la ruta
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <input class="form-control" id="nombreRutaEditar"
+                                                                        name="" required="required" type="text" />
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lineaTransporte">
+                                                                        Línea de transporte
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <select class="form-control" id="lstLineasEditar"
+                                                                        required="required">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="lstCiudades">
+                                                                        Ciudad
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <select class="form-control" id="lstCiudadesEditar"
+                                                                        required="required">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group">
+                                                                    <label for="modalidad">
+                                                                        Modalidad
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <select class="form-control" id="lstModalidadEditar"
+                                                                        required="required">
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="item form-group col-md-6">
+                                                                    <label for="horaInicio">
+                                                                        Hora inicio
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <div class='input-group date' id='horaInicio'>
+                                                                        <input type='text' id='horaInitEditar' class="form-control" />
+                                                                        <span class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item form-group col-md-6">
+                                                                    <label for="horaFin">
+                                                                        Hora fin
+                                                                        <span class="required">
+                                                                            *
+                                                                        </span>
+                                                                    </label>
+                                                                    <div class='input-group date' id='horaFin'>
+                                                                        <input type='text' id='horaEndEditar' class="form-control" />
+                                                                        <span class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item from-group">
+                                                                    <label for="descrip">
+                                                                        Descripción
+                                                                    </label>
+                                                                    <textarea name="" class="form-control" id="descripEditar"
+                                                                        cols="30" rows="3"></textarea>
+                                                                </div>
+                                                                <br>
+                                                                <button class="btn btn-success" id="btnupdateRuta" type="submit">
+                                                                    Editar Ruta
+                                                                </button>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -145,98 +469,64 @@
                     </div>
                 </div>
             </div>
+
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    <p>Secretaria de Comunicaciones y Transportes SLP</p>
+                </div>
+                <div class="clearfix">
+                </div>
+            </footer>
+            <!-- /footer content -->
         </div>
     </div>
-
-    <!-- /footer content -->
     <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js">
-
-    </script>
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery Cookie -->
+    <script src="../js/js.cookie.js"></script>    
+    <!-- Permit -->
+    <script src="../js/permit.js"></script>
     <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js">
-
-    </script>
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js">
-
-    </script>
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js">
-
-    </script>
+    <script src="../vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
-    <script src="../vendors/Chart.js/dist/Chart.min.js">
-
-    </script>
+    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
     <!-- gauge.js -->
-    <script src="../vendors/gauge.js/dist/gauge.min.js">
-
-    </script>
+    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
     <!-- bootstrap-progressbar -->
-    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js">
-
-    </script>
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
-    <script src="../vendors/iCheck/icheck.min.js">
-
-    </script>
+    <script src="../vendors/iCheck/icheck.min.js"></script>
     <!-- Skycons -->
-    <script src="../vendors/skycons/skycons.js">
-
-    </script>
+    <script src="../vendors/skycons/skycons.js"></script>
     <!-- Flot -->
-    <script src="../vendors/Flot/jquery.flot.js">
-
-    </script>
-    <script src="../vendors/Flot/jquery.flot.pie.js">
-
-    </script>
-    <script src="../vendors/Flot/jquery.flot.time.js">
-
-    </script>
-    <script src="../vendors/Flot/jquery.flot.stack.js">
-
-    </script>
-    <script src="../vendors/Flot/jquery.flot.resize.js">
-
-    </script>
+    <script src="../vendors/Flot/jquery.flot.js"></script>
+    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
     <!-- Flot plugins -->
-    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js">
-
-    </script>
-    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js">
-
-    </script>
-    <script src="../vendors/flot.curvedlines/curvedLines.js">
-
-    </script>
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"> </script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
     <!-- DateJS -->
-    <script src="../vendors/DateJS/build/date.js">
-
-    </script>
+    <script src="../vendors/DateJS/build/date.js"></script>
     <!-- JQVMap -->
-    <script src="../vendors/jqvmap/dist/jquery.vmap.js">
-
-    </script>
-    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js">
-
-    </script>
-    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js">
-
-    </script>
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
     <!-- bootstrap-daterangepicker -->
-    <script src="../vendors/moment/min/moment.min.js">
-
-    </script>
-    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js">
-
-    </script>
-    <script src="../vendors/validator/validator.js" type="text/javascript">
-
-    </script>
+    <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- Google Maps API -->
-    <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXlyFifhXL537XaP866pupts-8QvK4xkM&callback=initMap"
+    <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXlyFifhXL537XaP866pupts-8QvK4xkM"
         type="text/javascript">
 
         </script>
@@ -244,11 +534,13 @@
     <script src="../vendors/pnotify/dist/pnotify.js"></script>
     <script src="../vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <!-- Switchery -->
+    <script src="../vendors/switchery/dist/switchery.min.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="../js/comun.js"></script>
-    <script src="../js/custom.js">
+    <script src="../js/MapeoRutas.js"></script>
+    <script src="../js/custom.js"></script>
+</body>
 
-    </script>
-    <script src="../js/MapeoRutas.js">
-
-    </script>
+</html>

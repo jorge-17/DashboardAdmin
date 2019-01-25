@@ -5,8 +5,9 @@
 #ruta{
 	height: 400px;
 }
-#mapcontainerCR,
-#mapcontainerVR{
+#mapcontainer,
+#mapcontainerVR,
+#mapcontainerER{
 	height: 700px;
 	border: solid 1px black;
 }
@@ -17,9 +18,31 @@
 	width: 100%;
 	min-height: 930px;	
 }
-#fila{
+#fila_item{
 	background-color: #F7F7F7;
 }
-#tablaReportes{    
+#tablaReportes1{    
 	position: inherit;
+	width: auto !important;
+}
+#tablaReportes1 thead{
+	display: none;
+}
+#tablaReportes2{    
+	position: inherit;
+	width: auto !important;
+}
+#tablaReportes2 thead{
+	display: none;
+}
+#fila_item_reporte{
+	min-height: 930px;	
+	background-color: #F7F7F7;
+}
+.fa-caret-down{
+	float: right;
+}
+#jumboHome{
+	position: relative;
+	top: 70px;
 }
