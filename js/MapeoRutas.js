@@ -351,52 +351,60 @@ var removeVMarkers = function (index) {
 $("#btnsaveRuta").on('click', async function () {
     var path = polyLine.getPath();
     var ptnsPath = path.length;
-    nomRuta = $("#nombreRuta").val();
-    ciudadRuta = $("#lstCiudades").val();
-    modalidadRuta = $("#lstModalidad").val();
-    lineaRuta = $("#lstLineas").val();
-    horaInicio = ($("#horaInit").val()).split(" ");
-    horaFin = ($("#horaEnd").val()).split(" ");
-    des = $("#descrip").val();
-    for (var i = 0; i < ptnsPath; i++) {
-        var item = path.getAt(i);
-        var lat = item.lat().toFixed(5);
-        var lng = item.lng().toFixed(5);
-        var string = lat + ", " + lng;
-        if (i == ptnsPath - 1) {
-            trazo = trazo + lat + ',' + lng;
-        } else {
-            trazo = trazo + lat + ',' + lng + '|';
+    if (ptnsPath != 0) {
+        nomRuta = $("#nombreRuta").val();
+        ciudadRuta = $("#lstCiudades").val();
+        modalidadRuta = $("#lstModalidad").val();
+        lineaRuta = $("#lstLineas").val();
+        horaInicio = ($("#horaInit").val()).split(" ");
+        horaFin = ($("#horaEnd").val()).split(" ");
+        des = $("#descrip").val();
+        for (var i = 0; i < ptnsPath; i++) {
+            var item = path.getAt(i);
+            var lat = item.lat().toFixed(5);
+            var lng = item.lng().toFixed(5);
+            var string = lat + ", " + lng;
+            if (i == ptnsPath - 1) {
+                trazo = trazo + lat + ',' + lng;
+            } else {
+                trazo = trazo + lat + ',' + lng + '|';
+            }
         }
-    }
-    var dataJson = JSON.stringify({
-        nomRuta: nomRuta,
-        idCiudad: ciudadRuta,
-        idModalidad: modalidadRuta,
-        puntos: trazo,
-        idLinea: lineaRuta,
-        horaInicio: horaInicio[0],
-        horaFin: horaFin[0],
-        descripcion: des,
-        token: tokenSession
-    });
-    var resultado;
-    try {
-        resultado = await $.ajax({
-            type: "POST",
-            url: rootURL + guardarRutas,
-            data: dataJson,
-            contentType: "application/json;charset=utf-8",
+        var dataJson = JSON.stringify({
+            nomRuta: nomRuta,
+            idCiudad: ciudadRuta,
+            idModalidad: modalidadRuta,
+            puntos: trazo,
+            idLinea: lineaRuta,
+            horaInicio: horaInicio[0],
+            horaFin: horaFin[0],
+            descripcion: des,
+            token: tokenSession
+        });
+        var resultado;
+        try {
+            resultado = await $.ajax({
+                type: "POST",
+                url: rootURL + guardarRutas,
+                data: dataJson,
+                contentType: "application/json;charset=utf-8",
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        $.when(resultado).then(function (data) {
+            $("#formCreateRuta")[0].reset();
+            initMap('mapcontainer');
         })
-    } catch (error) {
-        console.log(error);
+        trazo = '';
+    } else {
+        new PNotify({
+            title: 'La ruta no ha sido definida',
+            text: 'Verifica que hayas ingresado una ruta en el mapa',
+            type: 'error',
+            styling: 'bootstrap3'
+        });
     }
-
-    $.when(resultado).then(function (data) {
-        $("#formCreateRuta")[0].reset();
-        initMap('mapcontainer');
-    })
-    trazo = '';
 
 });
 
@@ -666,15 +674,17 @@ setInterval(async function () {
 $("#tabSeeRoute").on('click', function () {
     initMap('mapcontainer', 21.256712, -98.786337);
     initPolyline(map);
-    $("#formCreateRuta").find('input:text, select, textarea').val("");
+    $("#formSeeRuta").find('input:text, select, textarea').val("");
 });
 $("#tabCreateRoute").on('click', function () {
     initMap('mapcontainer', 21.256712, -98.786337);
     initPolyline(map);
+    $("#formCreateRuta").find('input:text, select, textarea').val("");
 });
 $("#tabEditRoute").on('click', function () {
     initMap('mapcontainer', 21.256712, -98.786337);
     initPolyline(map);
+    $("#formEditRuta").find('input:text, select, textarea').val("");
 });
 
 window.onload = function () {

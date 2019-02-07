@@ -36,6 +36,11 @@
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Switchery -->
     <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+    <!-- PNotify -->
+    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/ciatecCustom.css">
@@ -67,15 +72,18 @@
                                 General
                             </h3>
                             <ul class="nav side-menu">
-                                <li class="permit permit-Admin permit-STramites"><a href="admin.html" id="btnAdmin"><i class="fas fa-home"></i> Pagina principal </a>
+                                <li class="permit permit-Admin permit-STramites"><a href="admin.html" id="btnAdmin"><i
+                                            class="fas fa-home"></i> Pagina principal </a>
                                 </li>
-                                <li class="permit permit-Admin permit-AReportes"><a id="btnReportes"><i class="fas fa-table"></i> Reportes <span class="fas fa-caret-down"></span></a>
+                                <li class="permit permit-Admin permit-AReportes"><a id="btnReportes"><i class="fas fa-table"></i>
+                                        Reportes <span class="fas fa-caret-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="Reportes.html">Trámites</a></li>
                                         <li><a href="Reportes2.html">Transparencia</a></li>
                                     </ul>
                                 </li>
-                                <li class="permit permit-Admin permit-ARutas"><a href="MapeoRutas.html" id="btnMapeoRutas"><i class="fas fa-map-marked-alt"></i>
+                                <li class="permit permit-Admin permit-ARutas"><a href="MapeoRutas.html" id="btnMapeoRutas"><i
+                                            class="fas fa-map-marked-alt"></i>
                                         Mapeo Rutas
                                     </a>
                                 </li>
@@ -102,7 +110,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                                    href="javascript:;"> 
+                                    href="javascript:;">
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
@@ -175,81 +183,85 @@
                                                     <h3>Visualización de rutas</h3>
                                                     <div class="col-md-12 panel panel-default">
                                                         <div class="panel-body">
-                                                            <label for="lstRutas">
-                                                                Seleccione una ruta para la visualización en el mapa
-                                                            </label>
-                                                            <select aria-placeholder="Selecciona alguna ruta" class="form-control"
-                                                                id="lstRutas">
-                                                                <option></option>
-                                                            </select>
-                                                            <br>
-                                                            <div id="RutaInfo">
-                                                                <div class="item form-group">
-                                                                    <label for="nombreRuta">
-                                                                        Nombre de la ruta
-                                                                    </label>
-                                                                    <input class="form-control" id="nombreRutaVer" name=""
-                                                                        required="required" type="text" disabled="disabled" />
-                                                                </div>
-                                                                <div class="item form-group">
-                                                                    <label for="lineaTransporte">
-                                                                        Línea de transporte
-                                                                    </label>
-                                                                    <select class="form-control" id="lstLineasVer"
-                                                                        required="required" disabled="disabled">
-                                                                        <option value=""></option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="item form-group">
-                                                                    <label for="lstCiudades">
-                                                                        Ciudad
-                                                                    </label>
-                                                                    <select class="form-control" id="lstCiudadesVer"
-                                                                        required="required" disabled="disabled">
-                                                                        <option value=""></option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="item form-group">
-                                                                    <label for="lstModalidadVer">
-                                                                        Modalidad
-                                                                    </label>
-                                                                    <select class="form-control" id="lstModalidadVer"
-                                                                        required="required" disabled="disabled">
-                                                                        <option value=""></option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="item form-group col-md-6">
-                                                                    <label for="horaInicio">
-                                                                        Hora inicio
-                                                                    </label>
-                                                                    <div class='input-group date' id='horaInicio'>
-                                                                        <input type='text' id='horaInitVer' class="form-control"
+                                                            <form id="formSeeRuta">
+                                                                <label for="lstRutas">
+                                                                    Seleccione una ruta para la visualización en el
+                                                                    mapa
+                                                                </label>
+                                                                <select aria-placeholder="Selecciona alguna ruta" class="form-control"
+                                                                    id="lstRutas">
+                                                                    <option></option>
+                                                                </select>
+                                                                <br>
+                                                                <div id="RutaInfo">
+                                                                    <div class="item form-group">
+                                                                        <label for="nombreRuta">
+                                                                            Nombre de la ruta
+                                                                        </label>
+                                                                        <input class="form-control" id="nombreRutaVer"
+                                                                            name="" required="required" type="text"
                                                                             disabled="disabled" />
-                                                                        <span class="input-group-addon">
-                                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                                        </span>
+                                                                    </div>
+                                                                    <div class="item form-group">
+                                                                        <label for="lineaTransporte">
+                                                                            Línea de transporte
+                                                                        </label>
+                                                                        <select class="form-control" id="lstLineasVer"
+                                                                            required="required" disabled="disabled">
+                                                                            <option value=""></option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="item form-group">
+                                                                        <label for="lstCiudades">
+                                                                            Ciudad
+                                                                        </label>
+                                                                        <select class="form-control" id="lstCiudadesVer"
+                                                                            required="required" disabled="disabled">
+                                                                            <option value=""></option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="item form-group">
+                                                                        <label for="lstModalidadVer">
+                                                                            Modalidad
+                                                                        </label>
+                                                                        <select class="form-control" id="lstModalidadVer"
+                                                                            required="required" disabled="disabled">
+                                                                            <option value=""></option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="item form-group col-md-6">
+                                                                        <label for="horaInicio">
+                                                                            Hora inicio
+                                                                        </label>
+                                                                        <div class='input-group date' id='horaInicio'>
+                                                                            <input type='text' id='horaInitVer' class="form-control"
+                                                                                disabled="disabled" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item form-group col-md-6">
+                                                                        <label for="horaFin">
+                                                                            Hora fin
+                                                                        </label>
+                                                                        <div class='input-group date' id='horaFin'>
+                                                                            <input type='text' id='horaEndVer' class="form-control"
+                                                                                disabled="disabled" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item from-group">
+                                                                        <label for="descrip">
+                                                                            Descripción
+                                                                        </label>
+                                                                        <textarea name="" class="form-control" id="descripVer"
+                                                                            cols="30" rows="3" disabled="disabled"></textarea>
                                                                     </div>
                                                                 </div>
-                                                                <div class="item form-group col-md-6">
-                                                                    <label for="horaFin">
-                                                                        Hora fin
-                                                                    </label>
-                                                                    <div class='input-group date' id='horaFin'>
-                                                                        <input type='text' id='horaEndVer' class="form-control"
-                                                                            disabled="disabled" />
-                                                                        <span class="input-group-addon">
-                                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="item from-group">
-                                                                    <label for="descrip">
-                                                                        Descripción
-                                                                    </label>
-                                                                    <textarea name="" class="form-control" id="descripVer"
-                                                                        cols="30" rows="3" disabled="disabled"></textarea>
-                                                                </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -362,7 +374,7 @@
                                                     </div>-->
                                                     <div class=" col-md-12 panel panel-default">
                                                         <div class="panel-body">
-                                                            <form action="#" id="formCreateRuta" novalidate>
+                                                            <form action="#" id="formEditRuta" novalidate>
                                                                 <label for="lstRutasEditar">
                                                                     <h4>Seleccione la ruta que deseé editar</h4>
                                                                 </label>
@@ -485,7 +497,7 @@
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- jQuery Cookie -->
-    <script src="../js/js.cookie.js"></script>    
+    <script src="../js/js.cookie.js"></script>
     <!-- Permit -->
     <script src="../js/permit.js"></script>
     <!-- Bootstrap -->
