@@ -4,10 +4,10 @@ var datos;
 var resultado;
 var resultadoP;
 //@jrodarte Declaración de URL y metodos
-//var rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-var rootURL = "http://localhost:26010/Dashboard.svc/";
-var autenticacion = "Autenticacion";
-var permisos = "ObtenerPermisos";
+//const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+const rootURL = "http://localhost:26010/Dashboard.svc/";
+const autenticacion = "Autenticacion";
+const permisos = "ObtenerPermisos";
 $("#btnLogin").on('click', async function () {
     user = $("#user").val();
     pass = $("#pass").val();
@@ -27,29 +27,31 @@ $("#btnLogin").on('click', async function () {
     } catch (error) {
         console.log(error);
     }
-    $.when(resultadoP).then(function (data) {        
-        var cPrefix = 'permit_';
+    $.when(resultadoP).then(function (data) {
+        const cPrefix = 'permit_';
         datos = JSON.parse(data.d);
-        var arrayPer = [];
-        var arrayRol = [];
-        var itemS = datos['aoData'];
+        const arrayPer = [];
+        const arrayRol = [];
+        const arrarRolDes = [];
+        const itemS = datos['aoData'];
         if (itemS != null) {
-            console.log(itemS);
+            //console.log(itemS);
             itemS.forEach(element => {
                 arrayPer.push(element["permiso"]);
                 arrayRol.push(element["rol"]);
+                arrarRolDes.push(element["des_rol"]);
             });
             arrayRol.forEach(element => {
-                if(element == 7){
+                if(element === 7){
                     $.cookie(cPrefix+'Admin', 1);
                 }
-                if(element == 8){
+                if(element === 8){
                     $.cookie(cPrefix+'ARutas', 1);
                 }
-                if(element == 9){
+                if(element === 9){
                     $.cookie(cPrefix+'AReportes', 1);
                 }
-                if(element == 10){
+                if(element === 10){
                     $.cookie(cPrefix+'STramites', 1);
                 }
             });

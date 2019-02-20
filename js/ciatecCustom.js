@@ -1,7 +1,3 @@
-var fechaNow = new Date();
-var yearN = fechaNow.getFullYear();
-var monthN = fechaNow.getMonth();
-var dayN = fechaNow.getDate();
 var spl, slp2, time;
 var datos = [];
 var AllData = [];
@@ -15,10 +11,11 @@ var x = 0;
 var j = 0;
 var v = 0;
 
-$('#myDatepicker2').datetimepicker({
-    format: 'DD/MM/YYYY'
+const fechaPicker = $('#myDatepicker2').datetimepicker({
+    format: 'DD/MM/YYYY',
+    defaultDate: new Date()
 });
-$("#dateRangePicker").daterangepicker({
+let fechaRange = $("#dateRangePicker").daterangepicker({
     "maxDate": (monthN + 1) + "/" + dayN + "/" + yearN,
     autoUpdateInput: false,
     locale: {
@@ -37,7 +34,8 @@ $(window).on("load", function () {
 //Grafica Tramites por Semana
 async function postG1() {
     var resultado;
-    if ($("#dateRangePicker").val() == "") {
+    const fechaRange = $("#dateRangePicker").val();
+    if (fechaRange === "") {
         //Carga inicial grafica de Tramites por día
         try {
             resultado = await $.ajax({
@@ -128,7 +126,7 @@ async function postG1() {
             v = 0;
         });
     } else {
-        var dateRange = $("#dateRangePicker").val().split(" - ");
+        var dateRange = fechaRange.split(" - ");
         var dateInicial = dateRange[0];
         var dateFinal = dateRange[1];
         var dataJson = JSON.stringify({
@@ -226,7 +224,8 @@ async function postG1() {
 //Grafica Tramites por Mes
 async function postG2() {
     var resultado;
-    if ($("#dateRangePicker").val() == "") {
+    const fechaRange = $("#dateRangePicker").val();
+    if (fechaRange === "") {
         try {
             resultado = await $.ajax({
                 type: "POST",
@@ -301,7 +300,7 @@ async function postG2() {
             AllData = [];
         });
     } else {
-        var dateRange = $("#dateRangePicker").val().split(" - ");
+        var dateRange = fechaRange.split(" - ");
         var dateInicial = dateRange[0];
         var dateFinal = dateRange[1];
         var fechaF = dateFinal.split("/");
@@ -389,7 +388,8 @@ async function postG2() {
 //Grafica Tramites por Horario
 async function postG3() {
     var resultado;
-    if ($("#datePicker").val() == "") {
+    const fechaPicker = $("#datePicker").val();
+    if (fechaPicker === "") {
         try {
             resultado = await $.ajax({
                 type: "POST",
@@ -467,16 +467,16 @@ async function postG3() {
                     data: [h9, h10, h11, h12, h13, h14, h15]
                 }]
             });
-            var h9 = 0;
-            var h10 = 0;
-            var h11 = 0;
-            var h12 = 0;
-            var h13 = 0;
-            var h14 = 0;
-            var h15 = 0;
+            h9 = 0;
+            h10 = 0;
+            h11 = 0;
+            h12 = 0;
+            h13 = 0;
+            h14 = 0;
+            h15 = 0;
         });
     } else {
-        var val = $("#datePicker").val();
+        var val = fechaPicker;
         var dateArr = val.split("/");
         var diaR = dateArr[0];
         var mesR = dateArr[1];
@@ -594,7 +594,7 @@ setInterval(async function () {
     $.when(resultado).then(function (data) {
         datos = JSON.parse(data.d);
         var item = datos['aoData'];
-        if (item == true) {
+        if (item === true) {
             postG1();
             postG2();
             postG3();
