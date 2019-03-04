@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../img/logo_sctslp.ico" rel="icon" type="image/ico" />
+    <title>
+        Dashboard Administrador
+    </title>
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+          rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/ciatecCustom.css">
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <i id="logo_sctslp">
+                        <img alt="..." class="img-circle profile_img" src="../img/logoSLP2.png" />
+                    </i>
+                    <a class="site_title" href="home.html">
+                            <span>
+                                Tablero
+                            </span>
+                    </a>
+                </div>
+                <div class="clearfix">
+                </div>
+                <br />
+                <!-- sidebar menu -->
+                <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
+                    <div class="menu_section">
+                        <h3>
+                            General
+                        </h3>
+                        <ul class="nav side-menu">
+                            <li class="permit permit-Admin permit-STramites"><a href="admin.html" id="btnAdmin"><i
+                                    class="fas fa-home"></i> Página principal </a>
+                            </li>
+                            <li class="permit permit-Admin permit-AReportes"><a id="btnReportes"><i class="fas fa-table"></i>
+                                Reportes <span class="fas fa-caret-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="Reportes.html">Trámites</a></li>
+                                    <li><a href="Reportes2.html">Transparecia</a></li>
+                                </ul>
+                            </li>
+                            <li class="permit permit-Admin permit-ARutas"><a href="MapeoRutas.html" id="btnMapeoRutas"><i
+                                    class="fas fa-map-marked-alt"></i>
+                                Mapeo Rutas
+                            </a>
+                            </li>
+                            <li class="permit permit-Admin"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
+                                Personas Juridicas <span class="fas fa-caret-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a id="repLeg" href="catalogoRepLeg.html">Representantes Legales</a></li>
+                                    <li><a id="tutor" href="catalogoTutor.html">Tutor</a></li>
+                                    <li><a id="albacea" href="catalogoAlbacea.html">Albacea</a></li>
+                                    <li><a id="beneficiario" href="catalogoBene.html">Beneficiarios</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+                <!-- /menu footer buttons -->
+                <div class="sidebar-footer hidden-small">
+                </div>
+                <!-- /menu footer buttons -->
+            </div>
+        </div>
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle">
+                            <i class="fa fa-bars">
+                            </i>
+                        </a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               href="javascript:;">
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" role="presentation">
+                            <a aria-expanded="false" class="dropdown-toggle info-number" data-toggle="dropdown"
+                               href="javascript:;">
+                                <i class="fa fa-envelope-o">
+                                </i>
+                            </a>
+                            <ul class="dropdown-menu list-unstyled msg_list" id="menu1" role="menu">
+                                <li>
+                                    <div class="text-center">
+                                        <a>
+                                            <strong>
+                                                See All Alerts
+                                            </strong>
+                                            <i class="fa fa-angle-right">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row" id="tab_catalogos">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h3>Catálogo de <b id="nomCatalogo">Tutores</b></h3>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control form-control-lg" id="inputBusqueda" aria-describedby="busquedaHelp" placeholder="Ingrese palabra a buscar">
+                                <small id="busquedaHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
+                            </div>
+                            <button id="btnBuscar" class="btn btn-lg btn-primary">Buscar</button>
+                            <button id="btnNuevo" class="btn btn-lg btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo</button>
+                            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">Tutores</h4>
+                                        </div>
+                                        <div id="tablaPFdiv" class="modal-body">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control form-control-lg" id="inputBusquedaPF" aria-describedby="busquedaPFHelp" placeholder="Ingrese palabra a buscar">
+                                                <small id="busquedaPFHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
+                                            </div>
+                                            <button id="btnBuscarPF" class="btn btn-lg btn-primary">Buscar</button>
+                                            <table id="tablaPerFisicas" class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Num. Prestador</th>
+                                                    <th>Nombre</th>
+                                                    <th>CURP</th>
+                                                    <th>Dirección</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="TblPerFisBody">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="formularioDiv" class="modal-body">
+                                            <form id="formDiv" data-parsley-validate class="form-horizontal form-label-left">
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="btnNuevaPF" type="button" class="btn btn-default" data-dismiss="modal" disabled>Crear persona fisica</button>
+                                            <button id="btnAgregarPF" type="button" class="btn btn-primary" disabled>Añadir a catalogo de Tutores </button>
+                                            <button id="btnRegresarBPF" type="button" class="btn btn-default">Regresar</button>
+                                            <button id="btnGuardarPJ" type="button" class="btn btn-primary" disabled>Guardar </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <table id="tablaCatalogos" class="table">
+                                <thead>
+                                <tr>
+                                    <th>Número Económico</th>
+                                    <th>Nombre</th>
+                                    <th>CURP</th>
+                                    <th>Fecha de nombramiento</th>
+                                </tr>
+                                </thead>
+                                <tbody id="TblCatBody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /page content -->
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                <p>Secretaria de Comunicaciones y Transportes SLP</p>
+            </div>
+            <div class="clearfix">
+            </div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+<!-- jQuery -->
+<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<!-- jQuery Cookie -->
+<script src="../js/js.cookie.js"></script>
+<!-- Permit -->
+<script src="../js/permit.js"></script>
+<!-- Bootstrap -->
+<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="../vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="../vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="../vendors/Flot/jquery.flot.js"></script>
+<script src="../vendors/Flot/jquery.flot.pie.js"></script>
+<script src="../vendors/Flot/jquery.flot.time.js"></script>
+<script src="../vendors/Flot/jquery.flot.stack.js"></script>
+<script src="../vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"> </script>
+<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="../vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="../vendors/moment/min/moment.min.js"></script>
+<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap-datetimepicker -->
+<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<!-- Highcarts -->
+<script src="../js/highcharts/highcharts.js"></script>
+<script src="../js/highcharts/series-label.js"></script>
+<script src="../js/highcharts/exporting.js"></script>
+<script src="../js/highcharts/export-data.js"></script>
+<!-- Datatables -->
+<script src="../vendors/datatables.net/js/jquery.dataTables.js"></script>
+<script src="../vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+<script src="../vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+<script src="../vendors/jszip/dist/jszip.js"></script>
+<script src="../vendors/pdfmake/build/pdfmake.js"></script>
+<script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="../vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+<script src="../vendors/datatables.net-buttons/js/buttons.print.js"></script>
+<!-- Custom Theme Scripts -->
+
+<script src="../js/custom.js"></script>
+<script src="../js/comun.js"></script>
+<script src="../js/catalogos.js"></script>
+</body>
+</html>

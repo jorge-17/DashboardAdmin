@@ -46,3 +46,8 @@
 	position: relative;
 	top: 70px;
 }
+#formularioDiv,
+#btnRegresarBPF,
+#btnGuardarPJ{
+	display: none;
+}
