@@ -48,6 +48,19 @@
 }
 #formularioDiv,
 #btnRegresarBPF,
-#btnGuardarPJ{
+#btnGuardarPJ,
+#fromularioNuevaPF,
+#alertaVali{
+	display: none;
+}
+#lblNombreTitular{
+	font-size: x-small;
+}
+.modal-content{
+	padding: 15px
+}
+#alertExito,
+#alertError,
+#alertDelete{
 	display: none;
 }

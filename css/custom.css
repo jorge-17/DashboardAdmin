@@ -2239,7 +2239,8 @@ p.parsley-error {
 ul.parsley-errors-list {
     list-style: none;
     color: #E74C3C;
-    padding-left: 0
+    padding-left: 0;
+    display: none;
 }
 input.parsley-error,
 textarea.parsley-error,
@@ -4071,22 +4072,21 @@ ul.verticle_bars li {
 .progress.vertical.progress_wide {
     width: 35px
 }
-.alert-success {
+/*.alert-success {
     color: #ffffff;
     background-color: rgba(38, 185, 154, 0.88);
     border-color: rgba(38, 185, 154, 0.88)
-}
+}*/
 .alert-info {
     color: #E9EDEF;
     background-color: rgba(52, 152, 219, 0.88);
     border-color: rgba(52, 152, 219, 0.88)
 }
-.alert-warning {
+/*.alert-warning {
     color: #E9EDEF;
     background-color: rgba(243, 156, 18, 0.88);
     border-color: rgba(243, 156, 18, 0.88)
-}
-.alert-danger,
+}*/
 .alert-error {
     color: #E9EDEF;
     background-color: rgba(231, 76, 60, 0.88);

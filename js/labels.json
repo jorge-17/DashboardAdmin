@@ -1,0 +1,23 @@
+{
+    "Nombre" : "Nombre(s)",
+    "ApellidoP" : "Apellido Paterno",
+    "ApellidoM" : "Apellido Materno",
+    "Sexo" : "Genero",
+    "EdoCivil" : "Estado Civil",
+    "Calle" : "Calle",
+    "claveEle" : "Clave Elector",
+    "codigoP" : "Codigo Postal",
+    "Colonia" : "Colonia",
+    "curp" : "CURP",
+    "email" : "Correo Electrónico",
+    "FechaNom" : "Fecha de Nombramiento",
+    "Nacionalidad" : "Nacionalidad",
+    "NoEco" : "Número Economico",
+    "NoExt" : "No. Exterior",
+    "NoInt": "No. Interior",
+    "obser" : "Observaciones",
+    "OrdenPre" : "Orden de Prelación",
+    "rfc" : "RFC",
+    "Tel" : "Teléfono",
+    "TipoVi" : "Tipo de vivienda"
+}

@@ -57,7 +57,8 @@
                 type: "POST",
                 url: rootURL + ciudadesRutas,
                 data: JSON.stringify({
-                    token: tokenSession
+                    token: tokenSession,
+                    idEstado: 24
                 }),
                 contentType: "application/json; charset=utf-8",
             })

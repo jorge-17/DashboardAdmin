@@ -103,7 +103,8 @@
                     dom: 'Bfrtlip',
                     buttons: [
                         'excel'
-                    ]
+                    ],
+                    scrollX: true
                 });
 
 
@@ -269,7 +270,8 @@
                     dom: 'Bfrtlip',
                     buttons: [
                         'excel'
-                    ]
+                    ],
+                    scrollX: true
                 });
 
                 flagTbl2 = true;

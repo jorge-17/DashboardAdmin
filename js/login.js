@@ -4,11 +4,13 @@
     var datos;
     var resultado;
     var resultadoP;
+    var arrayP = [];
     //@jrodarte Declaración de URL y metodos
     const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
     //const rootURL = "http://localhost:26010/Dashboard.svc/";
     const autenticacion = "Autenticacion";
     const permisos = "ObtenerPermisos";
+    const consultarPermisos = "ObtenerPermisosG";
     $("#btnLogin").on('click', async function () {
         var user = $("#user").val();
         var pass = $("#pass").val();
@@ -43,8 +45,9 @@
                     arrayRol.push(element["rol"]);
                     arrarRolDes.push(element["des_rol"]);
                 });
-                arrayRol.forEach(element => {
-                    if(element === 7){
+                arrayPer.forEach(element => {
+                    $.cookie(cPrefix+ element, 1);
+                    /*if(element === 7){
                         $.cookie(cPrefix+'Admin', 1);
                     }
                     if(element === 8){
@@ -55,7 +58,7 @@
                     }
                     if(element === 10){
                         $.cookie(cPrefix+'STramites', 1);
-                    }
+                    }*/
                 });
                 sessionStorage.setItem('permisos', arrayPer);
                 sessionStorage.setItem('roles', arrayRol);
@@ -96,6 +99,29 @@
                     styling: 'bootstrap3'
                 });
             }
+        });
+
+        try {
+            var result = await $.ajax({
+                type: "POST",
+                async: false,
+                url: rootURL + consultarPermisos,
+                data: JSON.stringify({
+                    token: sessionStorage.getItem('token')
+                }),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json"
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        $.when(result).then(function (data) {
+            var datos = JSON.parse(data.d);
+            var itemData = datos['aoData'];
+            itemData.forEach(element => {
+                arrayP.push(element["clavePer"]);
+            });
+            sessionStorage.setItem("perG", arrayP);
         });
 
     });

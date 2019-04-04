@@ -13,8 +13,7 @@
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-          rel="stylesheet">
+    <link href="../css/fontawesome/css/all.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -36,6 +35,7 @@
     <!-- Custom Theme Style -->
     <link href="../css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/ciatecCustom.css">
+    <link rel="stylesheet" href="../css/controlRadio.css">
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -62,28 +62,28 @@
                             General
                         </h3>
                         <ul class="nav side-menu">
-                            <li class="permit permit-Admin permit-STramites"><a href="admin.html" id="btnAdmin"><i
-                                    class="fas fa-home"></i> Página principal </a>
+                            <li class="permit permit-DSB001"><a id="btnAdmin" href="admin.html"><i
+                                        class="fas fa-home"></i> Página principal </a>
                             </li>
-                            <li class="permit permit-Admin permit-AReportes"><a id="btnReportes"><i class="fas fa-table"></i>
-                                Reportes <span class="fas fa-caret-down"></span></a>
+                            <li class="permit permit-DSB002 permit-DSB003"><a id="btnReportes"><i class="fas fa-table"></i>
+                                    Reportes <span class="fas fa-caret-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="Reportes.html">Trámites</a></li>
-                                    <li><a href="Reportes2.html">Transparecia</a></li>
+                                    <li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>
+                                    <li><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
                                 </ul>
                             </li>
-                            <li class="permit permit-Admin permit-ARutas"><a href="MapeoRutas.html" id="btnMapeoRutas"><i
-                                    class="fas fa-map-marked-alt"></i>
-                                Mapeo Rutas
-                            </a>
+                            <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas" href="MapeoRutas.html"><i
+                                        class="fas fa-map-marked-alt"></i>
+                                    Mapeo Rutas
+                                </a>
                             </li>
-                            <li class="permit permit-Admin"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
+                            <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
                                 Personas Juridicas <span class="fas fa-caret-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a id="repLeg" href="catalogoRepLeg.html">Representantes Legales</a></li>
-                                    <li><a id="tutor" href="catalogoTutor.html">Tutor</a></li>
-                                    <li><a id="albacea" href="catalogoAlbacea.html">Albacea</a></li>
-                                    <li><a id="beneficiario" href="catalogoBene.html">Beneficiarios</a></li>
+                                    <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Representantes Legales</a></li>
+                                    <li class="permit permit-DSB009"><a id="btnTutor" href="catalogoTutor.html">Tutor</a></li>
+                                    <li class="permit permit-DSB008"><a id="btnAlbacea" href="catalogoAlbacea.html">Albacea</a></li>
+                                    <li class="permit permit-DSB010"><a id="btnBeneficiario" href="catalogoBene.html">Beneficiarios</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -154,16 +154,10 @@
                                 <small id="busquedaHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
                             </div>
                             <button id="btnBuscar" class="btn btn-lg btn-primary">Buscar</button>
-                            <button id="btnNuevo" class="btn btn-lg btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo</button>
-                            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                            <button id="btnNuevo" class="btn btn-lg btn-primary"  data-target=".bs-example-modal-lg">Nuevo</button>                            
+                            <div class="modal fade bs-example-modal-lg" id="modalLarge" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
-
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Albacea</h4>
-                                        </div>
                                         <div id="tablaPFdiv" class="modal-body">
                                             <div class="form-group col-md-6">
                                                 <input type="text" class="form-control form-control-lg" id="inputBusquedaPF" aria-describedby="busquedaPFHelp" placeholder="Ingrese palabra a buscar">
@@ -173,7 +167,7 @@
                                             <table id="tablaPerFisicas" class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th>Num. Prestador</th>
+                                                    <th style="display: none;">Num. Prestador</th>
                                                     <th>Nombre</th>
                                                     <th>CURP</th>
                                                     <th>Dirección</th>
@@ -185,14 +179,51 @@
                                             </table>
                                         </div>
                                         <div id="formularioDiv" class="modal-body">
-                                            <form id="formDiv" data-parsley-validate class="form-horizontal form-label-left">
+                                            <form id="formDiv" data-parsley-validate class="form-horizontal form-label-left">                                                    
+                                            </form>
+                                        </div>
+                                        <div id="fromularioNuevaPF" class="modal-body">
+                                            <form id="formNuevaPF" data-parsley-validate class="form-horizontal form-label-left">
+                                                
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button id="btnNuevaPF" type="button" class="btn btn-default" data-dismiss="modal" disabled>Crear persona fisica</button>
+                                            <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
+                                            <button id="btnNuevaPF" type="button" class="btn btn-default" disabled>Crear persona fisica</button>
                                             <button id="btnAgregarPF" type="button" class="btn btn-primary" disabled>Añadir a catalogo de Albacea </button>
                                             <button id="btnRegresarBPF" type="button" class="btn btn-default">Regresar</button>
-                                            <button id="btnGuardarPJ" type="button" class="btn btn-primary" disabled>Guardar </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade bs-example-modal-sm" id="modalSmall" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content" id="alertDelete">
+                                        <div class="modal-body alert alert-danger" role="alert"> 
+                                            <h4>¿Desea eliminar a <b id="nomUsuario"></b> del catálogo de <b id="tipoUlabel"></b>?</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                            <button type="button" id="btnElimitarPJ" class="btn btn-danger">Si</button>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-content" id="alertError">
+                                        <div class="modal-body alert alert-warning" role="alert"> 
+                                            <h4>No se puede guardar la relacion que intentaste crear.</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-content" id="alertExito">
+                                        <div class="modal-body alert alert-success" role="alert"> 
+                                            <h4>Se ha guardado la informacion correctamente.</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="btnSuccess" class="btn btn-default" data-dismiss="modal">Ok</button>
                                         </div>
 
                                     </div>
@@ -202,10 +233,13 @@
                             <table id="tablaCatalogos" class="table">
                                 <thead>
                                 <tr>
+                                    <th style="display:none">Id Prestador</th>
                                     <th>Número Económico</th>
                                     <th>Nombre</th>
                                     <th>CURP</th>
                                     <th>Fecha de nombramiento</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody id="TblCatBody">
@@ -287,9 +321,11 @@
 <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
 <script src="../vendors/datatables.net-buttons/js/buttons.html5.js"></script>
 <script src="../vendors/datatables.net-buttons/js/buttons.print.js"></script>
+<!-- Parsley -->
+<script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="../js/custom.js"></script>
 <script src="../js/comun.js"></script>
-<script src="../js/catalogos.js"></script>
+<script src="../js/catalogos.min.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
     const tokenSession = sessionStorage.getItem('token');
     const NombreUsuario = sessionStorage.getItem('NombreU');
     var resultado;
-    const arrayR = [];
+    const arrayR= [];
     $(window).on('load', async function () {
         try {
             var result = await $.ajax({
@@ -34,9 +34,9 @@
         });
     });
 //Roles establecidos para usuarios
+    var permisos = sessionStorage.getItem('perG').split(",");
     $.permit({
-        permits: ['Admin', 'ARutas', 'A' +
-        'Reportes', 'STramites']
+        permits: permisos
     });
 //Se establece el nombre del usuario que ingreso al dashboard
     $("#userName").append(NombreUsuario + '  <span class=" fa fa-angle-down"></span>');
@@ -63,25 +63,15 @@
         $.when(resultado).then(function () {
             const cPrefix = 'permit_';
             sessionStorage.removeItem('token');
-            sessionStorage.removeItem('permisos');
+            sessionStorage.removeItem('roles');
             sessionStorage.removeItem('NombreU');
-            const arrRol = sessionStorage.getItem('roles');
+            sessionStorage.removeItem('perG');
+            const arrRol = sessionStorage.getItem('permisos');
             const arrayRol = arrRol.split(",");
             arrayRol.forEach(element => {
-                if (element === "7") {
-                    $.removeCookie(cPrefix + 'Admin');
-                }
-                if (element === "8") {
-                    $.removeCookie(cPrefix + 'ARutas');
-                }
-                if (element === "9") {
-                    $.removeCookie(cPrefix + 'AReportes');
-                }
-                if (element === "10") {
-                    $.removeCookie(cPrefix + 'STramites');
-                }
+                $.removeCookie(cPrefix + element);
             });
-            sessionStorage.removeItem('roles');
+            sessionStorage.removeItem('permisos');
             //window.location.replace("http://localhost/dashboard/views/");
             window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
         });
@@ -101,22 +91,22 @@
         }
     });
 
-    var linkRepLeg = $("#repLeg");
-    var linkTutor = $("#tutor");
-    var linkAlbacea = $("#albacea");
-    var linkBeneficiario = $("#beneficiario");
-
-    linkRepLeg.on("click", function () {
+    $("#btnRepLeg").on("click", function () {
         localStorage.setItem("tipoU", "3");
+        localStorage.setItem("tipoUstring", "RL");
     });
-    linkTutor.on("click", function () {
+    $("#btnTutor").on("click", function () {
         localStorage.setItem("tipoU", "5");
+        localStorage.setItem("tipoUstring", "Tutor");
     });
-    linkAlbacea.on("click", function () {
+    $("#btnAlbacea").on("click", function () {
         localStorage.setItem("tipoU", "6");
+        localStorage.setItem("tipoUstring", "Alba");
     });
-    linkBeneficiario.on("click", function () {
+    $("#btnBeneficiario").on("click", function () {
         localStorage.setItem("tipoU", "4");
+        localStorage.setItem("tipoUstring", "Bene");
     });
+
 }));
 
