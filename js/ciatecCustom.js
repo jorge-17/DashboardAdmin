@@ -3,13 +3,14 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    const rootURL = "http://localhost:26010/Dashboard.svc/";
     const TramitesDia = "ConsultarTramitesDia";
     const TramitesDiaUpdate = "ConsultarTramitesDiaUpdate";
     const TramitesHorario = "ConsultarTramitesHorario";
     const TramitesDiaLast30 = "ConsultarTramitesLast30";
     const TramitesHorarioxDia = "ConsultarTramitesHorarioxDia";
+    const TramitesxMeses = "ObtenerTramitesxMeses";
     const tokenSession = sessionStorage.getItem('token');
     const fechaNow = new Date();
     const yearN = fechaNow.getFullYear();
@@ -18,6 +19,7 @@
     var spl, slp2, time;
     var datos = [];
     var AllData = [];
+    var DataGraficaG4 = [];
     var TotalRegistros = 0;
     var totRegTD = 0;
     var totRegTH = 0;
@@ -35,14 +37,41 @@
     let fechaRange = $("#dateRangePicker").daterangepicker({
         "maxDate": (monthN + 1) + "/" + dayN + "/" + yearN,
         autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
+        "locale": {
+            "applyLabel": "Aplicar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "De",
+            "toLabel": "A",
+            "daysOfWeek": [
+                "Dom.",
+                "Lun.",
+                "Mar.",
+                "Mie.",
+                "Jue.",
+                "Vie.",
+                "Sab."
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agusto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
         }
     });
     $(window).on("load", function () {
         postG1();
         postG2();
         postG3();
+        postG4();
     });
     /**
      * Cargas iniciales de las graficas G1, G2 y G3
@@ -51,7 +80,7 @@
 //Grafica Tramites por Semana
     async function postG1() {
         var resultado;
-        const fechaRange = $("#dateRangePicker").val();
+        const fechaRange = $("#dateRangePicker input").val();
         if (fechaRange === "") {
             //Carga inicial grafica de Tramites por día
             try {
@@ -241,7 +270,7 @@
 //Grafica Tramites por Mes
     async function postG2() {
         var resultado;
-        const fechaRange = $("#dateRangePicker").val();
+        const fechaRange = $("#dateRangePicker input").val();
         if (fechaRange === "") {
             try {
                 resultado = await $.ajax({
@@ -589,6 +618,81 @@
         }
     }
 
+    async function postG4() {
+        var resultado;
+        const fechaRange = $("#dateRangePicker input").val();
+        if (fechaRange === "") {
+            try {
+                resultado = await $.ajax({
+                    type: "POST",
+                    url: rootURL + TramitesxMeses,
+                    data: JSON.stringify({
+                        token: tokenSession
+                    }),
+                    contentType: "application/json; charset=utf-8"
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            $.when(resultado).then(function (data) {
+                datos = JSON.parse(data.d);
+                //Obtiene el total de registros retornados
+                totRegTD30 = datos['iRegistros'];
+                var info = datos['aoData'];
+                info.forEach(element => {
+                    var anioFecha = element['fechaYear'];
+                    var mesFecha = element['fechaMonth'];
+                    var fechaRegistro = Date.UTC(anioFecha, (mesFecha - 1), 1);
+                    var numRegistros = element['numRegistrosFecha'];
+                    DataGraficaG4.push([
+                        fechaRegistro,
+                        numRegistros
+                    ]);
+                });                
+                DataGraficaG4.sort();
+                Highcharts.chart('tramitesxMes', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Trámites por mes'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: { 
+                            month: '%b %Y'
+                        },
+                        max: fechaNow
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Número de trámites'
+                        },
+                        tickInterval: 2,
+                        gridLineWidth: 1
+                    },
+                    tooltip: {
+                        crosshairs: true
+                    },
+                    exporting: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'No. de trámites',
+                        data: DataGraficaG4
+                    }]
+                });
+                DataGraficaG4 = [];
+            });
+        } 
+    }
 
 
     /**Ciclo de actualizacion de graficas */
@@ -615,6 +719,7 @@
                 postG1();
                 postG2();
                 postG3();
+                postG4();
             }
         });
     }, 3000);
@@ -626,8 +731,8 @@
         postG3();
     });
     /** Seleccion de rango de fechas para graficas G1 y G2 */
-    $('input[name="dateRangePicker"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    $('#dateRangePicker').on('apply.daterangepicker', function (ev, picker) {
+        $('#dateRangePicker input').val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
         postG1();
         postG2();
     });

@@ -14,8 +14,8 @@
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-        rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
@@ -62,25 +62,35 @@
                                 <li class="permit permit-DSB001"><a id="btnAdmin" href="admin.html"><i
                                             class="fas fa-home"></i> Página principal </a>
                                 </li>
-                                <li class="permit permit-DSB002 permit-DSB003"><a id="btnReportes"><i class="fas fa-table"></i>
-                                        Reportes <span class="fas fa-caret-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>
-                                        <li><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
-                                    </ul>
-                                </li>
-                                <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas" href="MapeoRutas.html"><i
-                                            class="fas fa-map-marked-alt"></i>
+                                <li class="permit permit-DSB002 permit-DSB003 permit-DSB012 permit-DSB013 permit-DSB014"><a id="btnReportes"><i class="fas fa-table"></i>
+                                    Reportes <span class="fas fa-caret-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <!--<li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>-->
+                                    <li class="permit permit-DSB012"><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
+                                    <li class="permit permit-DSB013"><a id="btnRepPersonasFisicas" href="ReportePF.html">Personas Fisicas</a></li>
+                                    <li class="permit permit-DSB014"><a id="btnRepPersonasConce" href="ReporteConce.html">Reporte de concesionarios</a></li>
+                                </ul>
+                            </li>
+                                <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas"
+                                        href="MapeoRutas.html"><i class="fas fa-map-marked-alt"></i>
                                         Mapeo Rutas
                                     </a>
                                 </li>
-                                <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
-                                    Personas Juridicas <span class="fas fa-caret-down"></span></a>
+                                <li class="permit permit-DSB011">
+                                    <a href="concesiones.html" id="btnConcesiones"><i class="fas fa-user-tag"></i>Concesionarios</a>
+                                </li>
+                                <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a
+                                        id="btnCatalogos"><i class="fas fa-book-open"></i>
+                                        Personalidades Juridicas <span class="fas fa-caret-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Representantes Legales</a></li>
-                                        <li class="permit permit-DSB009"><a id="btnTutor" href="catalogoTutor.html">Tutor</a></li>
-                                        <li class="permit permit-DSB008"><a id="btnAlbacea" href="catalogoAlbacea.html">Albacea</a></li>
-                                        <li class="permit permit-DSB010"><a id="btnBeneficiario" href="catalogoBene.html">Beneficiarios</a></li>
+                                        <li class="permit permit-DSB007"><a id="btnRepLeg"
+                                                href="catalogoRepLeg.html">Apoderados Legales</a></li>
+                                        <li class="permit permit-DSB009"><a id="btnTutor"
+                                                href="catalogoTutor.html">Tutor</a></li>
+                                        <li class="permit permit-DSB008"><a id="btnAlbacea"
+                                                href="catalogoAlbacea.html">Albacea</a></li>
+                                        <li class="permit permit-DSB010"><a id="btnBeneficiario"
+                                                href="catalogoBene.html">Beneficiarios</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -105,8 +115,8 @@
                         </div>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
-                                <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                                    href="javascript:;">                                    
+                                <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle"
+                                    data-toggle="dropdown" href="javascript:;">
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
@@ -145,7 +155,7 @@
                     </div>
                 </div>
                 <div class="row" id="fila_item">
-                    <div class="col-md-12 col-sm-6 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <!--<button id="btn_getData" class="btn btn-info">Get Data</button>-->
                         <div class="x_panel">
                             <div class="x_content">
@@ -154,26 +164,28 @@
                                 </label>
                                 <div id="rngDatePicker" class="control-group">
                                     <div class="controls">
-                                        <div class="input-prepend input-group" style="width: 250px">
-                                            <input type="text" name="dateRangePicker" id="dateRangePicker" class="form-control"
-                                                placeholder="MM/DD/YYYY - MM/DD/YYYY" value="" />
-                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                        <div class="input-group" id="dateRangePicker" style="width: 250px">
+                                            <input type="text"
+                                                class="form-control" placeholder="MM/DD/YYYY - MM/DD/YYYY" value="" />
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
                                     <div id="tramitesDia" class="G1">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
                                     <div id="tramitesDiaUlt30" class="G2">
                                     </div>
                                 </div>
 
+
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
                                 <div>
@@ -181,7 +193,8 @@
                                         Seleccione la fecha que deseé visualizar
                                     </label>
                                     <div style="width: 250px" class='input-group date' id='myDatepicker2'>
-                                        <input type='text' id="datePicker" class="form-control" placeholder="DD/MM/YYYY" />
+                                        <input type='text' id="datePicker" class="form-control"
+                                            placeholder="DD/MM/YYYY" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -191,13 +204,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div id="tramitesxMes" class="G4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- /page content -->
             <!-- footer content -->
             <footer>
-                <div class="pull-right">                    
+                <div class="pull-right">
                     <p>Secretaria de Comunicaciones y Transportes SLP</p>
                 </div>
                 <div class="clearfix">
@@ -209,7 +230,7 @@
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- jQuery Cookie -->
-    <script src="../js/js.cookie.js"></script>    
+    <script src="../js/js.cookie.js"></script>
     <!-- Permit -->
     <script src="../js/permit.js"></script>
     <!-- Bootstrap -->
@@ -249,14 +270,14 @@
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- bootstrap-datetimepicker -->
     <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <!-- Highcarts -->    
+    <!-- Highcarts -->
     <script src="../js/highcharts/highcharts.js"></script>
     <script src="../js/highcharts/series-label.js"></script>
-    <script src="../js/highcharts/exporting.js"></script>    
-    <script src="../js/highcharts/export-data.js"></script>        
+    <script src="../js/highcharts/exporting.js"></script>
+    <script src="../js/highcharts/export-data.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="../js/comun.min.js"></script>
-    <script src="../js/ciatecCustom.min.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/ciatecCustom.js"></script>
     <script src="../js/custom.js"></script>
 </body>
 

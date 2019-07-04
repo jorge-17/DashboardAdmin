@@ -6,8 +6,8 @@
     var resultadoP;
     var arrayP = [];
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    const rootURL = "http://localhost:26010/Dashboard.svc/";
     const autenticacion = "Autenticacion";
     const permisos = "ObtenerPermisos";
     const consultarPermisos = "ObtenerPermisosG";
@@ -85,12 +85,12 @@
         $.when(resultado).then(function (data) {
             datos = JSON.parse(data.d);
             var item = datos['aoData'];
-            if (item != null) {
+            if (datos != null) {
                 var tokenS = item.split("|");
                 sessionStorage.setItem('token', tokenS[0]);
                 sessionStorage.setItem('NombreU', tokenS[1]);
-                //window.location.replace("http://localhost/dashboard/views/home.html");
-                window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/home.html");
+                window.location.replace("http://localhost/dashboard/views/home.html");
+                //window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/home.html");
             } else {
                 new PNotify({
                     title: 'Datos incorrectos',

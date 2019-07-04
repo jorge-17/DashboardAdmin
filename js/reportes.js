@@ -3,10 +3,13 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    const rootURL = "http://localhost:26010/Dashboard.svc/";
     const consultarReporte1 = "ObtenerReporte1";
     const consultarReporte2 = "ObtenerReporte2";
+    const consultarReportePF = "ReportePersonasFisicas";
+    const consultarReporteConce = "ObtenerConcesionarios";
+    const obtenerCiudades = "ConsultarCiudades";
     const tokenSession = sessionStorage.getItem('token');
     const fechaNow = new Date();
     const yearN = fechaNow.getFullYear();
@@ -16,7 +19,11 @@
     var registrosRep2 = [];
     var table1;
     var table2;
+    var table3;
+    var table4;
     var flagTbl1, flagTbl2 = false;
+    var permisos = sessionStorage.getItem("permisos");
+    var btns;
 // $(window).on("load", function () {
 //     $("#modSelDate").modal();
 // });
@@ -30,17 +37,45 @@
         "maxDate": (monthN + 1) + "/" + dayN + "/" + yearN,
         autoUpdateInput: false,
         locale: {
-            cancelLabel: 'Clear'
+            cancelLabel: 'Limpiar'
         }
     });
     $("#dateRangePicker2").daterangepicker({
         "maxDate": (monthN + 1) + "/" + dayN + "/" + yearN,
         autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
+        "locale": {            
+            "applyLabel": "Aplicar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "De",
+            "toLabel": "A",
+            "daysOfWeek": [
+                "Dom.",
+                "Lun.",
+                "Mar.",
+                "Mie.",
+                "Jue.",
+                "Vie.",
+                "Sab."
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agusto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
         }
     });
     async function cargaTablaReporte1() {
+        $("#loader").show();
+        $("#loader_bkg").show();
         const fechaRep1 = $("#dateRangePicker1").val();
         if (fechaRep1 !== "") {
             var dateRange = fechaRep1.split(" - ");
@@ -121,12 +156,16 @@
                 table1.column(14).visible(false);
                 table1.column(15).visible(false);
                 table1.column(16).visible(false);
+                $("#loader").hide();
+                $("#loader_bkg").hide();
             });
         }
     }
 
     async function cargaTablaReporte2() {
-        const fechaRep2 = $("#dateRangePicker2").val();
+        $("#loader").show();
+        $("#loader_bkg").show();
+        const fechaRep2 = $("#dateRangePicker2 input").val();
         if (fechaRep2 !== "") {
             var dateRange = fechaRep2.split(" - ");
             var dateInicial = dateRange[0];
@@ -266,13 +305,23 @@
                     fila.append("<td>" + element['Usuario'] + "</td>");
                     cont++;
                 });
+
+                if(permisos.includes("DSB003")){
+                    btns = [
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Reporte Transparencia'
+                        }
+                    ];
+                }else{
+                    btns = [];
+                }
                 table2 = $("#tablaReportes2").DataTable({
                     dom: 'Bfrtlip',
-                    buttons: [
-                        'excel'
-                    ],
+                    buttons: btns,
                     scrollX: true
                 });
+                $(".dt-button").addClass("btn btn-info");
 
                 flagTbl2 = true;
                 table2.column(14).visible(false);
@@ -281,9 +330,205 @@
                 table2.column(17).visible(false);
                 table2.column(18).visible(false);
                 table2.column(20).visible(false);
+                $("#loader").hide();
+                $("#loader_bkg").hide();
             });
             return resultado;
         }
+    }
+
+    async function cargaTablaReportePersonasFisicas(){
+        $("#loader").show();
+        $("#loader_bkg").show();
+        const idModalidad = $("#selModalidades").val();
+        if(idModalidad !== ""){
+            var dataJson = JSON.stringify({
+                token: tokenSession,
+                idModalidad: idModalidad
+            });
+            var resultado;
+            try{
+                resultado = await $.ajax({
+                    type: "POST",
+                    url: rootURL + consultarReportePF,
+                    data: dataJson,
+                    contentType: "application/json; charset=utf-8"
+                });
+            }catch (error) {
+                console.log(error);
+            }
+
+            $.when(resultado).done(function(data){
+                $("#tablaReportesPF thead").show();
+                var datos = JSON.parse(data.d);
+                var pFisicias = datos['aoData'];
+                var cont = 0;
+                pFisicias.forEach(element => {
+                    var fila = $("<tr></tr>").attr("id", "tblReporPF" + cont);
+                    $("#TblRepPFBody").append(fila);
+                    fila.append("<td>" + element['Nombres'] + "</td>");
+                    fila.append("<td>" + element['ApellidoPaterno'] + "</td>");
+                    fila.append("<td>" + element['ApellidoMaterno'] + "</td>");
+                    var sexo = element['Sexo'] === null ? "-" : element['Sexo'];
+                    fila.append("<td>" + sexo + "</td>");
+                    fila.append("<td>" + element['Descripcion'] + "</td>");
+                    fila.append("<td>" + element['Nacionalidad'] + "</td>");
+                    var curp = element['CURP'] === null ? "-" : element['CURP'];
+                    fila.append("<td>" + curp + "</td>");
+                    var rfc = element['RFC'] === null ? "-" : element['RFC'];
+                    fila.append("<td>" + rfc + "</td>");
+                    var calle = element['Calle'] === null ? "" : element['Calle'];
+                    var noExt = element['NumeroExterior'] === null ? "" : element['NumeroExterior'];
+                    var colonia = element['Colonia'] === null ? "" : element['Colonia'];
+                    fila.append("<td>" + calle + " " + noExt + " " + colonia + "</td>");
+                    fila.append("<td>" + element['noEconomico'] + "</td>");
+                });
+                if(permisos.includes("DSB003")){
+                    btns = [
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Reporte Personas Fisicas'
+                        }
+                    ];
+                }else{
+                    btns = [];
+                }
+                table3 = $("#tablaReportesPF").DataTable({
+                    dom: 'Bfrtlip',
+                    buttons: btns
+                });
+                $("#loader").hide();
+                $("#loader_bkg").hide();
+            })
+        }
+    }
+
+
+    async function cargaTablaReporteConcesionarios(){
+        $("#loader").show();
+        $("#loader_bkg").show();
+        const idModalidad = $("#selModalidadesConce").val();
+        const idCiudad = $("#selCiudades").val();
+        if(idModalidad !== ""){
+            var dataJson = JSON.stringify({
+                token: tokenSession,
+                idModalidad: idModalidad,
+                MunAdscipcion : idCiudad
+            });
+            var resultado;
+            try{
+                resultado = await $.ajax({
+                    type: "POST",
+                    url: rootURL + consultarReporteConce,
+                    data: dataJson,
+                    contentType: "application/json; charset=utf-8"
+                });
+            }catch (error) {
+                console.log(error);
+            }
+
+            $.when(resultado).done(function(data){
+                $("#tablaReportesConce thead").show();
+                var datos = JSON.parse(data.d);
+                var pFisicias = datos['aoData'];
+                var cont = 0;
+                pFisicias.forEach(element => {
+                    var fila = $("<tr></tr>").attr("id", "tblReporteConce" + cont);
+                    $("#TblRepConceBody").append(fila);
+                    fila.append("<td>" + element['Nombres'] + "</td>");
+                    fila.append("<td>" + element['ApellidoPaterno'] + "</td>");
+                    fila.append("<td>" + element['ApellidoMaterno'] + "</td>");
+                    var sexo = element['Sexo'] === null ? "-" : element['Sexo'];
+                    if(sexo === "h"){
+                        sexo = "Hombre";
+                    }else if(sexo === "m"){
+                        sexo = "Mujer";
+                    }else{
+                        sexo = "Otro"
+                    }
+                    fila.append("<td>" + sexo + "</td>");
+                    fila.append("<td>" + element['EdoCivil'] + "</td>");
+                    fila.append("<td>" + element['ClaveElector'] + "</td>");
+                    fila.append("<td>" + element['Nacionalidad'] + "</td>");
+                    var curp = element['CURP'] === null ? "-" : element['CURP'];
+                    fila.append("<td>" + curp + "</td>");
+                    var fechaNac = element['FechaNacimiento'] === null ? ["-"] : element['FechaNacimiento'].split("T");
+                    var fN = fechaNac[0].split("-");
+                    fila.append("<td>" + fN[2] +"/" + fN[1] + "/" + fN[0] + "</td>");
+                    var ciudad = element['Nombre'] === null ? "" : element['Nombre'];
+                    fila.append("<td>" + ciudad + "</td>");
+                    var tipoCasa = element['Descripcion'] === null ? "" : element['Descripcion'];
+                    fila.append("<td>" + tipoCasa + "</td>");
+                    var noEconomico = element['IdSCT'] === null ? "" : element['IdSCT'];
+                    fila.append("<td>" + noEconomico + "</td>");
+                    var noConcesion = element['NoConcesion'] === null ? "" : element['NoConcesion'];
+                    fila.append("<td>" + noConcesion + "</td>");
+                });
+                if(permisos.includes("DSB003")){
+                    btns = [
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Reporte Concesionarios'
+                        }
+                    ];
+                }else{
+                    btns = [];
+                }
+                table4 = $("#tablaReportesConce").DataTable({
+                    dom: 'Bfrtlip',
+                    buttons: btns,
+                    language: {
+                        lengthMenu: "Mostrar _MENU_ concesionarios por pagina",
+                        zeroRecords: "No se encontraros concesionarios",
+                        info: "Mostrando pagina _PAGE_ de _PAGES_",
+                        infoEmpty: "No se encontraros concesionarios",
+                        infoFiltered: "(filtradas de _MAX_ total de concesionarios)",
+                        paginate: {
+                            first:      "Primero",
+                            last:       "Último",
+                            next:       "Siguiente",
+                            previous:   "Anterior"
+                        },
+                        search:         "Buscar:",
+                    }
+                });
+                $("#loader").hide();
+                $("#loader_bkg").hide();
+            })
+        }
+    }
+
+    //carga combo ciudades
+    async function cargaCiudades(idEstado){
+        $("#selCiudades").empty().append('<option value="">Seleccione la ciudad</option>');
+        //TODO funcionalidad de carga de ciudades en combos
+        var resultado;
+        try {
+            resultado = await $.ajax({
+                type: "POST",
+                url: rootURL + obtenerCiudades,
+                data: JSON.stringify({
+                    token: tokenSession,
+                    idEstado : idEstado
+                }),
+                contentType: "application/json; charset=utf-8",
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        $.when(resultado).then(function (data) {
+            datos = JSON.parse(data.d);
+            //Obtiene el total de registros retornados
+            totRegCR = datos['iRegistros'];
+            setTimeout(function(){
+                for (var i = 0; i < totRegCR; i++) {
+                    const item = datos['aoData'][i];
+                    const idCiudad = item['IdCiudad'];
+                    const nombreCiudad = item['Nombre'];
+                    $("#selCiudades").append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
+                }
+            }, 300);
+        });
     }
 
     /** Seleccion de rango de fechas para reportes R1 y R2 */
@@ -296,13 +541,41 @@
         cargaTablaReporte1();
     });
 
-    $('input[name="dateRangePicker2"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    $('#dateRangePicker2').on('apply.daterangepicker', function (ev, picker) {
+        $('#dateRangePicker2 input').val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
         if ($.fn.dataTable.isDataTable('#tablaReportes2')) {
             table2.destroy();
             $("#TblRep2Body").empty();
         }
         cargaTablaReporte2();
+    });
+
+    $("#selModalidades").on("change", function(){
+        if ($.fn.dataTable.isDataTable('#tablaReportesPF')) {
+            table3.destroy();
+            $("#TblRepPFBody").empty();
+        }                
+        cargaTablaReportePersonasFisicas();
+    });
+
+    /*$("#selModalidadesConce").on("change", function(){
+        if ($.fn.dataTable.isDataTable('#tablaReportesConce')) {
+            table4.destroy();
+            $("#TblRepConceBody").empty();
+        }                
+        cargaTablaReporteConcesionarios();
+    });*/
+
+    $("#selCiudades").on("change", function(){
+        if ($.fn.dataTable.isDataTable('#tablaReportesConce')) {
+            table4.destroy();
+            $("#TblRepConceBody").empty();
+        }                
+        cargaTablaReporteConcesionarios();
+    });
+
+    $(window).on("load", function(){
+        cargaCiudades(24);
     });
 
 }));

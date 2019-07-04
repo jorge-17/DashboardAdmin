@@ -30,8 +30,10 @@
     <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">    
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://sciactive.com/pnotify/src/PNotifyBrightTheme.css">
     <!-- Custom Theme Style -->
     <link href="../css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/ciatecCustom.css">
@@ -68,8 +70,10 @@
                             <li class="permit permit-DSB002 permit-DSB003"><a id="btnReportes"><i class="fas fa-table"></i>
                                     Reportes <span class="fas fa-caret-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>
+                                    <!--<li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>-->
                                     <li><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
+                                    <li><a id="btnRepPersonasFisicas" href="ReportePF.html">Personas Fisicas</a></li>
+                                    <li><a id="btnRepPersonasConce" href="ReporteConce.html">Reporte de concesionarios</a></li>
                                 </ul>
                             </li>
                             <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas" href="MapeoRutas.html"><i
@@ -77,10 +81,13 @@
                                     Mapeo Rutas
                                 </a>
                             </li>
+                            <li class="permit permit-DSB011">
+                                <a href="concesiones.html" id="btnConcesiones"><i class="fas fa-user-tag"></i>Concesionarios</a>
+                            </li>
                             <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
-                                Personas Juridicas <span class="fas fa-caret-down"></span></a>
+                                Personalidades Juridicas <span class="fas fa-caret-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Representantes Legales</a></li>
+                                    <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Apoderados Legales</a></li>
                                     <li class="permit permit-DSB009"><a id="btnTutor" href="catalogoTutor.html">Tutor</a></li>
                                     <li class="permit permit-DSB008"><a id="btnAlbacea" href="catalogoAlbacea.html">Albacea</a></li>
                                     <li class="permit permit-DSB010"><a id="btnBeneficiario" href="catalogoBene.html">Beneficiarios</a></li>
@@ -146,7 +153,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h3>Catálogo de <b id="nomCatalogo">Representantes Legales</b></h3>
+                            <h3>Catálogo de <b id="nomCatalogo">Apoderados Legales</b></h3>
                         </div>
                         <div class="x_content">
                             <div class="form-group col-md-6">
@@ -154,7 +161,7 @@
                                 <small id="busquedaHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
                             </div>
                             <button id="btnBuscar" class="btn btn-lg btn-primary">Buscar</button>
-                            <button id="btnNuevo" class="btn btn-lg btn-primary" data-target=".bs-example-modal-lg">Nuevo</button>                            
+                            <button id="btnNuevo" class="btn btn-lg btn-primary" data-target=".bs-example-modal-lg">Nuevo</button>
                             <div class="modal fade bs-example-modal-lg" id="modalLarge" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -163,7 +170,8 @@
                                                 <input type="text" class="form-control form-control-lg" id="inputBusquedaPF" aria-describedby="busquedaPFHelp" placeholder="Ingrese palabra a buscar">
                                                 <small id="busquedaPFHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
                                             </div>
-                                            <button id="btnBuscarPF" class="btn btn-lg btn-primary">Buscar</button>
+                                            <button id="btnBuscarPF" class="btn btn-lg btn-primary">Buscar</button>                            
+                                            <button id="btnNuevaPF" type="button" class="btn btn-lg btn-default" disabled>Crear persona fisica</button>
                                             <table id="tablaPerFisicas" class="table">
                                                 <thead>
                                                 <tr>
@@ -171,6 +179,7 @@
                                                     <th>Nombre</th>
                                                     <th>CURP</th>
                                                     <th>Dirección</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody id="TblPerFisBody">
@@ -187,11 +196,11 @@
                                                 
                                             </form>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
-                                            <button id="btnNuevaPF" type="button" class="btn btn-default" disabled>Crear persona fisica</button>
-                                            <button id="btnAgregarPF" type="button" class="btn btn-primary" disabled>Añadir a catalogo de Representantes Legales </button>
-                                            <button id="btnRegresarBPF" type="button" class="btn btn-default" >Regresar</button>
+                                        <div class="modal-footer" id="formDivFooter">
+                                            <input form="formNuevaPF" id="btnSaveData" class="btn btn-success" value="Guardar datos">
+                                            <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>                                            
+                                            <button id="btnAgregarPF" type="button" class="btn btn-primary" disabled>Añadir a catálogo de Apoderados Legales </button>
+                                            <!--<button id="btnRegresarBPF" type="button" class="btn btn-default" >Regresar</button>-->
                                         </div>
 
                                     </div>
@@ -207,25 +216,6 @@
                                             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                                             <button type="button" id="btnElimitarPJ" class="btn btn-danger">Si</button>
                                         </div>
-
-                                    </div>
-                                    <div class="modal-content" id="alertError">
-                                        <div class="modal-body alert alert-warning" role="alert"> 
-                                            <h4>No se puede guardar la relacion que intentaste crear.</h4>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-content" id="alertExito">
-                                        <div class="modal-body alert alert-success" role="alert"> 
-                                            <h4>Se ha guardado la informacion correctamente.</h4>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" id="btnSuccess" class="btn btn-default" data-dismiss="modal">Ok</button>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -323,9 +313,12 @@
     <script src="../vendors/datatables.net-buttons/js/buttons.print.js"></script>
     <!-- Parsley -->
     <script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- PNotify -->
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotify.js"></script>
+
 <!-- Custom Theme Scripts -->
     <script src="../js/custom.js"></script>
-    <script src="../js/comun.min.js"></script>
-    <script src="../js/catalogos.min.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/catalogos.js"></script>
 </body>
 </html>

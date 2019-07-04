@@ -1,16 +1,16 @@
-(function (a){
+(function (a) {
     a(window.jQuery, window, document);
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    const rootURL = "http://localhost:26010/Dashboard.svc/";
     const CerrarSesion = "CerrarSesion";
     const consultarRoles = "ObtenerRoles";
     const tokenSession = sessionStorage.getItem('token');
     const NombreUsuario = sessionStorage.getItem('NombreU');
     var resultado;
-    const arrayR= [];
+    const arrayR = [];
     $(window).on('load', async function () {
         try {
             var result = await $.ajax({
@@ -33,19 +33,19 @@
             });
         });
     });
-//Roles establecidos para usuarios
+    //Roles establecidos para usuarios
     var permisos = sessionStorage.getItem('perG').split(",");
     $.permit({
         permits: permisos
     });
-//Se establece el nombre del usuario que ingreso al dashboard
+    //Se establece el nombre del usuario que ingreso al dashboard
     $("#userName").append(NombreUsuario + '  <span class=" fa fa-angle-down"></span>');
-//Se verifica si existe token de inicio de sesion, si no se encuentra se expulsa del dashboard
+    //Se verifica si existe token de inicio de sesion, si no se encuentra se expulsa del dashboard
     if (!sessionStorage.getItem('token')) {
-        //window.location.replace("http://localhost/dashboard/views/");
-        window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
+        window.location.replace("http://localhost/dashboard/views/");
+        //window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
     }
-//Funcionamiento del boton de Logout
+    //Funcionamiento del boton de Logout
     $("#btnLogOut").on('click', async function () {
         try {
             resultado = await $.ajax({
@@ -72,11 +72,11 @@
                 $.removeCookie(cPrefix + element);
             });
             sessionStorage.removeItem('permisos');
-            //window.location.replace("http://localhost/dashboard/views/");
-            window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
+            window.location.replace("http://localhost/dashboard/views/");
+            //window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
         });
     });
-//Opciones globales para graficas de tramites
+    //Opciones globales para graficas de tramites
     Highcharts.setOptions({
         lang: {
             months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
@@ -107,6 +107,21 @@
         localStorage.setItem("tipoU", "4");
         localStorage.setItem("tipoUstring", "Bene");
     });
+    $("#btnConcesiones").on("click", function () {
+        localStorage.setItem("tipoU", "7");
+        localStorage.setItem("tipoUstring", "Con");
+    });
+
+
+
+    function myFunction() {
+        myVar = setTimeout(showPage, 3000);
+    }
+
+    function showPage() {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("myDiv").style.display = "block";
+    }
 
 }));
 

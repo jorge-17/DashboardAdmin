@@ -36,11 +36,6 @@
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Switchery -->
     <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-
-    <!-- PNotify -->
-    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../css/custom.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/ciatecCustom.css">
@@ -75,11 +70,13 @@
                                 <li class="permit permit-DSB001"><a id="btnAdmin" href="admin.html"><i
                                             class="fas fa-home"></i> Página principal </a>
                                 </li>
-                                <li class="permit permit-DSB002 permit-DSB003"><a id="btnReportes"><i class="fas fa-table"></i>
-                                        Reportes <span class="fas fa-caret-down"></span></a>
+                                <li class="permit permit-DSB002 permit-DSB003 permit-DSB012 permit-DSB013 permit-DSB014"><a id="btnReportes"><i class="fas fa-table"></i>
+                                    Reportes <span class="fas fa-caret-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>
-                                        <li><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
+                                        <!--<li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>-->
+                                        <li class="permit permit-DSB012"><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
+                                        <li class="permit permit-DSB013"><a id="btnRepPersonasFisicas" href="ReportePF.html">Personas Fisicas</a></li>
+                                        <li class="permit permit-DSB014"><a id="btnRepPersonasConce" href="ReporteConce.html">Reporte de concesionarios</a></li>
                                     </ul>
                                 </li>
                                 <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas" href="MapeoRutas.html"><i
@@ -87,10 +84,13 @@
                                         Mapeo Rutas
                                     </a>
                                 </li>
+                                <li class="permit permit-DSB011">
+                                    <a href="concesiones.html" id="btnConcesiones"><i class="fas fa-user-tag"></i>Concesionarios</a>
+                                </li>
                                 <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
-                                    Personas Juridicas <span class="fas fa-caret-down"></span></a>
+                                    Personalidades Juridicas <span class="fas fa-caret-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Representantes Legales</a></li>
+                                        <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Apoderados Legales</a></li>
                                         <li class="permit permit-DSB009"><a id="btnTutor" href="catalogoTutor.html">Tutor</a></li>
                                         <li class="permit permit-DSB008"><a id="btnAlbacea" href="catalogoAlbacea.html">Albacea</a></li>
                                         <li class="permit permit-DSB010"><a id="btnBeneficiario" href="catalogoBene.html">Beneficiarios</a></li>
@@ -167,19 +167,19 @@
                                     <div class="col-md-4">
                                         <div class="" data-example-id="togglable-tabs" role="tabpanel">
                                             <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
-                                                <li class="active" role="presentation">
+                                                <li class="permit permit-DSB004" role="presentation">
                                                     <a aria-expanded="true" id="tabSeeRoute" data-toggle="tab" href="#tab_verRuta"
                                                         id="home-tab" role="tab">
                                                         Ver Ruta
                                                     </a>
                                                 </li>
-                                                <li class="" role="presentation">
+                                                <li class="permit permit-DSB005" role="presentation">
                                                     <a aria-expanded="false" id="tabCreateRoute" data-toggle="tab" href="#tab_creaRuta"
                                                         id="profile-tab" role="tab">
                                                         Crear Ruta
                                                     </a>
                                                 </li>
-                                                <li class="" role="presentation">
+                                                <li class="permit permit-DSB006" role="presentation">
                                                     <a aria-expanded="false" id="tabEditRoute" data-toggle="tab" href="#tab_editarRuta"
                                                         id="profile-tab" role="tab">
                                                         Editar Ruta
@@ -187,7 +187,7 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content" id="myTabContent">
-                                                <div aria-labelledby="home-tab" class="tab-pane fade active in" id="tab_verRuta"
+                                                <div aria-labelledby="home-tab" class="tab-pane fade" id="tab_verRuta"
                                                     role="tabpanel">
                                                     <h3>Visualización de rutas</h3>
                                                     <div class="col-md-12 panel panel-default">
@@ -552,15 +552,13 @@
 
         </script>
     <!-- PNotify -->
-    <script src="../vendors/pnotify/dist/pnotify.js"></script>
-    <script src="../vendors/pnotify/dist/pnotify.buttons.js"></script>
-    <script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <script src="../js/PNotify.js"></script>
     <!-- Switchery -->
     <script src="../vendors/switchery/dist/switchery.min.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="../js/comun.min.js"></script>
-    <script src="../js/MapeoRutas.min.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/MapeoRutas.js"></script>
     <script src="../js/custom.js"></script>
 </body>
 

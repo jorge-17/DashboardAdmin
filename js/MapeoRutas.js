@@ -1,10 +1,10 @@
-(function (a){
+(function (a) {
     a(window.jQuery, window, document);
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    const rootURL = "http://localhost:26010/Dashboard.svc/";
     const mapRutas = "ConsultarRutas";
     const ciudadesRutas = "ConsultarCiudades";
     const guardarRutas = "GuardarRuta";
@@ -412,15 +412,21 @@
             }
             $.when(resultado).then(function (data) {
                 $("#formCreateRuta")[0].reset();
-                initMap('mapcontainer');
+                initMap('mapcontainer', latGlobal, lngGlobal);
+                new PNotify.success({
+                    title: 'Exito!',
+                    text: 'La ruta se ha registrado correctamente',
+                    styling: 'bootstrap4',
+                    delay: 2000
+                });
             })
             trazo = '';
         } else {
-            new PNotify({
+            new PNotify.error({
                 title: 'La ruta no ha sido definida',
                 text: 'Verifica que hayas ingresado una ruta en el mapa',
-                type: 'error',
-                styling: 'bootstrap3'
+                styling: 'bootstrap4',
+                delay: 2000
             });
         }
 
@@ -473,8 +479,14 @@
         }
 
         $.when(resultado).then(function (data) {
-            $("#formCreateRuta")[0].reset();
-            initMap('mapcontainer');
+            $("#formEditRuta")[0].reset();
+            initMap('mapcontainer', latGlobal, lngGlobal);
+            new PNotify.success({
+                title: 'Exito!',
+                text: 'La ruta se ha actualizado correctamente',
+                styling: 'bootstrap4',
+                delay: 2000
+            });
         });
         trazo = '';
 
