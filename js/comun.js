@@ -3,8 +3,8 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    const rootURL = "http://localhost:26010/Dashboard.svc/";
+    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    //const rootURL = "http://localhost:26010/Dashboard.svc/";
     const CerrarSesion = "CerrarSesion";
     const consultarRoles = "ObtenerRoles";
     const tokenSession = sessionStorage.getItem('token');
@@ -42,8 +42,8 @@
     $("#userName").append(NombreUsuario + '  <span class=" fa fa-angle-down"></span>');
     //Se verifica si existe token de inicio de sesion, si no se encuentra se expulsa del dashboard
     if (!sessionStorage.getItem('token')) {
-        window.location.replace("http://localhost/dashboard/views/");
-        //window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
+        //window.location.replace("http://localhost/dashboard/views/");
+        window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
     }
     //Funcionamiento del boton de Logout
     $("#btnLogOut").on('click', async function () {
@@ -72,8 +72,8 @@
                 $.removeCookie(cPrefix + element);
             });
             sessionStorage.removeItem('permisos');
-            window.location.replace("http://localhost/dashboard/views/");
-            //window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
+            //window.location.replace("http://localhost/dashboard/views/");
+            window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
         });
     });
     //Opciones globales para graficas de tramites

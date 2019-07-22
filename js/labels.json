@@ -60,5 +60,9 @@
     "NoConceAntCD" : "Número de concesión anterior",
     "TipoPerDG" : "Tipo de persona",
     "CdConce" : "Ciudad de la concesión",
-    "JustiCD" : "Justificación"
+    "JustiCD" : "Justificación",
+    "DocPoderNotarial": "Poder Notarial",
+    "DocJuicioST" : "Juicio sucesorio testamentario",
+    "DocJuicioSI" : "Juicio sucesorio intestamentario",
+    "DocJuicioJV" : "Juicio de diligencia de jurisdicción voluntaria-estado de interdicción"
 }

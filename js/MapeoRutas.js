@@ -3,8 +3,8 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    //const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    const rootURL = "http://localhost:26010/Dashboard.svc/";
+    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
+    //const rootURL = "http://localhost:26010/Dashboard.svc/";
     const mapRutas = "ConsultarRutas";
     const ciudadesRutas = "ConsultarCiudades";
     const guardarRutas = "GuardarRuta";
