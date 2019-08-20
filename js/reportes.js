@@ -3,8 +3,8 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    const rootURL = sessionStorage.getItem("rootURL");
+    const urlDashboard = sessionStorage.getItem("urlDashboard");
     const consultarReporte1 = "ObtenerReporte1";
     const consultarReporte2 = "ObtenerReporte2";
     const consultarReportePF = "ReportePersonasFisicas";
@@ -501,7 +501,6 @@
     //carga combo ciudades
     async function cargaCiudades(idEstado){
         $("#selCiudades").empty().append('<option value="">Seleccione la ciudad</option>');
-        //TODO funcionalidad de carga de ciudades en combos
         var resultado;
         try {
             resultado = await $.ajax({

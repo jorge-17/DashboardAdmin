@@ -3,8 +3,8 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    const rootURL = sessionStorage.getItem("rootURL");
+    const urlDashboard = sessionStorage.getItem("urlDashboard");
     const mapRutas = "ConsultarRutas";
     const ciudadesRutas = "ConsultarCiudades";
     const guardarRutas = "GuardarRuta";
@@ -426,7 +426,27 @@
                 title: 'La ruta no ha sido definida',
                 text: 'Verifica que hayas ingresado una ruta en el mapa',
                 styling: 'bootstrap4',
-                delay: 2000
+                hide: false,
+                            modules: {
+                                Confirm: {
+                                    confirm: true,
+                                    buttons: [
+                                        {
+                                            text: 'Entendido',
+                                            primary: true,
+                                            click: function (notice) {
+                                                notice.close();
+                                            }
+                                        }
+                                    ]
+                                },
+                                Buttons: {
+                                    closer: true
+                                },
+                                History: {
+                                    history: false
+                                },
+                            }
             });
         }
 

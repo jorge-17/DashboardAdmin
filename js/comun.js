@@ -3,17 +3,18 @@
 }(function ($, window, document) {
     //console.log("Init...");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    const rootURL = sessionStorage.getItem("rootURL");
+    const urlDashboard = sessionStorage.getItem("urlDashboard");
     const CerrarSesion = "CerrarSesion";
     const consultarRoles = "ObtenerRoles";
     const tokenSession = sessionStorage.getItem('token');
     const NombreUsuario = sessionStorage.getItem('NombreU');
     var resultado;
     const arrayR = [];
-    $(window).on('load', async function () {
+    async function getRoles(){
+        var result;
         try {
-            var result = await $.ajax({
+            result = await $.ajax({
                 type: "POST",
                 url: rootURL + consultarRoles,
                 data: JSON.stringify({
@@ -32,7 +33,8 @@
                 arrayR.push(element["rol"]);
             });
         });
-    });
+    }
+
     //Roles establecidos para usuarios
     var permisos = sessionStorage.getItem('perG').split(",");
     $.permit({
@@ -42,8 +44,7 @@
     $("#userName").append(NombreUsuario + '  <span class=" fa fa-angle-down"></span>');
     //Se verifica si existe token de inicio de sesion, si no se encuentra se expulsa del dashboard
     if (!sessionStorage.getItem('token')) {
-        //window.location.replace("http://localhost/dashboard/views/");
-        window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
+        window.location.replace(urlDashboard);
     }
     //Funcionamiento del boton de Logout
     $("#btnLogOut").on('click', async function () {
@@ -66,14 +67,14 @@
             sessionStorage.removeItem('roles');
             sessionStorage.removeItem('NombreU');
             sessionStorage.removeItem('perG');
+            sessionStorage.removeItem('idDocs');
             const arrRol = sessionStorage.getItem('permisos');
             const arrayRol = arrRol.split(",");
             arrayRol.forEach(element => {
                 $.removeCookie(cPrefix + element);
             });
             sessionStorage.removeItem('permisos');
-            //window.location.replace("http://localhost/dashboard/views/");
-            window.location.replace("https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/");
+            window.location.replace(urlDashboard);
         });
     });
     //Opciones globales para graficas de tramites
@@ -122,6 +123,10 @@
         document.getElementById("loader").style.display = "none";
         document.getElementById("myDiv").style.display = "block";
     }
+
+    $(window).on('load', function () {
+        getRoles();
+    });
 
 }));
 

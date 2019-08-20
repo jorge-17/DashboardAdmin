@@ -40,7 +40,8 @@
 </head>
 
 <body class="nav-md">
-        <div id="loader"></div>
+<div id="loader_conce"></div>
+<div id="loader_bkg_conce"></div>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
@@ -102,6 +103,9 @@
                                         <li class="permit permit-DSB010"><a id="btnBeneficiario"
                                                 href="catalogoBene.html">Beneficiarios</a></li>
                                     </ul>
+                                </li>
+                                <li class="permit permit-DSB016">
+                                    <a id="btnExpOperadores" href="expOperadores.html"><i class="fas fa-folder-open"></i> Suspensión de Operadores</a>
                                 </li>
                             </ul>
                         </div>
@@ -165,7 +169,8 @@
                             <div class="x_title">
                                 <h3>Administración del padrón de registro de<b id="nomCatalogo"> concesionarios</b></h3>
                             </div>
-                            <div class="x_content">
+                            <div class="x_content table-responsive">
+                                <br>
                                 <div class="form-group col-md-6">
                                     <input type="text" class="form-control form-control-lg" id="inputBusqueda"
                                         aria-describedby="busquedaHelp"
@@ -176,6 +181,40 @@
                                 <button id="btnBuscarConce" class="btn btn-lg btn-primary">Buscar</button>
                                 <button id="btnNuevo" class="btn btn-lg btn-primary"
                                     data-target=".bs-example-modal-lg">Nuevo</button>
+                                <div class="modal fade bs-example-modal-lg" id="modalLargeExp" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div>
+                                                <p>
+                                                <h3><b><label class="lblMovimiento"></label> de expedientes</b></h3>
+                                                </p>
+                                                <p>
+                                                <h4><b id="lbl_IdSCT"></b> - <b id="lbl_Modalidad"></b> - <b id="lbl_nombre"></b></h4>
+                                                </p>
+                                            </div>
+                                            <div id="formularioDivExp" class="modal-body">
+                                                <form id="formDivExp" data-parsley-validate
+                                                      class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <label for="txt_motivo" class="control-label">Motivo *</label>
+                                                        <textarea id="txt_motivo" class="form-control" rows="5" required></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="archivoAcreditacion" class="control-label">Adjuntar documento que acredite la <b class="lblMovimiento"></b></label>
+                                                        <input class="form-control" type="file" id="archivoAcreditacion">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer" id="formDivFooter">
+                                                <div class="alert alert-danger col-md-12" role="alert" id="alertaVali">Complete los campos obligatorios</div>
+                                                <input form="formularioDiv" id="btnSaveDataExp" class="btn btn-success" value="Guardar datos">
+                                                <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="modal fade bs-example-modal-lg" id="modalLarge" tabindex="-1" role="dialog"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
@@ -217,21 +256,31 @@
                                                 </table>
                                             </div>
                                             <div id="formularioDiv" class="modal-body">
-                                                <form id="formDiv" data-parsley-validate
-                                                    class="form-horizontal form-label-left">
+                                                <form id="formDiv" data-parsley-validate class="form-horizontal form-label-left">
 
                                                 </form>
                                             </div>
-                                            <div id="fromularioNuevaPF" class="modal-body">
-                                                <form id="formNuevaPF" data-parsley-validate
-                                                    class="form-horizontal form-label-left">
-
-                                                </form>
+                                            <div id="formSuspencion" class="modal-body">
+                                                    <h3><b><label class="lblMovimiento"></label> de expedientes</b></h3>
+                                                    <h4><b class="lbl_IdSCT"></b> - <b class="lbl_Modalidad"></b> - <b class="lbl_nombre"></b></h4>
+                                                    <form id="formDivExp" data-parsley-validate
+                                                          class="formDivExp form-horizontal form-label-left" enctype="multipart/form-data">
+                                                        <div class="form-group">
+                                                            <label for="txt_motivo" class="control-label">Motivo *</label>
+                                                            <textarea id="txt_motivo" class="txt_motivo form-control" rows="5" required></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="fileupload" class="control-label">Adjuntar documento que acredite la <b class="lblMovimiento"></b></label>
+                                                            <input id="fileupload" type="file" multiple formenctype="multipart/form-data">
+                                                        </div>
+                                                        <div class="alertaVali alert alert-danger col-md-12" role="alert" id="">Complete los campos obligatorios</div>
+                                                    </form>
                                             </div>
                                             <div class="modal-footer" id="formDivFooter">
-                                                <input form="formNuevaPF" id="btnSaveDataCon" class="btn btn-success" value="Guardar datos">
+                                                <input form="formDiv" id="btnSaveDataCon" class="btn btn-success btnSaveDataCon" value="Guardar datos"/>
                                                 <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>                                            
                                                 <button id="btnAgregarPFCon" type="button" class="btn btn-primary" disabled>Añadir a catálogo de concesionarios </button>
+                                                <button form="formDivExp" class="btn btn-success btnSaveDataExpConce">Guardar datos</button>
                                                 <!--<button id="btnRegresarBPF" type="button" class="btn btn-default" >Regresar</button>-->
                                             </div>
 
@@ -253,17 +302,7 @@
                                                     class="btn btn-danger">Si</button>
                                             </div>
 
-                                        </div>
-                                        <div class="modal-content" id="alertError">
-                                            <div class="modal-body alert alert-warning" role="alert">
-                                                <h4>No se puede guardar la relacion que intentaste crear.</h4>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default"
-                                                    data-dismiss="modal">Ok</button>
-                                            </div>
-
-                                        </div>
+                                        </div>                                        
                                         <div class="modal-content" id="alertNotiConcesion">
                                             <div class="modal-body alert alert-light" role="alert">
                                                 <h4>Ya se tiene registrada una concesion con esta persona fisica</h4>
@@ -289,10 +328,11 @@
                                     </div>
                                 </div>
                                 <br>
-                                <table id="tablaCatalogos" class="table">
+                                <table id="tablaCatalogos" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th style="display:none">Id Prestador</th>
+                                            <th style="display:none"></th>
                                             <th>Número Económico</th>
                                             <th>Número de concesión</th>
                                             <th>Nombre</th>
@@ -303,6 +343,8 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th></th>
+                                            <th style="display:none"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="TblCatBodyConce">
@@ -388,11 +430,23 @@
     <!-- Parsley -->
     <script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
     <!-- PNotify -->
-    <script src="../js/PNotify.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotify.js"></script>
+    <link rel="stylesheet" href="https://sciactive.com/pnotify/src/PNotifyBrightTheme.css" />
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyButtons.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyAnimate.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyCallbacks.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyNonBlock.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyMobile.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyHistory.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyDesktop.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyConfirm.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyStyleMaterial.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyReference.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../js/custom.js"></script>
-    <script src="../js/comun.js"></script>
-    <script src="../js/catalogos.js"></script>
+    <script src="../js/comun.min.js"></script>
+    <script src="../js/catalogos.min.js"></script>
+    <script src="../js/suspenciones.min.js"></script>
 </body>
 
 </html>

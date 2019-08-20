@@ -92,6 +92,9 @@
                                         <li class="permit permit-DSB010"><a id="btnBeneficiario" href="catalogoBene.html">Beneficiarios</a></li>
                                     </ul>
                                 </li>
+                                <li class="permit permit-DSB016">
+                                    <a id="btnExpOperadores" href="expOperadores.html"><i class="fas fa-folder-open"></i> Suspensión de Operadores</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -185,6 +188,7 @@
                                                             <th>Nombre</th>
                                                             <th>CURP</th>
                                                             <th>Dirección</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="TblPerFisBody">
@@ -222,10 +226,10 @@
                                     </div>
                                 </div>
                                 <br>
-                                <table id="tablaCatalogos" class="table">
+                                <table id="tablaCatalogos" class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th style="display:none">Id Prestador</th>
+                                        <tr><th style="display:none">Id Prestador</th>
+                                            <th style="display: none"></th>
                                             <th>Número Económico</th>
                                             <th>Nombre</th>
                                             <th>Orden de prelación</th>
@@ -300,6 +304,7 @@
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- bootstrap-datetimepicker -->
     <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../vendors/bootstrap-datetimepicker/build/js/es.js"></script>
     <!-- Highcarts -->
     <script src="../js/highcharts/highcharts.js"></script>
     <script src="../js/highcharts/series-label.js"></script>
@@ -318,10 +323,21 @@
     <script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
     <!-- PNotify -->
     <script src="https://sciactive.com/pnotify/lib/iife/PNotify.js"></script>
+    <link rel="stylesheet" href="https://sciactive.com/pnotify/src/PNotifyBrightTheme.css" />
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyButtons.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyAnimate.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyCallbacks.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyNonBlock.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyMobile.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyHistory.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyDesktop.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyConfirm.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyStyleMaterial.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyReference.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../js/custom.js"></script>
-    <script src="../js/comun.js"></script>
-    <script src="../js/catalogos.js"></script>
+    <script src="../js/comun.min.js"></script>
+    <script src="../js/catalogos.min.js"></script>
 </body>
 
 </html>

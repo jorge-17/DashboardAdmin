@@ -2,11 +2,15 @@
     a(window.jQuery, window, document);
 }(function ($, window, document) {
     //console.log("Init...");
+    var arrayIdDocumentos = [];
+    var idDocuemntosArr = sessionStorage.getItem("idDocs");
+    idDocuemntosArr = idDocuemntosArr.split(",");
     //@jrodarte Declaración de URL y metodos
-    const rootURL = "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/";
-    //const rootURL = "http://localhost:26010/Dashboard.svc/";
+    const rootURL = sessionStorage.getItem("rootURL");
+    const urlDashboard = sessionStorage.getItem("urlDashboard");
     const GuardarPFfile = "GuardarPersonaFisicaFile";
     const obtenerExpedientes = "ObtenerExpedientes";
+    const obtenerIdDocumentos = "ObtenerIdDocumentos";
     const tokenSession = sessionStorage.getItem('token');
     const NombreUsuario = sessionStorage.getItem('NombreU');
     var resultado;
@@ -23,6 +27,34 @@
             $(".alertaVali").show();
         }
     };
+
+    async function cargaIdDocumentos(ev){
+        var resultado;
+        try {
+            resultado = await $.ajax({
+                type: "POST",
+                url: rootURL + obtenerIdDocumentos,
+                data: JSON.stringify({
+                    token: tokenSession
+                }),
+                contentType: "application/json; charset=utf-8",
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        $.when(resultado).then(function (data) {
+            datos = JSON.parse(data.d);
+            //Obtiene el total de registros retornados
+            var datos = datos['aoData'];
+            if (datos != null) {
+                //console.log(itemS);
+                datos.forEach(element => {
+                    arrayIdDocumentos.push(element["Valor"]);
+                });
+                sessionStorage.setItem('idDocs', arrayIdDocumentos);
+            }
+        });
+    }
 
     async function cargaTablaOperadores() {
         $("#loader").show();
@@ -94,7 +126,7 @@
 
     $("#tablaExpOperadores").on("click", "#btnSuspencion", function(){
         $(".formDivExp").find("input[type=file], textarea").val("");
-        $("#modalLarge").modal('toggle');
+        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
         $("#formularioDivExp").show();
         $(".lblMovimiento").html("Suspensión");
         var parent = $(this).parent("td").parent("tr");
@@ -104,8 +136,8 @@
         var nombre = child[3].innerText;
         var idPrestador = child[1].innerText;
         var idExpediente = child[0].innerText;
-        //var idDocumentoSuspencion = 74;
-        var idDocumentoSuspencion = "00117";
+        var idDocumentoSuspencion = idDocuemntosArr[4];
+        //var idDocumentoSuspencion = "00117";
         localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoSuspencion+"_"+0);
         $("#lbl_IdSCT").html(idSCT);
         $("#lbl_Modalidad").html(modalidad);
@@ -114,7 +146,7 @@
 
     $("#tablaExpOperadores").on("click", "#btnActivacion", function(){
         $(".formDivExp").find("input[type=file], textarea").val("");
-        $("#modalLarge").modal('toggle');
+        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
         $("#formularioDivExp").show();
         $(".lblMovimiento").html("Activación");
         var parent = $(this).parent("td").parent("tr");
@@ -124,21 +156,21 @@
         var nombre = child[3].innerText;
         var idPrestador = child[1].innerText;
         var idExpediente = child[0].innerText;
-        //var idDocumentoActivacion = 75;
-        var idDocumentoActivacion = "00118";
+        var idDocumentoActivacion = idDocuemntosArr[5];
         localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoActivacion+"_"+1);
         $("#lbl_IdSCT").html(idSCT);
         $("#lbl_Modalidad").html(modalidad);
         $("#lbl_nombre").html(nombre);
     });
 
-    $("#tablaCatalogos").on("click", "#btnSuspencion", function(){
+    $("#tablaCatalogos").on("click", ".btnSuspencion", function(){
         $(".formDivExp").find("input[type=file], textarea").val("");
         $("#formSuspencion").show();
         $("#tablaPFdiv").hide();
         $("#formularioDiv").hide();
         $("#fromularioNuevaPF").hide();
         $("#btnSaveDataCon").hide();
+        $(".btnSaveDataExpConce").show();
         $(".lblMovimiento").html("Suspensión");
         var parent = $(this).parent("td").parent("tr");
         var child = parent.children("td");
@@ -147,17 +179,16 @@
         var nombre = child[4].innerText;
         var idPrestador = child[0].innerText;
         var idExpediente = child[1].innerText;
-        //var idDocumentoSuspencion = 74;
-        var idDocumentoSuspencion = "00117";
+        var idDocumentoSuspencion = idDocuemntosArr[4];
         localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoSuspencion+"_"+0);
         $(".lbl_IdSCT").html(idSCT);
         $(".lbl_Modalidad").html(modalidad);
         $(".lbl_nombre").html(nombre);
     });
 
-    $("#tablaCatalogos").on("click", "#btnActivacion", function(){
+    $("#tablaCatalogos").on("click", ".btnActivacion", function(){
         $(".formDivExp").find("input[type=file], textarea").val("");
-        $("#modalLarge").modal('toggle');
+        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
         $("#formularioDiv").hide();
         $("#btnSaveData").hide();
         $("#btnSaveDataCon").hide();
@@ -168,7 +199,8 @@
         $("#btnAgregarPF").hide();
         $("#btnAgregarPFCon").hide();
         $("#btnNuevaPF").hide();
-        $("#formSuspencion").show();
+        $("#formSuspencion").show();        
+        $(".btnSaveDataExpConce").show();
         $(".lblMovimiento").html("Activación");
         var parent = $(this).parent("td").parent("tr");
         var child = parent.children("td");
@@ -177,8 +209,7 @@
         var nombre = child[4].innerText;
         var idPrestador = child[0].innerText;
         var idExpediente = child[1].innerText;
-        //var idDocumentoActivacion = 75;
-        var idDocumentoActivacion = "00118";
+        var idDocumentoActivacion = idDocuemntosArr[5];
         localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoActivacion+"_"+1);
         $(".lbl_IdSCT").html(idSCT);
         $(".lbl_Modalidad").html(modalidad);
@@ -204,7 +235,6 @@
 
             formData.append("idPrestador", valuesArr[0]);
             formData.append("idExpediente", valuesArr[1]);
-            //formData.append("idDocumento", valuesArr[2]);
             formData.append("movimiento", valuesArr[3]);
             var resultado;
             try {
@@ -224,41 +254,81 @@
                 //alert(info);
 
                 if (info === "x0004") {
+                    //Error x0004
                     PNotify.notice({
-                        title: 'Error x0004',
+                        title: 'Error',
                         text: 'No se puede guardar se puede guardar el archivo que intentaste subir',
                         styling: 'bootstrap4',
-                        delay: 4000
+                        hide: false,
+                        modules: {
+                            Confirm: {
+                                confirm: true,
+                                buttons: [
+                                    {
+                                        text: 'Entendido',
+                                        primary: true,
+                                        click: function (notice) {
+                                            notice.close();
+                                        }
+                                    }
+                                ]
+                            },
+                            Buttons: {
+                                closer: true
+                            },
+                            History: {
+                                history: false
+                            },
+                        }
                     });
                     //alert("No se puede guardar la relacion que intentaste crear.");
                 }else if (info === "x0002"){
+                    //Error x0002
                     PNotify.notice({
-                        title: 'Error x0002',
+                        title: 'Error',
                         text: 'No se puede guardar la relacion que intentaste crear ...',
                         styling: 'bootstrap4',
-                        delay: 4000
+                        hide: false,
+                        modules: {
+                            Confirm: {
+                                confirm: true,
+                                buttons: [
+                                    {
+                                        text: 'Entendido',
+                                        primary: true,
+                                        click: function (notice) {
+                                            notice.close();
+                                        }
+                                    }
+                                ]
+                            },
+                            Buttons: {
+                                closer: true
+                            },
+                            History: {
+                                history: false
+                            },
+                        }
                     });
                 } else {
-                    console.log(info);
                     PNotify.success({
                         title: 'Exito',
                         text: 'Se ha guardado la informacion correctamente.',
                         styling: 'bootstrap4',
                         delay: 2000
                     });
-                    //$("#modalLarge").modal('toggle');
                     if ($.fn.dataTable.isDataTable('#tablaExpOperadores')) {
                         tablaOperadores.destroy();
                         $("#TblCatBodyExpOperadores").empty();
                     }
-                    //$("#TblCatBodyExpOperadores tr").remove();
                     cargaTablaOperadores();
-
-
-                    //alert("Se ha guardado la informacion correctamente.");
                 }
             });
         }
+    });
+
+    $(window).on("load", function(){
+        cargaIdDocumentos()
     });
 }));
 
