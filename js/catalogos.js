@@ -11,21 +11,21 @@
     var tipoU = localStorage.getItem("tipoU");
     var ciu_noEco = [];
     //@jrodarte Declaración de URL y metodos
-    const rootURL = sessionStorage.getItem("rootURL");
-    const urlDashboard = sessionStorage.getItem("urlDashboard");
-    const obtenerTiposU = "ObtenerTiposUsuarios";
-    const obtenerPF = "ObtenerPersonasFisicas";
-    const BorrarRelacionCon = "BorrarRelacionConcesiones";
-    const GuardartPF = "GuardarPersonaFisica";
-    const GuardarPFfile = "GuardarPersonaFisicaFile";
-    const GuardartConce = "GuardarConcesionario";
-    const ObtenerCamposForm = "ObtenerCamposFromulario";
-    const tokenSession = sessionStorage.getItem('token');
-    const obtenerNomTitilar = "ObtenerNombreTitular";
-    const obtenerCiudades = "ConsultarCiudades";
-    const obtenerEstados = "ConsultarEstados";
-    const obtenerNoEconomicos = "ObtenerNoEconomicoCiudad";
-    const obtenerIdDocumentos = "ObtenerIdDocumentos";
+    var rootURL = sessionStorage.getItem("rootURL");
+    var urlDashboard = sessionStorage.getItem("urlDashboard");
+    var obtenerTiposU = "ObtenerTiposUsuarios";
+    var obtenerPF = "ObtenerPersonasFisicas";
+    var BorrarRelacionCon = "BorrarRelacionConcesiones";
+    var GuardartPF = "GuardarPersonaFisica";
+    var GuardarPFfile = "GuardarPersonaFisicaFile";
+    var GuardartConce = "GuardarConcesionario";
+    var ObtenerCamposForm = "ObtenerCamposFromulario";
+    var tokenSession = sessionStorage.getItem('token');
+    var obtenerNomTitilar = "ObtenerNombreTitular";
+    var obtenerCiudades = "ConsultarCiudades";
+    var obtenerEstados = "ConsultarEstados";
+    var obtenerNoEconomicos = "ObtenerNoEconomicoCiudad";
+    var obtenerIdDocumentos = "ObtenerIdDocumentos";
     var notice;
 
     var validateFront = function () {
@@ -43,7 +43,7 @@
     };
 
 
-    async function cargaIdDocumentos(ev){
+    async function cargaIdDocumentos(ev) {
         var resultado;
         try {
             resultado = await $.ajax({
@@ -137,7 +137,7 @@
             tipoPerPS: tipoPer,
             FechaNacPF: fechaNac,
             cdNacPF: cdNac,
-            cdDomPS : cdDom,
+            cdDomPS: cdDom,
             telParLadaPS: telParLada,
             telParNumPS: telParNum,
             telParExtPS: telParExt,
@@ -183,14 +183,14 @@
                         Confirm: {
                             confirm: true,
                             buttons: [
-                                    {
-                                        text: 'Entendido',
-                                        primary: true,
-                                        click: function (notice) {
-                                            notice.close();
-                                        }
+                                {
+                                    text: 'Entendido',
+                                    primary: true,
+                                    click: function (notice) {
+                                        notice.close();
                                     }
-                                ]
+                                }
+                            ]
                         },
                         Buttons: {
                             closer: true
@@ -201,7 +201,7 @@
                     }
                 });
                 //alert("No se puede guardar la relacion que intentaste crear.");
-            }else if (info === "x0002"){
+            } else if (info === "x0002") {
                 //Error x0002
                 $("#loader_conce").hide();
                 $("#loader_bkg_conce").hide();
@@ -231,7 +231,7 @@
                         },
                     }
                 });
-            }else if (info === "x0005"){
+            } else if (info === "x0005") {
                 //Error x0005
                 $("#loader_conce").hide();
                 $("#loader_bkg_conce").hide();
@@ -271,7 +271,10 @@
                     delay: 5000
                 });
                 $("#modalLarge").modal('toggle');
-                $("#TblCatBodyConce tr").remove();
+                if ($.fn.dataTable.isDataTable('#tablaCatalogos')) {
+                    tablaCatalogos.destroy();
+                    $("#TblCatBodyConce").empty();
+                }
                 cargaTablaConcesionarios();
                 //alert("Se ha guardado la informacion correctamente.");                
             }
@@ -399,8 +402,13 @@
                     delay: 2000
                 });
                 $("#modalLarge").modal('toggle');
-                $("#TblCatBody tr").remove();
+                if ($.fn.dataTable.isDataTable('#tablaCatalogos')) {
+                    tablaCatalogos.destroy();
+                    $("#TblCatBody").empty();
+                }
                 cargaTablaTipoUsuarios();
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
                 //alert("Se ha guardado la informacion correctamente.");                
             }
         });
@@ -412,24 +420,24 @@
         var idDocuemntosArr = sessionStorage.getItem("idDocs");
         idDocuemntosArr = idDocuemntosArr.split(",");
         var formData = new FormData()
-            var fileInput = $("#formDiv").find('input[type="file"]')
-            for(var i = 0; i < fileInput.length; i++){
-                var file = fileInput[i];
-                var idFile  = file.id;
-                if(idFile.includes("DocJuicioST")){
-                    idDocumento = idDocuemntosArr[1];
-                }else if(idFile.includes("DocJuicioSI")){
-                    idDocumento = idDocuemntosArr[2];
-                }else if(idFile.includes("DocPoderNotarial")){
-                    idDocumento = idDocuemntosArr[0];
-                }else if(idFile.includes("DocJuicioJV")){
-                    idDocumento = idDocuemntosArr[3];
-                }
-                var data = file.files;
-                for(var j = 0; j < data.length; j++){
-                    formData.append(idDocumento, data[j]);
-                }
+        var fileInput = $("#formDiv").find('input[type="file"]')
+        for (var i = 0; i < fileInput.length; i++) {
+            var file = fileInput[i];
+            var idFile = file.id;
+            if (idFile.includes("DocJuicioST")) {
+                idDocumento = idDocuemntosArr[1];
+            } else if (idFile.includes("DocJuicioSI")) {
+                idDocumento = idDocuemntosArr[2];
+            } else if (idFile.includes("DocPoderNotarial")) {
+                idDocumento = idDocuemntosArr[0];
+            } else if (idFile.includes("DocJuicioJV")) {
+                idDocumento = idDocuemntosArr[3];
             }
+            var data = file.files;
+            for (var j = 0; j < data.length; j++) {
+                formData.append(idDocumento, data[j]);
+            }
+        }
         var tipoU = localStorage.getItem("tipoU");
         var idPrestadorSer = $("#psInput").val() === "" ? "0" : $("#psInput").val();
         var nombres = $("#Nombre" + tipoUstring).val();
@@ -506,6 +514,8 @@
             var datos = JSON.parse(data.d);
             var info = datos['aoData'];
             console.log(info);
+            var dataServ = info.split("_");
+            var idPrestadorServicio = dataServ[1];
             //alert(info);
 
             if (info === "x0003") {
@@ -528,6 +538,8 @@
                                     primary: true,
                                     click: function (notice) {
                                         notice.close();
+                                        $("#loader_conce").hide();
+                                        $("#loader_bkg_conce").hide();
                                     }
                                 }
                             ]
@@ -542,6 +554,8 @@
                 });
                 //alert("No se puede guardar la relacion que intentaste crear.");
             } else {
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
                 PNotify.success({
                     title: 'Exito',
                     text: 'Se ha guardado la información correctamente.',
@@ -549,12 +563,15 @@
                     delay: 2000
                 });
                 $("#modalLarge").modal('toggle');
-                $("#TblCatBody tr").remove();
+                if ($.fn.dataTable.isDataTable('#tablaCatalogos')) {
+                    tablaCatalogos.destroy();
+                    $("#TblCatBody").empty();
+                }
                 cargaTablaTipoUsuarios();
                 //alert("Se ha guardado la informacion correctamente.");
                 formData.append("motivo", "");
                 formData.append("token", sessionStorage.getItem("token"));
-                formData.append("idPrestador", idPrestadorSer);
+                formData.append("idPrestador", idPrestadorServicio);
                 formData.append("idExpediente", noExpediente.IdExpediente);
                 //formData.append("idDocumento", valuesArr[2]);
                 formData.append("movimiento", "0");
@@ -608,7 +625,7 @@
                             }
                         });
                         //alert("No se puede guardar la relacion que intentaste crear.");
-                    }else if (info === "x0002"){
+                    } else if (info === "x0002") {
                         //Error x0002
                         PNotify.notice({
                             title: 'Error',
@@ -639,7 +656,7 @@
                     } else {
                         PNotify.success({
                             title: 'Exito',
-                            text: 'Se ha guardado la información correctamente.',
+                            text: 'Se ha guardado el archivo correctamente.',
                             styling: 'bootstrap4',
                             delay: 2000
                         });
@@ -671,9 +688,9 @@
             totRegCR = datos['iRegistros'];
             ciu_noEco = datos['aoData'];
             for (var i = 0; i < totRegCR; i++) {
-                const item = datos['aoData'][i];
-                const idExpediente = item['IdExpediente'];
-                const NoEconomico = item['IdSCT'];
+                var item = datos['aoData'][i];
+                var idExpediente = item['IdExpediente'];
+                var NoEconomico = item['IdSCT'];
                 $('#noEconomicoList').append('<option>' + NoEconomico + '</option>');
             }
             $('#NoEco' + tipoUstring).attr("disabled", false);
@@ -681,13 +698,15 @@
     }
 
     $("#formDivFooter").on("click", "#btnSaveData", function (ev) {
+        $("#loader_conce").show();
+        $("#loader_bkg_conce").show();
         $('#formDiv').parsley().validate();
         validateFront();
 
         if (true === $('#formDiv').parsley().isValid()) {
-            if(tipoU === "3" || tipoU === "5" || tipoU === "6"){
-                if(tipoU == "6"){
-                    if($("#DocJuicioST" + tipoUstring).val() == "" && $("#DocJuicioSI" + tipoUstring).val() == ""){
+            if (tipoU === "3" || tipoU === "5" || tipoU === "6") {
+                if (tipoU == "6") {
+                    if ($("#DocJuicioST" + tipoUstring).val() == "" && $("#DocJuicioSI" + tipoUstring).val() == "") {
                         $("#DocJuicioST" + tipoUstring).addClass('parsley-error');
                         $("#DocJuicioSI" + tipoUstring).addClass('parsley-error');
                         $("#DocJuicioST" + tipoUstring).focus();
@@ -706,6 +725,8 @@
                                             primary: true,
                                             click: function (notice) {
                                                 notice.close();
+                                                $("#loader_conce").hide();
+                                                $("#loader_bkg_conce").hide();
                                             }
                                         }
                                     ]
@@ -718,14 +739,140 @@
                                 },
                             }
                         });
-                    }else{
+                    } else {
+                        var amValue = $("#ApellidoM" + tipoUstring).val();
+                        if (amValue == "") {
+                            $("#ApellidoM" + tipoUstring).addClass('parsley-error');
+                            $("#ApellidoM" + tipoUstring).focus();
+                            PNotify.notice({
+                                title: 'Nota',
+                                text: 'El campo de Apellido Materno esta vacío, ¿desea continuar el registro?',
+                                styling: 'bootstrap4',
+                                hide: false,
+                                modules: {
+                                    Confirm: {
+                                        confirm: true,
+                                        buttons: [
+                                            {
+                                                text: 'Entendido',
+                                                primary: true,
+                                                click: function (notice) {
+                                                    notice.close();
+                                                    guardarPersonaFisicaFile(ev);
+                                                }
+                                            },
+                                            {
+                                                text: 'Cancelar',
+                                                primary: true,
+                                                click: function (notice) {
+                                                    notice.close();
+                                                    $("#loader_conce").hide();
+                                                    $("#loader_bkg_conce").hide();
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    Buttons: {
+                                        closer: true
+                                    },
+                                    History: {
+                                        history: false
+                                    },
+                                }
+                            });
+                        } else {
+                            guardarPersonaFisicaFile(ev);
+                        }
+                    }
+                } else {
+                    var amValue = $("#ApellidoM" + tipoUstring).val();
+                    if (amValue == "") {
+                        $("#ApellidoM" + tipoUstring).addClass('parsley-error');
+                        $("#ApellidoM" + tipoUstring).focus();
+                        PNotify.notice({
+                            title: 'Nota',
+                            text: 'El campo de Apellido Materno esta vacío, ¿desea continuar el registro?',
+                            styling: 'bootstrap4',
+                            hide: false,
+                            modules: {
+                                Confirm: {
+                                    confirm: true,
+                                    buttons: [
+                                        {
+                                            text: 'Entendido',
+                                            primary: true,
+                                            click: function (notice) {
+                                                notice.close();
+                                                guardarPersonaFisicaFile(ev);
+                                            }
+                                        },
+                                        {
+                                            text: 'Cancelar',
+                                            primary: true,
+                                            click: function (notice) {
+                                                notice.close();
+                                                $("#loader_conce").hide();
+                                                $("#loader_bkg_conce").hide();
+                                            }
+                                        }
+                                    ]
+                                },
+                                Buttons: {
+                                    closer: true
+                                },
+                                History: {
+                                    history: false
+                                },
+                            }
+                        });
+                    } else {
                         guardarPersonaFisicaFile(ev);
                     }
-                }else{
-                    guardarPersonaFisicaFile(ev);
                 }
-            }else {
-                guardarPersonaFisica(ev);
+            } else {
+                var amValue = $("#ApellidoM" + tipoUstring).val();
+                if (amValue == "") {
+                    $("#ApellidoM" + tipoUstring).addClass('parsley-error');
+                    $("#ApellidoM" + tipoUstring).focus();
+                    PNotify.notice({
+                        title: 'Nota',
+                        text: 'El campo de Apellido Materno esta vacío, ¿desea continuar el registro?',
+                        styling: 'bootstrap4',
+                        hide: false,
+                        modules: {
+                            Confirm: {
+                                confirm: true,
+                                buttons: [
+                                    {
+                                        text: 'Entendido',
+                                        primary: true,
+                                        click: function (notice) {
+                                            notice.close();
+                                            guardarPersonaFisica(ev);
+                                        }
+                                    },
+                                    {
+                                        text: 'Cancelar',
+                                        primary: true,
+                                        click: function (notice) {
+                                            notice.close();
+                                            $("#loader_conce").hide();
+                                            $("#loader_bkg_conce").hide();
+                                        }
+                                    }
+                                ]
+                            },
+                            Buttons: {
+                                closer: true
+                            },
+                            History: {
+                                history: false
+                            },
+                        }
+                    });
+                } else {
+                    guardarPersonaFisica(ev);
+                }
             }
         }
     });
@@ -737,7 +884,7 @@
         validateFront();
         if (true === $('#formDiv').parsley().isValid()) {
             var amValue = $("#ApellidoMDG" + tipoUstring).val();
-            if(amValue == ""){
+            if (amValue == "") {
                 $("#ApellidoMDG" + tipoUstring).addClass('parsley-error');
                 $("#ApellidoMDG" + tipoUstring).focus();
                 PNotify.notice({
@@ -776,7 +923,7 @@
                         },
                     }
                 });
-            }else{
+            } else {
                 guardarConcesionario(ev);
             }
         }
@@ -789,6 +936,23 @@
                 etiquetas.push(key + "_" + val);
             });
         });
+    }
+
+    //Agrega las ciudades a los combos
+    function addCiudades(selector) {
+        var selectorId = "#" + selector + tipoUstring;
+        $(selectorId).empty().append('<option value=""></option>');
+        arrCiudadesIDs = localStorage.getItem('arrCiudadesIDs');
+        arrCiudadesIDs = arrCiudadesIDs.split(',');
+        arrCiudadesNom = localStorage.getItem('arrCiudadesNom');
+        arrCiudadesNom = arrCiudadesNom.split(',');
+        setTimeout(function () {
+            for (var i = 0; i < arrCiudadesIDs.length; i++) {
+                var idCiudad = arrCiudadesIDs[i];
+                var nombreCiudad = arrCiudadesNom[i];
+                $(selectorId).append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
+            }
+        }, 500);
     }
     //carga combo estados
     async function cargaEstados() {
@@ -811,9 +975,9 @@
             totRegCR = datos['iRegistros'];
             setTimeout(function () {
                 for (var i = 0; i < totRegCR; i++) {
-                    const item = datos['aoData'][i];
-                    const idEstado = item['IdEstado'];
-                    const nombreEstado = item['Nombre'];
+                    var item = datos['aoData'][i];
+                    var idEstado = item['IdEstado'];
+                    var nombreEstado = item['Nombre'];
                     $('#EdoNacLN' + tipoUstring).append('<option value="' + idEstado + '">' + nombreEstado + '</option>');
                     $('#EdoDomDC' + tipoUstring).append('<option value="' + idEstado + '">' + nombreEstado + '</option>');
                 }
@@ -842,14 +1006,28 @@
             datos = JSON.parse(data.d);
             //Obtiene el total de registros retornados
             totRegCR = datos['iRegistros'];
-            setTimeout(function () {
+            if (selectorId.includes('MunAdsCD') || selectorId.includes('CdConce')) {
+                arrCiudadesNom = [];
+                arrCiudadesIDs = [];
                 for (var i = 0; i < totRegCR; i++) {
-                    const item = datos['aoData'][i];
-                    const idCiudad = item['IdCiudad'];
-                    const nombreCiudad = item['Nombre'];
-                    $(selectorId).append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
+                    var item = datos['aoData'][i];
+                    var idCiudad = item['IdCiudad'];
+                    var nombreCiudad = item['Nombre'];
+                    arrCiudadesNom.push(nombreCiudad);
+                    arrCiudadesIDs.push(idCiudad);
+                    localStorage.setItem('arrCiudadesNom', arrCiudadesNom);
+                    localStorage.setItem('arrCiudadesIDs', arrCiudadesIDs);
                 }
-            }, 500);
+            } else {
+                setTimeout(function () {
+                    for (var i = 0; i < totRegCR; i++) {
+                        var item = datos['aoData'][i];
+                        var idCiudad = item['IdCiudad'];
+                        var nombreCiudad = item['Nombre'];
+                        $(selectorId).append('<option value="' + idCiudad + '">' + nombreCiudad + '</option>');
+                    }
+                }, 500);
+            }
         });
     }
     //Genera de forma automatica el formulario dependiendo del tipo de usuario que sea
@@ -872,7 +1050,7 @@
         $.when(resultado).done(function (data) {
             var datos = JSON.parse(data.d);
             var campos = datos['aoData'];
-            if(tipoU === "3" || tipoU === "5" || tipoU === "6"){
+            if (tipoU === "3" || tipoU === "5" || tipoU === "6") {
                 $("#formDiv").attr("enctype", "multipart/form-data");
             }
             var psFG = $("<div></div>").addClass("form-group col-md-6");
@@ -1045,71 +1223,6 @@
                         var psL = $("<label></label>").addClass("control-label").attr("id", "lbl" + idCampo).attr("for", idCampo).text(lblCampo);
                         var psDI = $("<div></div>");
                         var psI = $("<select>").addClass("form-control").attr("type", "text").attr("id", idCampo);
-                        var seIopt = $("<option></option>").attr("value", "");
-                        var seIopt1 = $("<option>AHUALULCO</option>").attr("value", "1820");
-                        var seIopt2 = $("<option>ALAQUINES</option>").attr("value", "1821");
-                        var seIopt3 = $("<option>AQUISMÓN</option>").attr("value", "1822");
-                        var seIopt4 = $("<option>ARMADILLO DE LOS INFANTE</option>").attr("value", "1823");
-                        var seIopt53 = $("<option>AXTLA DE TERRAZAS</option>").attr("value", "1872");
-                        var seIopt5 = $("<option>CÁRDENAS</option>").attr("value", "1824");
-                        var seIopt6 = $("<option>CATORCE</option>").attr("value", "1825");
-                        var seIopt7 = $("<option>CEDRAL</option>").attr("value", "1826");
-                        var seIopt8 = $("<option>CERRITOS</option>").attr("value", "1827");
-                        var seIopt9 = $("<option>CERRO DE SAN PEDRO</option>").attr("value", "1828");
-                        var seIopt15 = $("<option>CHARCAS</option>").attr("value", "1834");
-                        var seIopt10 = $("<option>CIUDAD DEL MAÍZ</option>").attr("value", "1829");
-                        var seIopt11 = $("<option>CIUDAD FERNÁNDEZ</option>").attr("value", "1830");
-                        var seIopt13 = $("<option>CIUDAD VALLES</option>").attr("value", "1832");
-                        var seIopt14 = $("<option>COXCATLÁN</option>").attr("value", "1833");
-                        var seIopt16 = $("<option>EBANO</option>").attr("value", "1835");
-                        var seIopt58 = $("<option>EL NARANJO</option>").attr("value", "1877");
-                        var seIopt17 = $("<option>GUADALCÁZAR</option>").attr("value", "1836");
-                        var seIopt18 = $("<option>HUEHUETLÁN</option>").attr("value", "1837");
-                        var seIopt19 = $("<option>LAGUNILLAS</option>").attr("value", "1838");
-                        var seIopt20 = $("<option>MATEHUALA</option>").attr("value", "1839");
-                        var seIopt57 = $("<option>MATLAPA</option>").attr("value", "1876");
-                        var seIopt21 = $("<option>MEXQUITIC DE CARMONA</option>").attr("value", "1840");
-                        var seIopt22 = $("<option>MOCTEZUMA</option>").attr("value", "1841");
-                        var seIopt23 = $("<option>RAYÓN</option>").attr("value", "1842");
-                        var seIopt24 = $("<option>RIOVERDE</option>").attr("value", "1843");
-                        var seIopt25 = $("<option>SALINAS</option>").attr("value", "1844");
-                        var seIopt26 = $("<option>SAN ANTONIO</option>").attr("value", "1845");
-                        var seIopt27 = $("<option>SAN CIRO DE ACOSTA</option>").attr("value", "1846");
-                        var seIopt28 = $("<option>SAN LUIS POTOSÍ</option>").attr("value", "1847");
-                        var seIopt29 = $("<option>SAN MARTÍN CHALCHICUAUTLA</option>").attr("value", "1848");
-                        var seIopt30 = $("<option>SAN NICOLÁS TOLENTINO</option>").attr("value", "1849");
-                        var seIopt31 = $("<option>SANTA CATARINA</option>").attr("value", "1850");
-                        var seIopt32 = $("<option>SANTA MARÍA DEL RÍO</option>").attr("value", "1851");
-                        var seIopt33 = $("<option>SANTO DOMINGO</option>").attr("value", "1852");
-                        var seIopt34 = $("<option>SAN VICENTE TANCUAYALAB</option>").attr("value", "1853");
-                        var seIopt35 = $("<option>SOLEDAD DE GRACIANO SÁNCHEZ</option>").attr("value", "1854");
-                        var seIopt36 = $("<option>TAMASOPO</option>").attr("value", "1855");
-                        var seIopt37 = $("<option>TAMAZUNCHALE</option>").attr("value", "1856");
-                        var seIopt38 = $("<option>TAMPACÁN</option>").attr("value", "1857");
-                        var seIopt39 = $("<option>TAMPAMOLÓN CORONA</option>").attr("value", "1858");
-                        var seIopt40 = $("<option>TAMUÍN</option>").attr("value", "1859");
-                        var seIopt12 = $("<option>TANCANHUITZ</option>").attr("value", "1831");
-                        var seIopt41 = $("<option>TANLAJÁS</option>").attr("value", "1860");
-                        var seIopt42 = $("<option>TANQUIÁN DE ESCOBEDO</option>").attr("value", "1861");
-                        var seIopt43 = $("<option>TIERRA NUEVA</option>").attr("value", "1862");
-                        var seIopt44 = $("<option>VANEGAS</option>").attr("value", "1863");
-                        var seIopt45 = $("<option>VENADO</option>").attr("value", "1864");
-                        var seIopt56 = $("<option>VILLA DE ARISTA</option>").attr("value", "1875");
-                        var seIopt46 = $("<option>VILLA DE ARRIAGA</option>").attr("value", "1865");
-                        var seIopt47 = $("<option>VILLA DE GUADALUPE</option>").attr("value", "1866");
-                        var seIopt48 = $("<option>VILLA DE LA PAZ</option>").attr("value", "1867");
-                        var seIopt49 = $("<option>VILLA DE RAMOS</option>").attr("value", "1868");
-                        var seIopt50 = $("<option>VILLA DE REYES</option>").attr("value", "1869");
-                        var seIopt51 = $("<option>VILLA HIDALGO</option>").attr("value", "1870");
-                        var seIopt52 = $("<option>VILLA JUÁREZ</option>").attr("value", "1871");
-                        var seIopt54 = $("<option>XILITLA</option>").attr("value", "1873");
-                        var seIopt55 = $("<option>ZARAGOZA</option>").attr("value", "1874");
-
-                        psI.append(seIopt, seIopt1, seIopt2, seIopt3, seIopt4, seIopt53, seIopt5, seIopt6, seIopt7, seIopt8, seIopt9, seIopt15, seIopt10, seIopt11,
-                            seIopt13, seIopt14, seIopt16, seIopt58, seIopt17, seIopt18, seIopt19, seIopt20, seIopt57, seIopt21, seIopt22, seIopt23,
-                            seIopt24, seIopt25, seIopt26, seIopt27, seIopt28, seIopt29, seIopt30, seIopt31, seIopt32, seIopt33, seIopt34, seIopt35, seIopt36, seIopt37,
-                            seIopt38, seIopt39, seIopt40, seIopt12, seIopt41, seIopt42, seIopt43, seIopt44, seIopt45, seIopt56, seIopt46, seIopt47, seIopt48, seIopt49, seIopt50, seIopt51,
-                            seIopt52, seIopt54, seIopt55);
                         psDI.append(psI);
                         psFG.append(psL, psDI);
                         $("#formDiv").append(psFG);
@@ -1151,7 +1264,7 @@
                         var seIopt32 = $("<option>VERACRUZ</option>").attr("value", "30");
                         var seIopt29 = $("<option>YUCATÁN</option>").attr("value", "31");
                         var seIopt30 = $("<option>ZACATECAS</option>").attr("value", "32");
-                        psI.append(seIopt, seIopt2, seIopt3, seIopt4, seIopt5, seIopt8, seIopt9, seIopt10, seIopt6, seIopt7,  seIopt11,
+                        psI.append(seIopt, seIopt2, seIopt3, seIopt4, seIopt5, seIopt8, seIopt9, seIopt10, seIopt6, seIopt7, seIopt11,
                             seIopt12, seIopt13, seIopt14, seIopt15, seIopt16, seIopt31, seIopt17, seIopt18, seIopt19, seIopt20, seIopt21, seIopt22, seIopt23, seIopt1,
                             seIopt24, seIopt25, seIopt26, seIopt27, seIopt28, seIopt32, seIopt29, seIopt30);
                         psDI.append(psI);
@@ -1177,7 +1290,7 @@
                         psDI.append(psI);
                         psFG.append(psL, psDI);
                         $("#formDiv").append(psFG);
-                    } else if (campoName.includes("Doc")){
+                    } else if (campoName.includes("Doc")) {
                         var psFG = $("<div></div>").addClass("form-group col-md-6");
                         var psL = $("<label></label>").addClass("control-label").attr("id", "lbl" + idCampo).attr("for", idCampo).text(lblCampo);
                         var psDI = $("<div></div>");
@@ -1185,7 +1298,7 @@
                         psDI.append(psI);
                         psFG.append(psL, psDI);
                         $("#formDiv").append(psFG);
-                    } else if (campoName.includes("Nacionalidad")){
+                    } else if (campoName.includes("Nacionalidad")) {
                         var psFG = $("<div></div>").addClass("form-group col-md-6");
                         var psL = $("<label></label>").addClass("control-label").attr("id", "lbl" + idCampo).attr("for", idCampo).text(lblCampo);
                         var psDI = $("<div></div>");
@@ -1243,7 +1356,7 @@
                 textoBus: "",
                 idPrestadorServicio: idPrestador
             });
-        }else if ( controlID === "btnContinuarConce"){
+        } else if (controlID === "btnContinuarConce") {
             uri = rootURL + obtenerPF
             dataJson = JSON.stringify({
                 token: tokenSession,
@@ -1271,10 +1384,10 @@
                 var usuario = datos['aoData'];
                 setTimeout(function () {
                     //Validacion en caso de que ya tenga registrada una concesion el PrestadorServicio
-                    if(ConcesionExist == true){
+                    if (ConcesionExist == true) {
                         $("#JustiCD" + tipoUstring).show();
                         $("#lblJustiCD" + tipoUstring).show()
-                    }else{
+                    } else {
                         $("#JustiCD" + tipoUstring).hide();
                         $("#lblJustiCD" + tipoUstring).hide();
                         $("#JustiCD" + tipoUstring).attr("required", false);
@@ -1351,7 +1464,7 @@
                     $("#idMunAds").val(usuario[0]['IdCiudad']);
                     $("#ModalidadCD" + tipoUstring).val(usuario[0]['IdModalidad']);
                     var valueJustificacion = usuario[0]['Justificacion'];
-                    if (valueJustificacion != "" && valueJustificacion != undefined && valueJustificacion != null){
+                    if (valueJustificacion != "" && valueJustificacion != undefined && valueJustificacion != null) {
                         $("#lblJustiCD" + tipoUstring).show()
                         $("#JustiCD" + tipoUstring).show();
                         $("#JustiCD" + tipoUstring).val(usuario[0]['Justificacion']);
@@ -1384,9 +1497,9 @@
                 $("#noEconomicoList").empty();
                 $("#noEconomicoList").append("<option value=''></option>");
                 cargaCiudades(24, 'CdConce');
-                setTimeout(function(){
+                setTimeout(function () {
                     CargaNoEconomicos(usuario[0]['IdCiudad']);
-                },600);
+                }, 600);
                 setTimeout(function () {
                     var ap, am, nom, calle, col, numE, numI, tel, cu, noE, fechaN;
                     var ce, se, nac;
@@ -1538,7 +1651,94 @@
     }
     //Carga las tablas de concesionarios
     async function cargaTablaConcesionarios() {
-        const idTipoUsuario = localStorage.getItem("tipoU");
+        var idTipoUsuario = localStorage.getItem("tipoU");
+        var inputTexto = $("#inputBusqueda").val();
+        var dataJson = JSON.stringify({
+            token: tokenSession,
+            tipoU: idTipoUsuario,
+            textoBus: inputTexto
+        });
+        var resultado;
+        try {
+            resultado = await $.ajax({
+                type: "POST",
+                url: rootURL + obtenerTiposU,
+                data: dataJson,
+                contentType: "application/json; charset=utf-8"
+            });
+        } catch (e) {
+            console.log(e.message)
+        }
+
+        $.when(resultado).done(function (data) {
+            var datos = JSON.parse(data.d);
+            var usuarios = datos['aoData'];
+            var contador = 0;
+            if (usuarios.length > 0) {
+                usuarios.forEach(usuario => {
+                    $("#TblCatBodyConce").append("<tr id='tblCataUsuaRow" + contador + "'></tr>");
+                    var fila = $("#tblCataUsuaRow" + contador);
+                    fila.append("<td style='display:none'>" + usuario['IdPrestadorServicio'] + "</td>");
+                    fila.append("<td style='display:none'>" + usuario['IdExpediente'] + "</td>");
+                    fila.append("<td>" + usuario['noEconomico'] + "</td>");//Numero economico
+                    fila.append("<td>" + usuario['NoConcesion'] + "</td>");
+                    fila.append("<td>" + usuario['NombreCompleto'] + "</td>");
+                    var fechaN = usuario['FechaNombramiento'] == null ? ["-"] : usuario['FechaNombramiento'].split("T");
+                    fila.append("<td>" + fechaN[0] + "</td>");
+                    fila.append("<td>" + usuario['MunAdscripcion'] + "</td>");
+                    var curp = usuario['CURP'] == null ? "-" : usuario['CURP'];
+                    fila.append("<td>" + curp + "</td>");
+                    var rfc = usuario['RFC'] == null ? "-" : usuario['RFC'];
+                    fila.append("<td>" + rfc + "</td>");
+                    fila.append("<td><button id='btnAddConce" + contador + "' class='btn btn-success'><i class='fas fa-folder-plus'></i></button></td>")
+                    fila.append("<td><button id='btnEditPJ" + contador + "' class='btn btn-warning'><i class='fas fa-edit'></i></button></td>")
+                    fila.append("<td><button id='btnDeletePJ" + contador + "' class='btn btn-danger'><i class='fas fa-trash-alt'></i></button></td>")
+                    var suspendido = usuario['Suspendido'];
+                    if (suspendido == false) {
+                        fila.append("<td><button id='btnSuspencion' class='permit permit-DSB015 btnSuspencion btn btn-success'><i class='fas fa-lock-open'></i></button></td>");
+                    } else {
+                        fila.append("<td><button id='btnActivacion' class='permit permit-DSB015 btnActivacion btn btn-danger'><i class='fas fa-lock'></i></button></td>");
+                    }
+                    fila.append("<td style='display: none;'>" + usuario['NombreModalidad'] + "</td>")
+                    contador++;
+                });
+                tablaCatalogos = $("#tablaCatalogos").DataTable({
+                    dom: 'p'
+                });
+            } else {
+                PNotify.notice({
+                    title: 'Nota',
+                    text: 'La búsqueda no he regresado ningún resultado.',
+                    styling: 'bootstrap4',
+                    hide: false,
+                    modules: {
+                        Confirm: {
+                            confirm: true,
+                            buttons: [
+                                {
+                                    text: 'Entendido',
+                                    primary: true,
+                                    click: function (notice) {
+                                        notice.close();
+                                    }
+                                }
+                            ]
+                        },
+                        Buttons: {
+                            closer: true
+                        },
+                        History: {
+                            history: false
+                        },
+                    }
+
+                });
+            }
+        });
+    }
+    //Carga las tablas de tipos de usuario
+    async function cargaTablaTipoUsuarios() {
+        var idTipoUsuario = localStorage.getItem("tipoU");
         var inputTexto = $("#inputBusqueda").val();
         var dataJson = JSON.stringify({
             token: tokenSession,
@@ -1563,30 +1763,21 @@
             var contador = 0;
             if(usuarios.length > 0){
                 usuarios.forEach(usuario => {
-                    $("#TblCatBodyConce").append("<tr id='tblCataUsuaRow" + contador + "'></tr>");
-                    const fila = $("#tblCataUsuaRow" + contador);
+                    $("#TblCatBody").append("<tr id='tblCataUsuaRow" + contador + "'></tr>");
+                    var fila = $("#tblCataUsuaRow" + contador);
                     fila.append("<td style='display:none'>" + usuario['IdPrestadorServicio'] + "</td>");
                     fila.append("<td style='display:none'>" + usuario['IdExpediente'] + "</td>");
-                    fila.append("<td>" + usuario['noEconomico'] + "</td>");//Numero economico
-                    fila.append("<td>" + usuario['NoConcesion'] + "</td>");
+                    fila.append("<td>" + usuario['noEconomico'] + "</td>");
                     fila.append("<td>" + usuario['NombreCompleto'] + "</td>");
-                    var fechaN = usuario['FechaNombramiento'] == null ? ["-"] : usuario['FechaNombramiento'].split("T");
-                    fila.append("<td>" + fechaN[0] + "</td>");
-                    fila.append("<td>" + usuario['MunAdscripcion'] + "</td>");
+                    if (idTipoUsuario === "4") {
+                        fila.append("<td>" + usuario['OrdenPrelacion'] + "</td>");
+                    }
                     var curp = usuario['CURP'] == null ? "-" : usuario['CURP'];
                     fila.append("<td>" + curp + "</td>");
-                    var rfc = usuario['RFC'] == null ? "-" : usuario['RFC'];
-                    fila.append("<td>" + rfc + "</td>");
-                    fila.append("<td><button id='btnAddConce" + contador + "' class='btn btn-success'><i class='fas fa-folder-plus'></i></button></td>")
+                    var fechaN = usuario['FechaNombramiento'] == null ? ["-"] : usuario['FechaNombramiento'].split("T");
+                    fila.append("<td>" + fechaN[0] + "</td>");
                     fila.append("<td><button id='btnEditPJ" + contador + "' class='btn btn-warning'><i class='fas fa-edit'></i></button></td>")
                     fila.append("<td><button id='btnDeletePJ" + contador + "' class='btn btn-danger'><i class='fas fa-trash-alt'></i></button></td>")
-                    var suspendido = usuario['Suspendido'];
-                    if(suspendido == false){
-                        fila.append("<td><button id='btnSuspencion' class='permit permit-DSB015 btnSuspencion btn btn-success'><i class='fas fa-lock-open'></i></button></td>");
-                    }else{
-                        fila.append("<td><button id='btnActivacion' class='permit permit-DSB015 btnActivacion btn btn-danger'><i class='fas fa-lock'></i></button></td>");
-                    }
-                    fila.append("<td style='display: none;'>" + usuario['NombreModalidad'] + "</td>")
                     contador++;
                 });
                 tablaCatalogos = $("#tablaCatalogos").DataTable({
@@ -1623,54 +1814,6 @@
             }
         });
     }
-    //Carga las tablas de tipos de usuario
-    async function cargaTablaTipoUsuarios() {
-        const idTipoUsuario = localStorage.getItem("tipoU");
-        var inputTexto = $("#inputBusqueda").val();
-        var dataJson = JSON.stringify({
-            token: tokenSession,
-            tipoU: idTipoUsuario,
-            textoBus: inputTexto
-        });
-        var resultado;
-        try {
-            resultado = await $.ajax({
-                type: "POST",
-                url: rootURL + obtenerTiposU,
-                data: dataJson,
-                contentType: "application/json; charset=utf-8"
-            });
-        } catch (e) {
-            console.log(e.message)
-        }
-
-        $.when(resultado).done(function (data) {
-            var datos = JSON.parse(data.d);
-            var usuarios = datos['aoData'];
-            var contador = 0;
-            usuarios.forEach(usuario => {
-                $("#TblCatBody").append("<tr id='tblCataUsuaRow" + contador + "'></tr>");
-                const fila = $("#tblCataUsuaRow" + contador);
-                fila.append("<td style='display:none'>" + usuario['IdPrestadorServicio'] + "</td>");
-                fila.append("<td style='display:none'>" + usuario['IdExpediente'] + "</td>");
-                fila.append("<td>" + usuario['noEconomico'] + "</td>");
-                fila.append("<td>" + usuario['NombreCompleto'] + "</td>");
-                if (idTipoUsuario === "4") {
-                    fila.append("<td>" + usuario['OrdenPrelacion'] + "</td>");
-                }
-                var curp = usuario['CURP'] == null ? "-" : usuario['CURP'];
-                fila.append("<td>" + curp + "</td>");
-                var fechaN = usuario['FechaNombramiento'] == null ? ["-"] : usuario['FechaNombramiento'].split("T");
-                fila.append("<td>" + fechaN[0] + "</td>");
-                fila.append("<td><button id='btnEditPJ" + contador + "' class='btn btn-warning'><i class='fas fa-edit'></i></button></td>")
-                fila.append("<td><button id='btnDeletePJ" + contador + "' class='btn btn-danger'><i class='fas fa-trash-alt'></i></button></td>")
-                contador++;
-            });
-            tablaCatalogos = $("#tablaCatalogos").DataTable({
-                dom: 'p'
-            });
-        });
-    }
     //Carga la tabla de personas fisicas
     async function cargaTablaPersonasFisica() {
         var inputTexto = $("#inputBusquedaPF").val();
@@ -1698,7 +1841,7 @@
                 var contador = 0;
                 usuarios.forEach(usuario => {
                     $("#TblPerFisBody").append("<tr id='tblPFRow" + contador + "'></tr>");
-                    const fila = $("#tblPFRow" + contador);
+                    var fila = $("#tblPFRow" + contador);
                     fila.append("<td style='display: none;'>" + usuario['IdPrestadorServicio'] + "</td>")
                     fila.append("<td>" + usuario['NombreCompleto'] + "</td>");
                     var curp = usuario['CURP'] == null ? "-" : usuario['CURP'];
@@ -1709,16 +1852,16 @@
                     var numI = usuario['NumeroInterior'] == null ? "" : usuario['NumeroInterior'];
                     fila.append("<td>" + calle + " " + colonia + " " + numE + " " + numI + "</td>");
                     var idTipoInd = usuario['idTipoIndividuo'] == [] ? [0] : usuario['idTipoIndividuo'];
-                    if(idTipoInd[0] == "7"){
-                        if(tipoU == "7"){
+                    if (idTipoInd[0] == "7") {
+                        if (tipoU == "7") {
                             var btnAddConce = $("<button><i class='fas fa-folder-plus'></i></button>").addClass("btn btn-success").attr("id", "btnNuevaConce");
                             var celdaBtnAdd = $("<td></td>");
                             celdaBtnAdd.append(btnAddConce);
                             fila.append(celdaBtnAdd);
-                        }else{
+                        } else {
                             fila.append("<td><span class='dot'></span></td>");
                         }
-                    }else{
+                    } else {
                         fila.append("<td></td>");
                     }
                     contador++;
@@ -1768,7 +1911,7 @@
             tablaCatalogos.destroy();
             $("#TblCatBody").empty();
         }
-        cargaTablaTipoUsuarios();        
+        cargaTablaTipoUsuarios();
     });
     //Evento de click donde se realiza la busqueda de una persona Juridica
     $("#btnBuscarConce").on("click", function () {
@@ -1776,11 +1919,11 @@
             tablaCatalogos.destroy();
             $("#TblCatBodyConce").empty();
         }
-        cargaTablaConcesionarios();        
+        cargaTablaConcesionarios();
     });
     //Evento de click donde se muestra el modal donde se buscaran y/o agregaran personas fisicas y sus relaciones
     $("#btnNuevo").on("click", function () {
-        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
+        $("#modalLarge").modal({ backdrop: 'static', keyboard: false });
         $("#formularioDiv").hide();
         $("#btnSaveData").hide();
         $("#btnSaveDataCon").hide();
@@ -1834,7 +1977,9 @@
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
-            cargaCiudades(24, 'CdConce');
+            setTimeout(function(){
+                addCiudades('CdConce');
+            }, 300);
         }
         cargaInfoPersonaFisica(idPrestador, tipoUsua);
         $('#formDiv').parsley().reset();
@@ -1865,6 +2010,9 @@
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
+            setTimeout(function(){
+                addCiudades('MunAdsCD');
+            },300);
         }
         cargaInfocConcesionPFConce(idPrestador, tipoUsua, controlID);
         $('#formDiv').parsley().reset();
@@ -1883,7 +2031,7 @@
     });
     //Evento de click donde muestra la informacion de la presona juridica para ser editada
     $("#TblCatBody").on("click", "tr .btn-warning", function (ev) {
-        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
+        $("#modalLarge").modal({ backdrop: 'static', keyboard: false });
         $("#tablaPFdiv").hide();
         $("#formularioDiv").show();
         $("#btnGuardarPJ").hide();
@@ -1904,7 +2052,7 @@
         var tipoUsua = localStorage.getItem("tipoU");
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
-            generateForm(idPrestador, tipoUsua);            
+            generateForm(idPrestador, tipoUsua);
         }
         cargaInfocConcesionPF(idPrestador, tipoUsua);
 
@@ -1948,7 +2096,7 @@
     //Evento de click donde muestra la informacion de la presona juridica para ser editada
     $("#TblCatBodyConce").on("click", "tr .btn-success", function (ev) {
         var controlID = $(this).attr("id");
-        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
+        $("#modalLarge").modal({ backdrop: 'static', keyboard: false });
         $("#tablaPFdiv").hide();
         $("#formularioDiv").show();
         $("#btnGuardarPJ").hide();
@@ -2010,7 +2158,7 @@
     });
     //Evento de click donde se muestra el modal para la eliminacion de la relacion de PF y conceciones
     $("#TblCatBodyConce").on("click", "tr .btn-danger", function () {
-        if($(this).attr("id") != "btnActivacion"){
+        if ($(this).attr("id") != "btnActivacion") {
             $("#alertExito").hide();
             $("#alertError").hide();
             $("#alertNotiConcesion").hide();
@@ -2060,7 +2208,7 @@
             //$("#modalSmall").modal('toggle');
             var datos = JSON.parse(data.d);
             var bandera = datos['aoData'];
-            if(bandera == "true"){
+            if (bandera == "true") {
                 PNotify.success({
                     title: 'Eliminado',
                     text: 'Se ha eliminado correctamente la relación.',
@@ -2069,7 +2217,7 @@
                 });
                 $("#TblCatBodyConce tr").remove();
                 cargaTablaConcesionarios();
-            }else if(bandera == "x0006"){
+            } else if (bandera == "x0006") {
                 //Error x0006
                 PNotify.error({
                     title: 'Error',
@@ -2153,7 +2301,9 @@
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
-            cargaCiudades(24, 'CdConce');
+            setTimeout(function(){
+                addCiudades('CdConce');
+            }, 300);
         }
         $('#formDiv').parsley().reset();
         $(".alertaVali").hide()
@@ -2179,12 +2329,15 @@
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
+            setTimeout(function(){
+                addCiudades('MunAdsCD');
+            },300);
         }
         $('#formDiv').parsley().reset();
         $(".alertaVali").hide()
-        setTimeout(function(){
+        setTimeout(function () {
             $("#JustiCD" + tipoUstring).attr("required", false);
-        },500);
+        }, 500);
     });
     //Evento de teclado donde se verifica si hay algun campo obligatorio si completar
     $("#formDiv").on("keydown", function () {
@@ -2221,12 +2374,12 @@
         CargaNoEconomicos(idCiudad);
     });
 
-    $("#tablaPFdiv").on("click", "#btnNuevaConce", function(){
+    $("#tablaPFdiv").on("click", "#btnNuevaConce", function () {
         $("#modalSmall").modal('toggle');
         $("#alertNotiConcesion").show();
         $("#alertApellidoMaterno").hide();
     });
-    
+
     $("#modalSmall").on("click", "#btnContinuarConce", function () {
         $("#modalSmall").modal('toggle');
         var controlID = "btnContinuarConce";
@@ -2251,12 +2404,12 @@
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
         }
-        cargaInfocConcesionPFConce(idPrestador, tipoUsua, controlID, true, );
+        cargaInfocConcesionPFConce(idPrestador, tipoUsua, controlID, true);
         $('#formDiv').parsley().reset();
         $(".alertaVali").hide();
     });
 
-    $(".btnSaveDataExpConce").on("click", function(){
+    $(".btnSaveDataExpConce").on("click", function () {
         $('.formDivExp').parsley().validate();
         validateFront();
         var values = localStorage.getItem("values");
@@ -2266,7 +2419,7 @@
             $("#modalLarge").modal('toggle');
             var files = $("#fileupload").get(0).files;
             var formData = new FormData();
-            for(var i = 0; i < files.length; i++){
+            for (var i = 0; i < files.length; i++) {
                 formData.append(valuesArr[2], files[i]);
             }
             formData.append("motivo", $(".txt_motivo").val());
@@ -2323,7 +2476,7 @@
                             },
                         }
                     });
-                }else if (info === "x0002"){
+                } else if (info === "x0002") {
                     //Error x0002
                     PNotify.notice({
                         title: 'Error',
@@ -2367,12 +2520,15 @@
     });
 
     $(window).on('load', function () {
-        cargaIdDocumentos();
         var tipoU = localStorage.getItem("tipoU");
         if (tipoU !== "7") {
             cargaTablaTipoUsuarios();
+            cargaCiudades('24', 'CdConce' + tipoUstring)
+
         } else {
             cargaTablaConcesionarios();
+            cargaCiudades('24', 'MunAdsCD' + tipoUstring)
         }
+        cargaIdDocumentos();
     });
 }));

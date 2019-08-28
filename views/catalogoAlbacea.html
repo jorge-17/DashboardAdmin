@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -37,301 +38,334 @@
     <link rel="stylesheet" href="../css/ciatecCustom.css">
     <link rel="stylesheet" href="../css/controlRadio.css">
 </head>
+
 <body class="nav-md">
-<div class="container body">
-    <div class="main_container">
-        <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-                <div class="navbar nav_title" style="border: 0;">
-                    <i id="logo_sctslp">
-                        <img alt="..." class="img-circle profile_img" src="../img/logoSLP2.png" />
-                    </i>
-                    <a class="site_title" href="home.html">
+    <div id="loader_conce"></div>
+    <div id="loader_bkg_conce"></div>
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <i id="logo_sctslp">
+                            <img alt="..." class="img-circle profile_img" src="../img/logoSLP2.png" />
+                        </i>
+                        <a class="site_title" href="home.html">
                             <span>
                                 Tablero
                             </span>
-                    </a>
+                        </a>
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                    <br />
+                    <!-- sidebar menu -->
+                    <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
+                        <div class="menu_section">
+                            <h3>
+                                General
+                            </h3>
+                            <ul class="nav side-menu">
+                                <li class="permit permit-DSB001"><a id="btnAdmin" href="admin.html"><i
+                                            class="fas fa-home"></i> Página principal </a>
+                                </li>
+                                <li
+                                    class="permit permit-DSB002 permit-DSB003 permit-DSB012 permit-DSB013 permit-DSB014">
+                                    <a id="btnReportes"><i class="fas fa-table"></i>
+                                        Reportes <span class="fas fa-caret-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <!--<li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>-->
+                                        <li class="permit permit-DSB012"><a id="btnRepTranparencia"
+                                                href="Reportes2.html">Transparecia</a></li>
+                                        <li class="permit permit-DSB013"><a id="btnRepPersonasFisicas"
+                                                href="ReportePF.html">Personas Fisicas</a></li>
+                                        <li class="permit permit-DSB014"><a id="btnRepPersonasConce"
+                                                href="ReporteConce.html">Reporte de concesionarios</a></li>
+                                    </ul>
+                                </li>
+                                <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas"
+                                        href="MapeoRutas.html"><i class="fas fa-map-marked-alt"></i>
+                                        Mapeo Rutas
+                                    </a>
+                                </li>
+                                <li class="permit permit-DSB011">
+                                    <a href="concesiones.html" id="btnConcesiones"><i
+                                            class="fas fa-user-tag"></i>Concesionarios</a>
+                                </li>
+                                <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a
+                                        id="btnCatalogos"><i class="fas fa-book-open"></i>
+                                        Personalidades Juridicas <span class="fas fa-caret-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li class="permit permit-DSB007"><a id="btnRepLeg"
+                                                href="catalogoRepLeg.html">Apoderados Legales</a></li>
+                                        <li class="permit permit-DSB009"><a id="btnTutor"
+                                                href="catalogoTutor.html">Tutor</a></li>
+                                        <li class="permit permit-DSB008"><a id="btnAlbacea"
+                                                href="catalogoAlbacea.html">Albacea</a></li>
+                                        <li class="permit permit-DSB010"><a id="btnBeneficiario"
+                                                href="catalogoBene.html">Beneficiarios</a></li>
+                                    </ul>
+                                </li>
+                                <li class="permit permit-DSB016">
+                                    <a id="btnExpOperadores" href="expOperadores.html"><i
+                                            class="fas fa-folder-open"></i> Suspensión de Operadores</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle">
+                                <i class="fa fa-bars">
+                                </i>
+                            </a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle"
+                                    data-toggle="dropdown" href="javascript:;">
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" role="presentation">
+                                <a aria-expanded="false" class="dropdown-toggle info-number" data-toggle="dropdown"
+                                    href="javascript:;">
+                                    <i class="fa fa-envelope-o">
+                                    </i>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" id="menu1" role="menu">
+                                    <li>
+                                        <div class="text-center">
+                                            <a>
+                                                <strong>
+                                                    See All Alerts
+                                                </strong>
+                                                <i class="fa fa-angle-right">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="row" id="tab_catalogos">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h3>Catálogo de <b id="nomCatalogo">Albacea</b></h3>
+                            </div>
+                            <div class="x_content">
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control form-control-lg" id="inputBusqueda"
+                                        aria-describedby="busquedaHelp" placeholder="Ingrese palabra a buscar">
+                                    <small id="busquedaHelp" class="form-text text-muted">Ingresa la palabra con la que
+                                        deseas realizar la busqueda</small>
+                                </div>
+                                <button id="btnBuscar" class="btn btn-lg btn-primary">Buscar</button>
+                                <button id="btnNuevo" class="btn btn-lg btn-primary"
+                                    data-target=".bs-example-modal-lg">Nuevo</button>
+                                <div class="modal fade bs-example-modal-lg" id="modalLarge" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div id="tablaPFdiv" class="modal-body">
+                                                <div class="form-group col-md-6">
+                                                    <input type="text" class="form-control form-control-lg"
+                                                        id="inputBusquedaPF" aria-describedby="busquedaPFHelp"
+                                                        placeholder="Ingrese palabra a buscar">
+                                                    <small id="busquedaPFHelp" class="form-text text-muted">Ingresa la
+                                                        palabra con la que deseas realizar la busqueda</small>
+                                                </div>
+                                                <button id="btnBuscarPF" class="btn btn-lg btn-primary">Buscar</button>
+                                                <button id="btnNuevaPF" type="button" class="btn btn-lg btn-default"
+                                                    disabled>Crear persona fisica</button>
+                                                <table id="tablaPerFisicas" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="display: none;">Num. Prestador</th>
+                                                            <th>Nombre</th>
+                                                            <th>CURP</th>
+                                                            <th>Dirección</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="TblPerFisBody">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="formularioDiv" class="modal-body">
+                                                <form id="formDiv" data-parsley-validate
+                                                    class="form-horizontal form-label-left">
+                                                </form>
+                                            </div>
+                                            <div id="fromularioNuevaPF" class="modal-body">
+                                                <form id="formNuevaPF" data-parsley-validate
+                                                    class="form-horizontal form-label-left">
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer" id="formDivFooter">
+                                                <input form="formNuevaPF" id="btnSaveData" class="btn btn-success"
+                                                    value="Guardar datos">
+                                                <button id="btnCancelar" type="button" data-dismiss="modal"
+                                                    class="btn btn-danger">Cancelar</button>
+                                                <button id="btnAgregarPF" type="button" class="btn btn-primary"
+                                                    disabled>Añadir a catálogo de Albacea </button>
+                                                <!--<button id="btnRegresarBPF" type="button" class="btn btn-default" >Regresar</button>-->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade bs-example-modal-sm" id="modalSmall" tabindex="-1" role="dialog"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content" id="alertDelete">
+                                            <div class="modal-body alert alert-danger" role="alert">
+                                                <h4>¿Desea eliminar a <b id="nomUsuario"></b> del catálogo de <b
+                                                        id="tipoUlabel"></b>?</h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">No</button>
+                                                <button type="button" id="btnElimitarPJ"
+                                                    class="btn btn-danger">Si</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <table id="tablaCatalogos" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="display:none">Id Prestador</th>
+                                            <th style="display: none"></th>
+                                            <th>Número Económico</th>
+                                            <th>Nombre</th>
+                                            <th>CURP</th>
+                                            <th>Fecha de nombramiento</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="TblCatBody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    <p>Secretaria de Comunicaciones y Transportes SLP</p>
                 </div>
                 <div class="clearfix">
                 </div>
-                <br />
-                <!-- sidebar menu -->
-                <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
-                    <div class="menu_section">
-                        <h3>
-                            General
-                        </h3>
-                        <ul class="nav side-menu">
-                            <li class="permit permit-DSB001"><a id="btnAdmin" href="admin.html"><i
-                                        class="fas fa-home"></i> Página principal </a>
-                            </li>
-                            <li class="permit permit-DSB002 permit-DSB003 permit-DSB012 permit-DSB013 permit-DSB014"><a id="btnReportes"><i class="fas fa-table"></i>
-                                Reportes <span class="fas fa-caret-down"></span></a>
-                            <ul class="nav child_menu">
-                                <!--<li><a id="btnReporte1" href="Reportes.html">Trámites</a></li>-->
-                                <li class="permit permit-DSB012"><a id="btnRepTranparencia" href="Reportes2.html">Transparecia</a></li>
-                                <li class="permit permit-DSB013"><a id="btnRepPersonasFisicas" href="ReportePF.html">Personas Fisicas</a></li>
-                                <li class="permit permit-DSB014"><a id="btnRepPersonasConce" href="ReporteConce.html">Reporte de concesionarios</a></li>
-                            </ul>
-                        </li>
-                            <li class="permit permit-DSB004 permit-DSB005 permit-DSB006"><a id="btnMapeoRutas" href="MapeoRutas.html"><i
-                                        class="fas fa-map-marked-alt"></i>
-                                    Mapeo Rutas
-                                </a>
-                            </li>
-                            <li class="permit permit-DSB011">
-                                <a href="concesiones.html" id="btnConcesiones"><i class="fas fa-user-tag"></i>Concesionarios</a>
-                            </li>
-                            <li class="permit permit-DSB007 permit-DSB008 permit-DSB009 permit-DSB010"><a id="btnCatalogos"><i class="fas fa-book-open"></i>
-                                Personalidades Juridicas <span class="fas fa-caret-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li class="permit permit-DSB007"><a id="btnRepLeg" href="catalogoRepLeg.html">Apoderados Legales</a></li>
-                                    <li class="permit permit-DSB009"><a id="btnTutor" href="catalogoTutor.html">Tutor</a></li>
-                                    <li class="permit permit-DSB008"><a id="btnAlbacea" href="catalogoAlbacea.html">Albacea</a></li>
-                                    <li class="permit permit-DSB010"><a id="btnBeneficiario" href="catalogoBene.html">Beneficiarios</a></li>
-                                </ul>
-                            </li>
-                            <li class="permit permit-DSB016">
-                                <a id="btnExpOperadores" href="expOperadores.html"><i class="fas fa-folder-open"></i> Suspensión de Operadores</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /sidebar menu -->
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                </div>
-                <!-- /menu footer buttons -->
-            </div>
+            </footer>
+            <!-- /footer content -->
         </div>
-        <!-- top navigation -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <nav>
-                    <div class="nav toggle">
-                        <a id="menu_toggle">
-                            <i class="fa fa-bars">
-                            </i>
-                        </a>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="">
-                            <a aria-expanded="false" id="userName" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                               href="javascript:;">
-                            </a>
-                            <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="#" id="btnLogOut"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown" role="presentation">
-                            <a aria-expanded="false" class="dropdown-toggle info-number" data-toggle="dropdown"
-                               href="javascript:;">
-                                <i class="fa fa-envelope-o">
-                                </i>
-                            </a>
-                            <ul class="dropdown-menu list-unstyled msg_list" id="menu1" role="menu">
-                                <li>
-                                    <div class="text-center">
-                                        <a>
-                                            <strong>
-                                                See All Alerts
-                                            </strong>
-                                            <i class="fa fa-angle-right">
-                                            </i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <!-- /top navigation -->
-        <!-- page content -->
-        <div class="right_col" role="main">
-            <div class="row" id="tab_catalogos">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h3>Catálogo de <b id="nomCatalogo">Albacea</b></h3>
-                        </div>
-                        <div class="x_content">
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control form-control-lg" id="inputBusqueda" aria-describedby="busquedaHelp" placeholder="Ingrese palabra a buscar">
-                                <small id="busquedaHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
-                            </div>
-                            <button id="btnBuscar" class="btn btn-lg btn-primary">Buscar</button>
-                            <button id="btnNuevo" class="btn btn-lg btn-primary"  data-target=".bs-example-modal-lg">Nuevo</button>
-                            <div class="modal fade bs-example-modal-lg" id="modalLarge" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div id="tablaPFdiv" class="modal-body">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" class="form-control form-control-lg" id="inputBusquedaPF" aria-describedby="busquedaPFHelp" placeholder="Ingrese palabra a buscar">
-                                                <small id="busquedaPFHelp" class="form-text text-muted">Ingresa la palabra con la que deseas realizar la busqueda</small>
-                                            </div>
-                                            <button id="btnBuscarPF" class="btn btn-lg btn-primary">Buscar</button>                                                                        
-                                            <button id="btnNuevaPF" type="button" class="btn btn-lg btn-default" disabled>Crear persona fisica</button>
-                                            <table id="tablaPerFisicas" class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th style="display: none;">Num. Prestador</th>
-                                                    <th>Nombre</th>
-                                                    <th>CURP</th>
-                                                    <th>Dirección</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="TblPerFisBody">
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div id="formularioDiv" class="modal-body">
-                                            <form id="formDiv" data-parsley-validate class="form-horizontal form-label-left">
-                                            </form>
-                                        </div>
-                                        <div id="fromularioNuevaPF" class="modal-body">
-                                            <form id="formNuevaPF" data-parsley-validate class="form-horizontal form-label-left">
-                                                
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer" id="formDivFooter">
-                                            <input form="formNuevaPF" id="btnSaveData" class="btn btn-success" value="Guardar datos">
-                                            <button id="btnCancelar" type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
-                                            <button id="btnAgregarPF" type="button" class="btn btn-primary" disabled>Añadir a catálogo de Albacea </button>
-                                            <!--<button id="btnRegresarBPF" type="button" class="btn btn-default" >Regresar</button>-->
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade bs-example-modal-sm" id="modalSmall" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content" id="alertDelete">
-                                        <div class="modal-body alert alert-danger" role="alert"> 
-                                            <h4>¿Desea eliminar a <b id="nomUsuario"></b> del catálogo de <b id="tipoUlabel"></b>?</h4>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                                            <button type="button" id="btnElimitarPJ" class="btn btn-danger">Si</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <table id="tablaCatalogos" class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th style="display:none">Id Prestador</th>
-                                    <th style="display: none"></th>
-                                    <th>Número Económico</th>
-                                    <th>Nombre</th>
-                                    <th>CURP</th>
-                                    <th>Fecha de nombramiento</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody id="TblCatBody">
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- /page content -->
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                <p>Secretaria de Comunicaciones y Transportes SLP</p>
-            </div>
-            <div class="clearfix">
-            </div>
-        </footer>
-        <!-- /footer content -->
     </div>
-</div>
-<!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
-<!-- jQuery Cookie -->
-<script src="../js/js.cookie.js"></script>
-<!-- Permit -->
-<script src="../js/permit.js"></script>
-<!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
-<!-- Chart.js -->
-<script src="../vendors/Chart.js/dist/Chart.min.js"></script>
-<!-- gauge.js -->
-<script src="../vendors/gauge.js/dist/gauge.min.js"></script>
-<!-- bootstrap-progressbar -->
-<script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<!-- iCheck -->
-<script src="../vendors/iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="../vendors/skycons/skycons.js"></script>
-<!-- Flot -->
-<script src="../vendors/Flot/jquery.flot.js"></script>
-<script src="../vendors/Flot/jquery.flot.pie.js"></script>
-<script src="../vendors/Flot/jquery.flot.time.js"></script>
-<script src="../vendors/Flot/jquery.flot.stack.js"></script>
-<script src="../vendors/Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"> </script>
-<script src="../vendors/flot.curvedlines/curvedLines.js"></script>
-<!-- DateJS -->
-<script src="../vendors/DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
-<script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="../vendors/moment/min/moment.min.js"></script>
-<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap-datetimepicker -->
-<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-<script src="../vendors/bootstrap-datetimepicker/build/js/es.js"></script>
-<!-- Highcarts -->
-<script src="../js/highcharts/highcharts.js"></script>
-<script src="../js/highcharts/series-label.js"></script>
-<script src="../js/highcharts/exporting.js"></script>
-<script src="../js/highcharts/export-data.js"></script>
-<!-- Datatables -->
-<script src="../vendors/datatables.net/js/jquery.dataTables.js"></script>
-<script src="../vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.flash.js"></script>
-<script src="../vendors/jszip/dist/jszip.js"></script>
-<script src="../vendors/pdfmake/build/pdfmake.js"></script>
-<script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.html5.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.print.js"></script>
-<!-- Parsley -->
-<script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
-<!-- PNotify -->
-<script src="https://sciactive.com/pnotify/lib/iife/PNotify.js"></script>
-<link rel="stylesheet" href="https://sciactive.com/pnotify/src/PNotifyBrightTheme.css" />
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyButtons.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyAnimate.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyCallbacks.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyNonBlock.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyMobile.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyHistory.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyDesktop.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyConfirm.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyStyleMaterial.js"></script>
-<script src="https://sciactive.com/pnotify/lib/iife/PNotifyReference.js"></script>
-<!-- Custom Theme Scripts -->
-<script src="../js/custom.js"></script>
-<script src="../js/comun.min.js"></script>
-<script src="../js/catalogos.min.js"></script>
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery Cookie -->
+    <script src="../js/js.cookie.js"></script>
+    <!-- Permit -->
+    <script src="../js/permit.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="../vendors/Flot/jquery.flot.js"></script>
+    <script src="../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../vendors/flot-spline/js/jquery.flot.spline.min.js"> </script>
+    <script src="../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../vendors/bootstrap-datetimepicker/build/js/es.js"></script>
+    <!-- Highcarts -->
+    <script src="../js/highcharts/highcharts.js"></script>
+    <script src="../js/highcharts/series-label.js"></script>
+    <script src="../js/highcharts/exporting.js"></script>
+    <script src="../js/highcharts/export-data.js"></script>
+    <!-- Datatables -->
+    <script src="../vendors/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.flash.js"></script>
+    <script src="../vendors/jszip/dist/jszip.js"></script>
+    <script src="../vendors/pdfmake/build/pdfmake.js"></script>
+    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.print.js"></script>
+    <!-- Parsley -->
+    <script src="../vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- PNotify -->
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotify.js"></script>
+    <link rel="stylesheet" href="https://sciactive.com/pnotify/src/PNotifyBrightTheme.css" />
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyButtons.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyAnimate.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyCallbacks.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyNonBlock.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyMobile.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyHistory.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyDesktop.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyConfirm.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyStyleMaterial.js"></script>
+    <script src="https://sciactive.com/pnotify/lib/iife/PNotifyReference.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../js/custom.js"></script>
+    <script src="../js/comun.min.js"></script>
+    <script src="../js/catalogos.min.js"></script>
 </body>
+
 </html>
