@@ -3,8 +3,10 @@
 }(function ($, window, document) {
     //console.log("Init...");
     var arrayIdDocumentos = [];
-    var idDocuemntosArr = sessionStorage.getItem("idDocs");
-    idDocuemntosArr = idDocuemntosArr.split(",");
+    if (sessionStorage.getItem("idDocs") !== null) {
+        var idDocuemntosArr = sessionStorage.getItem("idDocs");
+        idDocuemntosArr = idDocuemntosArr.split(",");
+    }
     //@jrodarte Declaración de URL y metodos
     const rootURL = sessionStorage.getItem("rootURL");
     const urlDashboard = sessionStorage.getItem("urlDashboard");
@@ -28,7 +30,7 @@
         }
     };
 
-    async function cargaIdDocumentos(ev){
+    async function cargaIdDocumentos(ev) {
         var resultado;
         try {
             resultado = await $.ajax({
@@ -52,6 +54,8 @@
                     arrayIdDocumentos.push(element["Valor"]);
                 });
                 sessionStorage.setItem('idDocs', arrayIdDocumentos);
+                var idDocuemntosArr = sessionStorage.getItem("idDocs");
+                idDocuemntosArr = idDocuemntosArr.split(",");
             }
         });
     }
@@ -98,9 +102,9 @@
                     var rfc = usuario['RFC'] == null ? "-" : usuario['RFC'];
                     fila.append("<td>" + rfc + "</td>");
                     var suspendido = usuario['Suspendido'];
-                    if(suspendido == false){
+                    if (suspendido == false) {
                         fila.append("<td><button id='btnSuspencion' class='btn btn-success'><i class='fas fa-lock-open'></i></button></td>");
-                    }else{
+                    } else {
                         fila.append("<td><button id='btnActivacion' class='btn btn-danger'><i class='fas fa-lock'></i></button></td>");
                     }
                     fila.append("<td style='display: none;'>" + usuario['ModalidadDesc'] + "</td>")
@@ -116,7 +120,7 @@
         $("#loader_bkg").hide();
     }
 
-    $("#btnBuscarExp").on("click", function(){
+    $("#btnBuscarExp").on("click", function () {
         if ($.fn.dataTable.isDataTable('#tablaExpOperadores')) {
             tablaOperadores.destroy();
             $("#TblCatBodyExpOperadores").empty();
@@ -124,9 +128,11 @@
         cargaTablaOperadores();
     });
 
-    $("#tablaExpOperadores").on("click", "#btnSuspencion", function(){
+    $("#tablaExpOperadores").on("click", "#btnSuspencion", function () {
+        $("#loader").show();
+        $("#loader_bkg").show();
         $(".formDivExp").find("input[type=file], textarea").val("");
-        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
+        $("#modalLarge").modal({ backdrop: 'static', keyboard: false });
         $("#formularioDivExp").show();
         $(".lblMovimiento").html("Suspensión");
         var parent = $(this).parent("td").parent("tr");
@@ -138,15 +144,19 @@
         var idExpediente = child[0].innerText;
         var idDocumentoSuspencion = idDocuemntosArr[4];
         //var idDocumentoSuspencion = "00117";
-        localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoSuspencion+"_"+0);
+        localStorage.setItem("values", idPrestador + "_" + idExpediente + "_" + idDocumentoSuspencion + "_" + 0);
         $("#lbl_IdSCT").html(idSCT);
         $("#lbl_Modalidad").html(modalidad);
         $("#lbl_nombre").html(nombre);
+        $("#loader").hide();
+        $("#loader_bkg").hide();
     });
 
-    $("#tablaExpOperadores").on("click", "#btnActivacion", function(){
+    $("#tablaExpOperadores").on("click", "#btnActivacion", function () {
+        $("#loader").show();
+        $("#loader_bkg").show();
         $(".formDivExp").find("input[type=file], textarea").val("");
-        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
+        $("#modalLarge").modal({ backdrop: 'static', keyboard: false });
         $("#formularioDivExp").show();
         $(".lblMovimiento").html("Activación");
         var parent = $(this).parent("td").parent("tr");
@@ -157,13 +167,17 @@
         var idPrestador = child[1].innerText;
         var idExpediente = child[0].innerText;
         var idDocumentoActivacion = idDocuemntosArr[5];
-        localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoActivacion+"_"+1);
+        localStorage.setItem("values", idPrestador + "_" + idExpediente + "_" + idDocumentoActivacion + "_" + 1);
         $("#lbl_IdSCT").html(idSCT);
         $("#lbl_Modalidad").html(modalidad);
         $("#lbl_nombre").html(nombre);
+        $("#loader").hide();
+        $("#loader_bkg").hide();
     });
 
-    $("#tablaCatalogos").on("click", ".btnSuspencion", function(){
+    $("#tablaCatalogos").on("click", ".btnSuspencion", function () {
+        $("#loader").show();
+        $("#loader_bkg").show();
         $(".formDivExp").find("input[type=file], textarea").val("");
         $("#formSuspencion").show();
         $("#tablaPFdiv").hide();
@@ -180,15 +194,19 @@
         var idPrestador = child[0].innerText;
         var idExpediente = child[1].innerText;
         var idDocumentoSuspencion = idDocuemntosArr[4];
-        localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoSuspencion+"_"+0);
+        localStorage.setItem("values", idPrestador + "_" + idExpediente + "_" + idDocumentoSuspencion + "_" + 0);
         $(".lbl_IdSCT").html(idSCT);
         $(".lbl_Modalidad").html(modalidad);
         $(".lbl_nombre").html(nombre);
+        $("#loader").hide();
+        $("#loader_bkg").hide();
     });
 
-    $("#tablaCatalogos").on("click", ".btnActivacion", function(){
+    $("#tablaCatalogos").on("click", ".btnActivacion", function () {
+        $("#loader").show();
+        $("#loader_bkg").show();
         $(".formDivExp").find("input[type=file], textarea").val("");
-        $("#modalLarge").modal({backdrop: 'static', keyboard: false});
+        $("#modalLarge").modal({ backdrop: 'static', keyboard: false });
         $("#formularioDiv").hide();
         $("#btnSaveData").hide();
         $("#btnSaveDataCon").hide();
@@ -199,7 +217,7 @@
         $("#btnAgregarPF").hide();
         $("#btnAgregarPFCon").hide();
         $("#btnNuevaPF").hide();
-        $("#formSuspencion").show();        
+        $("#formSuspencion").show();
         $(".btnSaveDataExpConce").show();
         $(".lblMovimiento").html("Activación");
         var parent = $(this).parent("td").parent("tr");
@@ -210,13 +228,15 @@
         var idPrestador = child[0].innerText;
         var idExpediente = child[1].innerText;
         var idDocumentoActivacion = idDocuemntosArr[5];
-        localStorage.setItem("values", idPrestador+"_"+idExpediente+"_"+idDocumentoActivacion+"_"+1);
+        localStorage.setItem("values", idPrestador + "_" + idExpediente + "_" + idDocumentoActivacion + "_" + 1);
         $(".lbl_IdSCT").html(idSCT);
         $(".lbl_Modalidad").html(modalidad);
         $(".lbl_nombre").html(nombre);
+        $("#loader").hide();
+        $("#loader_bkg").hide();
     });
 
-    $(".btnSaveDataExp").on("click", function(){
+    $(".btnSaveDataExp").on("click", function () {
         $('.formDivExp').parsley().validate();
         validateFront();
 
@@ -227,7 +247,7 @@
             $("#modalLarge").modal('toggle');
             var files = $("#fileupload").get(0).files;
             var formData = new FormData();
-            for(var i = 0; i < files.length; i++){
+            for (var i = 0; i < files.length; i++) {
                 formData.append(valuesArr[2], files[i]);
             }
             formData.append("motivo", $(".txt_motivo").val());
@@ -282,7 +302,7 @@
                         }
                     });
                     //alert("No se puede guardar la relacion que intentaste crear.");
-                }else if (info === "x0002"){
+                } else if (info === "x0002") {
                     //Error x0002
                     PNotify.notice({
                         title: 'Error',
@@ -327,7 +347,7 @@
         }
     });
 
-    $(window).on("load", function(){
+    $(window).on("load", function () {
         cargaIdDocumentos()
     });
 }));

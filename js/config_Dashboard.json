@@ -1,10 +1,10 @@
 {
   "ambiente_Server" : "uriLocal",
   "uriLocal" : "http://localhost:26010/Dashboard.svc/",
-  "uriPruebas" : "https://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/",
+  "uriPruebas" : "http://wsi01.sctslp.gob.mx/wcf/Dashboard.svc/",
   "uriProduccion" : "",
   "ambiente_Dashboard" : "uriDashboardLocal",
-  "uriDashboardLocal" : "http://localhost/dashboard/views/",
+  "uriDashboardLocal" : "http://127.0.0.1:5500/views/",
   "uriDashboardPruebas" : "https://wsi01.sctslp.gob.mx/wcf/Dashboard/views/",
   "uriDashboardProduccion" : ""
 }

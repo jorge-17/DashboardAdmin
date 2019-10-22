@@ -87,7 +87,7 @@
         var noExt = $("#NoExtDC" + tipoUstring).val();
         var noInt = $("#NoIntDC" + tipoUstring).val();
         var colonia = $("#ColoniaDC" + tipoUstring).val();
-        var tipoCasa = tipoU === "3" && $("#TipoViCD" + tipoUstring).val() !== "" ? $("#TipoViCD" + tipoUstring).val() : "6";
+        var tipoCasa = tipoU !== "3" && $("#TipoViCD" + tipoUstring).val() !== "" ? $("#TipoViCD" + tipoUstring).val() : "6";
         var telefono = $("#TelCD" + tipoUstring).val();
         var noEconomico = $("#NoEcoCD" + tipoUstring).val();
         var codigoPostal = $("#codigoPDC" + tipoUstring).val();
@@ -931,10 +931,14 @@
 
 
     function getEtiquetasForm() {
+        $("#loader_conce").show();
+        $("#loader_bkg_conce").show();
         $.getJSON("../js/labels.json", function (data) {
             $.each(data, function (key, val) {
                 etiquetas.push(key + "_" + val);
             });
+            $("#loader_conce").hide();
+            $("#loader_bkg_conce").hide();
         });
     }
 
@@ -1032,6 +1036,8 @@
     }
     //Genera de forma automatica el formulario dependiendo del tipo de usuario que sea
     async function generateForm(idPrestador, tipoU) {
+        $("#loader_conce").show();
+        $("#loader_bkg_conce").show();
         var dataJson = JSON.stringify({
             token: tokenSession,
             tipoU: tipoU
@@ -1318,7 +1324,9 @@
                 } else if (campoName[campoName.length - 1] === "O") {
                     $("#" + idCampo).attr("required", true);
                     $("#lbl" + idCampo).text(lblCampo + "*");
-                }
+                }                
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
             });
 
             //$("#formDiv").append(divDG, divLN, divDC, divCD);
@@ -1496,7 +1504,7 @@
                 var usuario = datos['aoData'];
                 $("#noEconomicoList").empty();
                 $("#noEconomicoList").append("<option value=''></option>");
-                cargaCiudades(24, 'CdConce');
+                addCiudades('CdConce');
                 setTimeout(function () {
                     CargaNoEconomicos(usuario[0]['IdCiudad']);
                 }, 600);
@@ -1564,7 +1572,7 @@
                     var fechaNom;
                     usuario[0]['FechaNombramiento'] == null ? fechaNom = [""] : fechaNom = usuario[0]['FechaNombramiento'].split("T");
                     $("#FechaNom" + tipoUstring).val(fechaNom[0]);
-                    $("#CdConce" + tipoUstring).val(usuario[0]['IdCiudad']);
+                    $("#CdConce" + tipoUstring).val(usuario[0]['MunAdscripcion']);
                     $("#NoEco" + tipoUstring).val(usuario[0]['noEconomico']);
                     if ($("#NoEco" + tipoUstring).val() !== "") {
                         setTimeout(function () {
@@ -1651,6 +1659,8 @@
     }
     //Carga las tablas de concesionarios
     async function cargaTablaConcesionarios() {
+        $("#loader_conce").show();
+        $("#loader_bkg_conce").show();
         var idTipoUsuario = localStorage.getItem("tipoU");
         var inputTexto = $("#inputBusqueda").val();
         var dataJson = JSON.stringify({
@@ -1705,6 +1715,8 @@
                 tablaCatalogos = $("#tablaCatalogos").DataTable({
                     dom: 'p'
                 });
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
             } else {
                 PNotify.notice({
                     title: 'Nota',
@@ -1733,11 +1745,15 @@
                     }
 
                 });
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
             }
         });
     }
     //Carga las tablas de tipos de usuario
     async function cargaTablaTipoUsuarios() {
+        $("#loader_conce").show();
+        $("#loader_bkg_conce").show();
         var idTipoUsuario = localStorage.getItem("tipoU");
         var inputTexto = $("#inputBusqueda").val();
         var dataJson = JSON.stringify({
@@ -1783,6 +1799,8 @@
                 tablaCatalogos = $("#tablaCatalogos").DataTable({
                     dom: 'p'
                 });
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
             }else{
                 PNotify.notice({
                     title: 'Nota',
@@ -1811,11 +1829,15 @@
                     }
 
                 });
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
             }
         });
     }
     //Carga la tabla de personas fisicas
     async function cargaTablaPersonasFisica() {
+        $("#loader_conce").show();
+        $("#loader_bkg_conce").show();
         var inputTexto = $("#inputBusquedaPF").val();
         if (inputTexto !== "") {
             var dataJson = JSON.stringify({
@@ -1873,6 +1895,8 @@
                 });
                 $("#btnNuevaPF").attr('disabled', false);
                 $("#btnNuevaPFConce").attr('disabled', false);
+                $("#loader_conce").hide();
+                $("#loader_bkg_conce").hide();
             });
         }
     }
@@ -2087,6 +2111,9 @@
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
+            setTimeout(function(){
+                addCiudades('MunAdsCD');
+            },300);
         }
         cargaInfocConcesionPFConce(idPrestador, tipoUsua, controlID, undefined, idConsecion);
         $('#formDiv').parsley().reset();
@@ -2121,6 +2148,9 @@
         if ($("#formDiv").children().length === 0) {
             getEtiquetasForm();
             generateForm(idPrestador, tipoUsua);
+            setTimeout(function(){
+                addCiudades('MunAdsCD');
+            },300);
         }
         cargaInfocConcesionPFConce(idPrestador, tipoUsua, 'btnAgregarPFCon', true);
         $('#formDiv').parsley().reset();
